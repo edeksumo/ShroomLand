@@ -7,6 +7,7 @@ class Game
 private:
 	unsigned int Wight;
 	unsigned int Height;
+	double Version;
 	std::string Title;
 	sf::RectangleShape shape;
 	std::stack<State*> States;
@@ -32,7 +33,8 @@ public:
 	Game() {
 		Wight = 800;
 		Height = 600;
-		Title = "ShroomLand 0.0.1v";
+		Version = 0.000001;
+		Title = dataMenager.Lang.gameName + " " + to_string(Version) + "v";
 		view.setSize(static_cast<float> (Wight), static_cast<float> (Height));
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);

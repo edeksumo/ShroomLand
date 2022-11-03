@@ -12,6 +12,7 @@ public:
 	sf::Font buttonFont;
 	mINI::INIStructure settingsINI;
 	mINI::INIFile* settings;
+
 	struct Lang {
 		string yes = "Yes";
 		string no = "No";
@@ -25,19 +26,28 @@ public:
 		string load = "Load";
 		string volume = "Volume";
 	};
+
+	struct EngineNames {
+		string volume = "volume";
+		string settings = "settings";
+		string volumeText = "volumeText";
+		string volumeSlider = "volumeSlider";
+		string settingsSwitch = "settingsSwitch";
+	};
+
 	struct Settings {
 		int volume;
 	};
+
 	Lang Lang;
 	Settings Settings;
+	EngineNames EngineNames;
+
 	DataMenager() {
 		settings = new mINI::INIFile("settings.ini");
 		buttonFont.loadFromFile("assets/fonts/alagard.ttf");
-
 		settings->read(settingsINI);
-
-		std::string& volumeStr = settingsINI["settings"]["volume"];
-
+		std::string& volumeStr = settingsINI[EngineNames.settings][EngineNames.volume];
 		Settings.volume = std::stoi(volumeStr);
 	}
 	~DataMenager() {

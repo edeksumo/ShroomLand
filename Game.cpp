@@ -15,26 +15,7 @@ void Game::Render() {
 
 void Game::Keyboard()
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        States.top()->stateQuit = true;
-    }
-    //if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        view.move(-0.6f, 0);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        view.move(0, -0.6f);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        view.move(0.6f, 0);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        view.move(0, 0.6f);
-    }
+
 }
 
 void Game::Update(){
@@ -47,13 +28,19 @@ void Game::Update(){
                 Window->close();
         }
         Keyboard::keyAndButtonStateSetter();
+        
         Keyboard();
+        
         mousePosition = sf::Mouse::getPosition(*Window);
+       
         States.top()->UpdateWindows(&mousePosition);
         States.top()->Update(&mousePosition);
+        
         Render();
+       
         if (States.top()->stateQuit)
             States.pop();
+       
         if (States.size() == 0)
             Window->close();
         Window->setView(view);

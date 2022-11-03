@@ -11,6 +11,7 @@ public:
 		hold,
 		released
 	};
+	
 	static void setKeyState(sf::Keyboard::Key a_key);
 	static void setMouseButtonState(sf::Mouse::Button a_button);
 	static Keyboard::KeyState checkKeyState(sf::Keyboard::Key a_key);

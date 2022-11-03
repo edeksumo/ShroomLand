@@ -12,6 +12,7 @@
 /****************************************************/
 static std::array<Keyboard::KeyState, sf::Keyboard::KeyCount> keyState;
 static std::array<Keyboard::KeyState, sf::Mouse::ButtonCount> mouseButtonState;
+
 void Keyboard::setKeyState(sf::Keyboard::Key a_key)
 {
 	if (a_key > sf::Keyboard::KeyCount)

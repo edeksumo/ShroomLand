@@ -11,9 +11,8 @@ public:
 		Hold
 	};
 private:
-	//variables
 	ButtonState lastButtonState;
-	//functions
+	
 	bool onEnter();
 	bool onQuit();
 protected:
@@ -28,6 +27,7 @@ protected:
 	bool mouseQuit(sf::Vector2i* a_mousePos);
 public:
 	bool isPressed();
+	
 	Button() {
 		isSwitch = false;
 		buttonState = ButtonState::Free;
@@ -61,6 +61,7 @@ public:
 	~Button() {
 		onQuit();
 	};
+	
 	void Update(sf::Vector2i* a_mousePos);
 	void Render(sf::RenderTarget* a_target);
 };

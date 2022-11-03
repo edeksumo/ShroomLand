@@ -12,15 +12,12 @@ bool Button::onQuit()
 	return false;
 }
 
-
 bool Button::isPressed()
 {
 	if (buttonState == ButtonState::Pressed)
 		return true;
 	return false;
 }
-
-
 /****************************************************/
 //Protected
 /****************************************************/
@@ -83,6 +80,7 @@ bool Button::pressed(sf::Vector2i* a_mousePos)
 	}
 	return false;
 }
+
 void Button::setTransparency()
 {
 	if (lastButtonState == buttonState)
@@ -95,6 +93,7 @@ void Button::setTransparency()
 	}
 	lastButtonState = buttonState;
 }
+
 void Button::drawSelector(sf::RenderTarget* a_target)
 {
 	if ((buttonState == ButtonState::Selected) || (buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold))
@@ -103,7 +102,6 @@ void Button::drawSelector(sf::RenderTarget* a_target)
 /****************************************************/
 //Public
 /****************************************************/
-
 void Button::Update(sf::Vector2i* a_mousePos) {
 	//std::cout << "== BUTTON == Update Func" << std::endl;
 	
