@@ -26,11 +26,11 @@ public:
         p_window = m_window;
         p_dM = m_dM;
 
-        PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(200, 400), sf::Color::Green, p_dM->Lang.gameName, sf::Vector2f(90, 20), sf::Color::Black);
+        PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(200, 400), sf::Color::Green, p_dM->Lang.gameName, sf::Vector2f(100, 30), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.newGame, sf::Vector2f(100, 50), sf::Vector2f(30, 60), sf::Color(50, 40, 30), m_dM->Lang.newGame, sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.settings, sf::Vector2f(100, 50), sf::Vector2f(30, 130), sf::Color(50, 40, 30), m_dM->Lang.settings, sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.editor, sf::Vector2f(100, 50), sf::Vector2f(30, 200), sf::Color(50, 40, 30), m_dM->Lang.editor, sf::Color::Black);
-        OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(100, 50), sf::Vector2f(30, 350), sf::Color(50, 40, 30), m_dM->Lang.quit, sf::Color::Black);
+        OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(100, 50), sf::Vector2f(30, 340), sf::Color(50, 40, 30), m_dM->Lang.quit, sf::Color::Black);
 
         p_game = nullptr;
         p_editor = nullptr;

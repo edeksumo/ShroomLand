@@ -13,8 +13,8 @@ void State::Keyboard()
 		}
 		else {
 			PushWindow(999, sf::Vector2f(250, 40), sf::Vector2f(200, 100), sf::Color::Blue, p_dM->Lang.quitDial, sf::Vector2f(100, 30), sf::Color::Black);
-			Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 100), sf::Color(50, 40, 30), p_dM->Lang.yes, sf::Color(23, 23, 23));
-			Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 100), sf::Color(50, 40, 30), p_dM->Lang.no, sf::Color(23, 23, 23));
+			Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 90), sf::Color(50, 40, 30), p_dM->Lang.yes, sf::Color(23, 23, 23));
+			Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), sf::Color(50, 40, 30), p_dM->Lang.no, sf::Color(23, 23, 23));
 		}
 	}
 }

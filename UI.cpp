@@ -10,8 +10,18 @@ void UI::keepOnPosition()
 {
 	position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
 	shadow.setPosition(background.getPosition());
-	if(hasBackground)
+	if (hasBackground) {
 		background.setPosition(position);
+		backgroundSprite.setPosition(position);
+		upperDecorLine.setPosition(position.x + p_dM->windowsDecorCornerTxt.getSize().x, position.y);
+		lowerDecorLine.setPosition(position.x + lowerDecorLine.getTextureRect().width + p_dM->windowsDecorCornerTxt.getSize().x, position.y + backgroundSprite.getTextureRect().height);
+		leftDecorLine.setPosition(position.x, position.y + leftDecorLine.getTextureRect().width + p_dM->windowsDecorCornerTxt.getSize().y);
+		rightDecorLine.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + p_dM->windowsDecorCornerTxt.getSize().y);
+		upperDecorLeftCorn.setPosition(position);
+		lowerDecorLeftCorn.setPosition(position.x, position.y + backgroundSprite.getTextureRect().height);
+		upperDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y);
+		lowerDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + backgroundSprite.getTextureRect().height);
+	}
 	if(hasText)
 		text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
 	if(hasSelector)

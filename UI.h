@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <map>
 #include <stack>
 #include <SFML/Graphics.hpp>
@@ -18,7 +17,18 @@ private:
 protected:
 	UIState v_UIState;
 	DataMenager* p_dM;
-	sf::RectangleShape background;
+	
+	sf::RectangleShape background;//del after making sprites
+	sf::Sprite backgroundSprite;
+	sf::Sprite upperDecorLine;
+	sf::Sprite lowerDecorLine;
+	sf::Sprite leftDecorLine;
+	sf::Sprite rightDecorLine;
+	sf::Sprite upperDecorLeftCorn;
+	sf::Sprite lowerDecorLeftCorn;
+	sf::Sprite upperDecorRightCorn;
+	sf::Sprite lowerDecorRightCorn;
+
 	sf::RectangleShape shadow;
 	sf::RectangleShape selector;
 	sf::RectangleShape sliderShape;
