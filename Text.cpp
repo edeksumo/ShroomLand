@@ -25,6 +25,5 @@ void Text::Render(sf::RenderTarget* a_target)
 	view = a_target->getView();
 	keepOnPosition();
 	a_target->draw(text);
-
 	//std::cout << "== TEXT == Render Func" << std::endl;
 }

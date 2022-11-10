@@ -24,8 +24,7 @@ unsigned int Window::getID()
 }
 
 void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, sf::Color a_color, std::string a_text, sf::Color a_textColor){
-	//Buttons.push_back(Button(size, pos, color, text, textColor, dataMenager));
-	//Buttons.insert(std::pair<std::string, Button>(name, Button(size, pos, color, text, textColor, p_dataMenager)));
+
 	Buttons.emplace(a_name, Button(a_size, a_pos, a_color, a_text, a_textColor, p_dM));
 }
 
@@ -82,6 +81,26 @@ void Window::SetElementValue(std::string a_eleName, std::string a_val) {
 	for (it = Texts.begin(); it != Texts.end(); ++it) {
 		if (it->first == a_eleName) {
 			it->second.setText(a_val);
+		}
+	}
+}
+
+int Window::GetSliderValue(std::string a_eleName)
+{
+	std::multimap<std::string, Slider>::iterator it = Sliders.begin();
+	for (it = Sliders.begin(); it != Sliders.end(); ++it) {
+		if (it->first == a_eleName) {
+			return it->second.getValue();
+		}
+	}
+}
+
+bool Window::IsSwitchOn(std::string a_eleName)
+{
+	std::multimap<std::string, Switch>::iterator it = Switches.begin();
+	for (it = Switches.begin(); it != Switches.end(); ++it) {
+		if (it->first == a_eleName) {
+			return it->second.isPressed();
 		}
 	}
 }

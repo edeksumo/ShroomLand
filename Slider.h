@@ -12,6 +12,7 @@ private:
     bool isHold;
     sf::FloatRect screenPositionRect;
     std::vector<float> sliderPosVec;
+    
     void calculateEachPos();
     bool isSliderSelected(sf::Vector2i* a_mousePos);
     void slider(sf::Vector2i* a_mousePos);
@@ -40,8 +41,8 @@ public:
         initBackground();
         pxPerVal = ((background.getLocalBounds().left + background.getSize().x - 10) - sliderShape.getSize().x) / (maxValue );
         calculateEachPos();
-        //std::cout << pxPerVal;
     };
+
     void setValue(int a_val);
     int getValue();
     int getMaxValue();

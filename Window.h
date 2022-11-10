@@ -48,6 +48,8 @@ public:
     void AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, std::string a_text);
     void SetElementValue(std::string a_eleName, int a_val);
     void SetElementValue(std::string a_eleName, std::string a_val);
+    int GetSliderValue(std::string a_eleName);
+    bool IsSwitchOn(std::string a_eleName);
     void Update(sf::Vector2i* a_mousePos);
     void Render(sf::RenderTarget* a_target);
 };

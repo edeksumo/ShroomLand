@@ -16,7 +16,6 @@ public:
 	};
 private:
 protected:
-	//variables
 	UIState v_UIState;
 	DataMenager* p_dM;
 	sf::RectangleShape background;
@@ -37,7 +36,7 @@ protected:
 	bool hasSlider;
 	bool hasBackground;
 	float sliderOffset;
-	//functions
+
 	void keepOnPosition();
 	void initText(std::string a_text);
 	void initBackground();
@@ -52,6 +51,7 @@ public:
 		hasBackground = false;
 		sliderOffset = 0;
 	}
+	
 	void setUIState(UI::UIState a_state);
 	UI::UIState getUIState();
 	void setColor(sf::Color a_color);

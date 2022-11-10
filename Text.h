@@ -6,6 +6,7 @@ class Text :
 private:
     std::string v_text;
 protected:
+
 public:
     Text(sf::Vector2f m_pos, std::string m_text, sf::Color m_textColor, DataMenager* m_dM) {
         hasText = true;
@@ -18,6 +19,7 @@ public:
         initBackground();
         initText(m_text);
     }
+
     void setText(string a_text);
     void Update(sf::Vector2i* a_mousePos);
     void Render(sf::RenderTarget* a_target);

@@ -13,6 +13,7 @@
 
 void EditorState::Update(sf::Vector2i* a_mousePos)
 {
+	updateOpenedWindowIt();
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }
 

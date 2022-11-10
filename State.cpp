@@ -3,8 +3,6 @@
 /****************************************************/
 //Private
 /****************************************************/
-
-
 void State::Keyboard()
 {
 	if (Keyboard::checkKeyState(sf::Keyboard::Escape) == Keyboard::KeyState::pressed)
@@ -20,6 +18,7 @@ void State::Keyboard()
 		}
 	}
 }
+
 void State::defaultButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
 {
 	if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
@@ -38,16 +37,21 @@ void State::defaultButtonFunctions(const std::multimap<std::string, Button>::ite
 /****************************************************/
 //Protected
 /****************************************************/
-
+void State::updateOpenedWindowIt()
+{
+	if (nbOfOpenedWindows != Windows.size()) {
+		nbOfOpenedWindows = Windows.size();
+		OpenedWindow = Windows.begin();
+	}
+}
 /****************************************************/
 //Public
 /****************************************************/
-
 void State::PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, sf::Color a_color, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor)
 {
 	Windows.push_front(Window(a_id, a_pos, a_size, a_color, a_text, a_textColor, a_textPos, p_window, p_dM));
+	OpenedWindow = Windows.begin();
 }
-
 
 void State::RenderWindows(sf::RenderTarget* a_target)
 {
@@ -55,7 +59,6 @@ void State::RenderWindows(sf::RenderTarget* a_target)
 		std::list<Window>::iterator it_1;
 		for (it_1 = Windows.begin(); it_1 != Windows.end(); ++it_1) {
 			if ((it_1 == Windows.begin()) && (it_1->getUIState() == UI::UIState::inActive)) {
-				//it_1->setColor(sf::Color(it_1->getColor().r, it_1->getColor().g - 10, it_1->getColor().b));
 				it_1->setUIState(UI::UIState::active);
 				std::multimap<std::string, Button>::iterator it = it_1->Buttons.begin();
 				for (it = it_1->Buttons.begin(); it != it_1->Buttons.end(); ++it) {
@@ -64,7 +67,6 @@ void State::RenderWindows(sf::RenderTarget* a_target)
 			}
 			if (Windows.size() > 1) {
 				if ((it_1 != Windows.begin()) && (it_1->getUIState() == UI::UIState::active)) {
-					//it_1->setColor(sf::Color(it_1->getColor().r, it_1->getColor().g - 10, it_1->getColor().b));
 					it_1->setUIState(UI::UIState::inActive);
 					std::multimap<std::string, Button>::iterator it = it_1->Buttons.begin();
 					for (it = it_1->Buttons.begin(); it != it_1->Buttons.end(); ++it) {
@@ -93,5 +95,4 @@ void State::UpdateWindows(sf::Vector2i* a_mousePos)
 			defaultButtonFunctions(it);
 		}
 	}
-	//std::cout << buttonCooldown << std::endl;
 }

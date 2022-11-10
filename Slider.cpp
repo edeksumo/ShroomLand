@@ -9,11 +9,8 @@ void Slider::calculateEachPos()
 	for (int i = 1; i <= maxValue; i++) {
 		sliderPosVec[i] = sliderPosVec[0] + i * pxPerVal;
 	}
-	for (int i = 0; i <= maxValue; i++) {
-		std::cout << sliderPosVec[i] << " ";
-	}
-	//sliderPosVec[maxValue] = background.getPosition().x;;
 }
+
 bool Slider::isSliderSelected(sf::Vector2i* a_mousePos)
 {
 	if ((screenPositionRect.left <= a_mousePos->x) && (screenPositionRect.width >= a_mousePos->x)) {
@@ -23,13 +20,14 @@ bool Slider::isSliderSelected(sf::Vector2i* a_mousePos)
 	}
 	return false;
 }
+
 void Slider::slider(sf::Vector2i* a_mousePos)
 {
 	if (isHold) {
 		if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
 			if (mouseX != a_mousePos->x) {
 				tempOffset = a_mousePos->x - mouseX;
-				if (tempOffset < 5)
+				if (tempOffset < 5) 
 					tempOffset = 5;
 				if (tempOffset > sliderPosVec[maxValue])
 					tempOffset = sliderPosVec[maxValue];
@@ -38,10 +36,9 @@ void Slider::slider(sf::Vector2i* a_mousePos)
 						sliderOffset = tempOffset;
 					}
 				}
-				value = sliderOffset / pxPerVal;
-				if (value >maxValue)
+				value = (sliderOffset - 5) / pxPerVal;
+				if (value > maxValue)
 					value = maxValue;
-				std::cout << tempOffset << " ";
 
 				screenPositionRect = sf::FloatRect(sliderShape.getLocalBounds().left + relativePosition.x + 5 + sliderOffset, sliderShape.getLocalBounds().top + relativePosition.y + 5, sliderShape.getLocalBounds().left + sliderShape.getSize().x + relativePosition.x + 5 + sliderOffset,
 					sliderShape.getLocalBounds().top + sliderShape.getSize().y + relativePosition.y + 5);
@@ -50,16 +47,13 @@ void Slider::slider(sf::Vector2i* a_mousePos)
 	}
 	if (isSliderSelected(a_mousePos) && Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed) {
 		mouseX = a_mousePos->x - tempOffset;
-		//mouseX = a_mousePos->x;
-
-		//std::cout << a_mousePos->x;
-
 		isHold = true;
 	}
 	if (isHold && Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released) {
 		isHold = false;
 	}
 }
+
 void Slider::setOffset()
 {
 	if (!isHold) {
@@ -76,7 +70,6 @@ void Slider::setOffset()
 /****************************************************/
 //Public
 /****************************************************/
-
 void Slider::setValue(int a_val)
 {
 	value = a_val;

@@ -4,7 +4,9 @@ class Switch :
     public Button
 {
 private:
+
 protected:
+
 public:
     Switch(sf::Vector2f m_pos, sf::Color m_color, DataMenager* m_dM) {
         hasSelector = true;
@@ -22,6 +24,7 @@ public:
         v_UIState = UI::UIState::active;
         initBackground();
     };
+
     void setState(Button::ButtonState a_state);
     Button::ButtonState getState();
     void Update(sf::Vector2i* a_mousePos);

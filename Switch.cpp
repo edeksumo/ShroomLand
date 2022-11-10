@@ -10,7 +10,6 @@
 /****************************************************/
 //Public
 /****************************************************/
-
 void Switch::setState(Button::ButtonState a_state)
 {
 	buttonState = a_state;
