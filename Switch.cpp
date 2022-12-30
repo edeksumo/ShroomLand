@@ -3,6 +3,15 @@
 //Private
 /****************************************************/
 
+void Switch::setTexture()
+{
+	if (state == SwitchState::off) {
+		backgroundSprite.setTexture(p_dM->switchBackgroundTxt);
+	}
+	else {
+		backgroundSprite.setTexture(p_dM->switchBackgroundTickTxt);
+	}
+}
 /****************************************************/
 //Protected
 /****************************************************/
@@ -32,7 +41,9 @@ void Switch::Render(sf::RenderTarget* a_target)
 {
 	view = a_target->getView();
 	keepOnPosition();
-	a_target->draw(background);
+	//a_target->draw(background);
+	setTexture();
+	a_target->draw(backgroundSprite);
 	setTransparency();
 	drawSelector(a_target);
 	renderShadow(a_target);

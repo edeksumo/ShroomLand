@@ -47,38 +47,31 @@ bool Button::mouseQuit(sf::Vector2i* a_mousePos)
 
 bool Button::pressed(sf::Vector2i* a_mousePos)
 {
-	if (isSwitch) {
-		if ((buttonState == ButtonState::Selected) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed)) {
-			buttonState = ButtonState::Pressed;
-			return true;
-		}
-		if ((screenPositionRect.left <= a_mousePos->x) && (screenPositionRect.width >= a_mousePos->x)) {
-			if ((screenPositionRect.top <= a_mousePos->y) && (screenPositionRect.height >= a_mousePos->y)) {
-				if ((buttonState == ButtonState::Pressed) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed)) {
-					buttonState = ButtonState::Selected;
-					return false;
-				}
+
+	if ((buttonState == ButtonState::Selected) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed)) {
+		buttonState = ButtonState::Pressed;
+		if (isSwitch) {
+			if (state == SwitchState::off) {
+				state = SwitchState::on;
+				std::cout << "on";
+			}
+			else {
+				state = SwitchState::off;
+				std::cout << "off";
 			}
 		}
+		return true;
 	}
-	else {
-		if ((buttonState == ButtonState::Selected) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed)) {
-			buttonState = ButtonState::Pressed;
-			return true;
-		}
-		if ((buttonState == ButtonState::Pressed || (buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold))) {
-			buttonState = ButtonState::Hold;
-			return true;
-		}
-
-		if ((buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold)
-			&& (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::hold) || (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::pressed)) {
-			buttonState = ButtonState::Free;
-			return false;
-		}
-
+	if ((buttonState == ButtonState::Pressed || (buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold))) {
+		buttonState = ButtonState::Hold;
+		return true;
 	}
-	return false;
+
+	if ((buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold)
+		&& (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::hold) || (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::pressed)) {
+		buttonState = ButtonState::Free;
+		return false;
+	}
 }
 
 void Button::setTransparency()
@@ -113,7 +106,15 @@ void Button::Update(sf::Vector2i* a_mousePos) {
 void Button::Render(sf::RenderTarget* a_target) {
 	view = a_target->getView();
 	keepOnPosition();
-	a_target->draw(background);
+	a_target->draw(backgroundSprite);
+	a_target->draw(upperDecorLine);
+	a_target->draw(lowerDecorLine);
+	a_target->draw(leftDecorLine);
+	a_target->draw(rightDecorLine);
+	a_target->draw(upperDecorLeftCorn);
+	a_target->draw(lowerDecorLeftCorn);
+	a_target->draw(upperDecorRightCorn);
+	a_target->draw(lowerDecorRightCorn);
 	a_target->draw(text);
 	setTransparency();
 	drawSelector(a_target);

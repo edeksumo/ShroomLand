@@ -19,17 +19,28 @@ protected:
 	DataMenager* p_dM;
 	
 	sf::RectangleShape background;//del after making sprites
+	
 	sf::Sprite backgroundSprite;
 	sf::Sprite upperDecorLine;
 	sf::Sprite lowerDecorLine;
 	sf::Sprite leftDecorLine;
 	sf::Sprite rightDecorLine;
-	sf::Sprite upperDecorLeftCorn;
+	sf::Sprite upperDecorLeftCorn;	//and for button left edge
 	sf::Sprite lowerDecorLeftCorn;
-	sf::Sprite upperDecorRightCorn;
+	sf::Sprite upperDecorRightCorn;	//and for button right edge
 	sf::Sprite lowerDecorRightCorn;
 
+	sf::Sprite buttonDecorLines;
+	sf::Sprite buttonDecorLeft;
+	sf::Sprite buttonDecorRight;
+
+	sf::Sprite sliderShapeSprite;
+	sf::Sprite sliderDecorLeft;
+	sf::Sprite SliderDecorRight;
+
+
 	sf::RectangleShape shadow;
+	
 	sf::RectangleShape selector;
 	sf::RectangleShape sliderShape;
 	sf::Text text;

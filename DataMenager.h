@@ -43,9 +43,21 @@ public:
 	Lang Lang;
 	Settings Settings;
 	EngineNames EngineNames;
+
 	sf::Texture windowsBackgroundTxt;
 	sf::Texture windowsDecorLineTxt;
 	sf::Texture windowsDecorCornerTxt;
+
+	sf::Texture buttonBackgroundTxt;
+	sf::Texture buttonDecorLineTxt;
+	sf::Texture buttonDecorCornerTxt;
+
+	sf::Texture switchBackgroundTxt;
+	sf::Texture switchBackgroundTickTxt;
+
+	sf::Texture sliderTxt;
+	sf::Texture sliderBackgroundTxt;
+	sf::Texture sliderDecorTxt;
 
 	DataMenager() {
 		//Texture loaders
@@ -53,10 +65,41 @@ public:
 			cout << "== DATAMENAGER ERROR == Texture not loaded: paper background.png" << std::endl;
 
 		if (!windowsDecorLineTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(893, 190, 73, 14))) {
-			windowsDecorLineTxt.setRepeated(true);
 			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
 		}
+		windowsDecorLineTxt.setRepeated(true);
+
 		if (!windowsDecorCornerTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(857, 190, 22, 22))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+
+		if (!buttonBackgroundTxt.loadFromFile("data/textures/wood background.png")) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: wood background.png" << std::endl;
+		}
+		if (!buttonDecorLineTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(900, 401, 74, 8))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+		buttonDecorLineTxt.setRepeated(true);
+
+		if (!buttonDecorCornerTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(868, 401, 14, 14))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+
+		if (!switchBackgroundTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(150, 85, 20, 20))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+		if (!switchBackgroundTickTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(175, 85, 20, 20))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+
+		if (!sliderTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(815, 20, 16, 28))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+		if (!sliderBackgroundTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(802, 63, 192, 28))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		}
+		sliderBackgroundTxt.setRepeated(true);
+		if (!sliderDecorTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(561, 18, 25, 28))) {
 			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
 		}
 		//Settings

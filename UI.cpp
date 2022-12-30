@@ -13,10 +13,10 @@ void UI::keepOnPosition()
 	if (hasBackground) {
 		background.setPosition(position);
 		backgroundSprite.setPosition(position);
-		upperDecorLine.setPosition(position.x + p_dM->windowsDecorCornerTxt.getSize().x, position.y);
-		lowerDecorLine.setPosition(position.x + lowerDecorLine.getTextureRect().width + p_dM->windowsDecorCornerTxt.getSize().x, position.y + backgroundSprite.getTextureRect().height);
-		leftDecorLine.setPosition(position.x, position.y + leftDecorLine.getTextureRect().width + p_dM->windowsDecorCornerTxt.getSize().y);
-		rightDecorLine.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + p_dM->windowsDecorCornerTxt.getSize().y);
+		upperDecorLine.setPosition(position.x + upperDecorLeftCorn.getTextureRect().width /*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y);
+		lowerDecorLine.setPosition(position.x + lowerDecorLine.getTextureRect().width + upperDecorLeftCorn.getTextureRect().width/*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y + backgroundSprite.getTextureRect().height);
+		leftDecorLine.setPosition(position.x, position.y + leftDecorLine.getTextureRect().width + upperDecorLeftCorn.getTextureRect().height);
+		rightDecorLine.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + upperDecorLeftCorn.getTextureRect().height);
 		upperDecorLeftCorn.setPosition(position);
 		lowerDecorLeftCorn.setPosition(position.x, position.y + backgroundSprite.getTextureRect().height);
 		upperDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y);
@@ -26,8 +26,13 @@ void UI::keepOnPosition()
 		text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
 	if(hasSelector)
 		selector.setPosition(background.getPosition());
-	if (hasSlider)
-		sliderShape.setPosition(sf::Vector2f(background.getPosition().x + sliderOffset, background.getPosition().y + 5));
+	if (hasSlider) {
+		//sliderShape.setPosition(sf::Vector2f(background.getPosition().x + sliderOffset, background.getPosition().y + 5));
+		sliderShapeSprite.setPosition(sf::Vector2f(background.getPosition().x + sliderOffset, backgroundSprite.getPosition().y + 5));
+		sliderDecorLeft.setPosition(position.x - (sliderDecorLeft.getTextureRect().width), position.y + 5);
+		SliderDecorRight.setPosition(position.x + backgroundSprite.getTextureRect().width + SliderDecorRight.getTextureRect().width, position.y + SliderDecorRight.getTextureRect().width + 8);
+		shadow.setPosition(sliderShapeSprite.getPosition());
+	}
 }
 
 void UI::initText(std::string a_text)
@@ -57,7 +62,7 @@ void UI::initBackground()
 		selector.setPosition(position);
 	}
 	if (hasSlider) {
-		sliderShape.setPosition(sf::Vector2f(position.x + 5, position.y + 5));
+		sliderShapeSprite.setPosition(sf::Vector2f(position.x + 5, position.y + 5));
 	}
 }
 
