@@ -26,7 +26,7 @@ public:
 	}
 	bool stateQuit;
 
-	void PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, sf::Color a_color, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor);
+	void PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor);
 	void RenderWindows(sf::RenderTarget* a_target);
 	void UpdateWindows(sf::Vector2i* a_mousePos);
 	virtual void Render(sf::RenderTarget *a_target) = 0;

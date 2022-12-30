@@ -21,7 +21,7 @@ private:
 
 protected:
 public:
-    Slider(sf::Vector2f m_pos, sf::Color m_color, float m_lenght, unsigned int m_maxValue, DataMenager* m_dM) {
+    Slider(sf::Vector2f m_pos, float m_lenght, unsigned int m_maxValue, DataMenager* m_dM) {
         mouseX = 0;
         tempOffset = 0;
         isHold = false;
@@ -38,13 +38,10 @@ public:
         SliderDecorRight.setTexture(m_dM->sliderDecorTxt);
         SliderDecorRight.setRotation(-180);
 
-        //sliderShape.setSize(sf::Vector2f(20, 30)); //18 28  192 28
         screenPositionRect = sf::FloatRect(sliderShapeSprite.getLocalBounds().left + m_pos.x , sliderShapeSprite.getLocalBounds().top + m_pos.y + 5, sliderShapeSprite.getLocalBounds().left + 
             sliderShapeSprite.getLocalBounds().width + m_pos.x, sliderShapeSprite.getLocalBounds().top + sliderShapeSprite.getLocalBounds().height + m_pos.y + 5);
-        //sliderShape.setFillColor(sf::Color::Black);
 
         relativePosition = m_pos;
-        color = m_color;
         size = sf::Vector2f(m_lenght, 40);
         p_dM = m_dM;
         maxValue = m_maxValue;
@@ -52,7 +49,6 @@ public:
         position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
         v_UIState = UI::UIState::active;
         initBackground();
-        //pxPerVal = ((background.getLocalBounds().left + background.getSize().x - 10) - sliderShape.getSize().x) / (maxValue );
         pxPerVal = ((backgroundSprite.getLocalBounds().left + backgroundSprite.getLocalBounds().width) - sliderShapeSprite.getLocalBounds().width) / (maxValue);
         shadow.setSize(sf::Vector2f(sliderShapeSprite.getTextureRect().width, sliderShapeSprite.getTextureRect().height));
         shadow.setFillColor(sf::Color(0, 0, 0, 60));

@@ -72,6 +72,7 @@ bool Button::pressed(sf::Vector2i* a_mousePos)
 		buttonState = ButtonState::Free;
 		return false;
 	}
+	return false;
 }
 
 void Button::setTransparency()

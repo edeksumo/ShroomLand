@@ -9,9 +9,8 @@
 void UI::keepOnPosition()
 {
 	position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
-	shadow.setPosition(background.getPosition());
+	shadow.setPosition(backgroundSprite.getPosition());
 	if (hasBackground) {
-		background.setPosition(position);
 		backgroundSprite.setPosition(position);
 		upperDecorLine.setPosition(position.x + upperDecorLeftCorn.getTextureRect().width /*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y);
 		lowerDecorLine.setPosition(position.x + lowerDecorLine.getTextureRect().width + upperDecorLeftCorn.getTextureRect().width/*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y + backgroundSprite.getTextureRect().height);
@@ -25,10 +24,9 @@ void UI::keepOnPosition()
 	if(hasText)
 		text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
 	if(hasSelector)
-		selector.setPosition(background.getPosition());
+		selector.setPosition(backgroundSprite.getPosition());
 	if (hasSlider) {
-		//sliderShape.setPosition(sf::Vector2f(background.getPosition().x + sliderOffset, background.getPosition().y + 5));
-		sliderShapeSprite.setPosition(sf::Vector2f(background.getPosition().x + sliderOffset, backgroundSprite.getPosition().y + 5));
+		sliderShapeSprite.setPosition(sf::Vector2f(backgroundSprite.getPosition().x + sliderOffset, backgroundSprite.getPosition().y + 5));
 		sliderDecorLeft.setPosition(position.x - (sliderDecorLeft.getTextureRect().width), position.y + 5);
 		SliderDecorRight.setPosition(position.x + backgroundSprite.getTextureRect().width + SliderDecorRight.getTextureRect().width, position.y + SliderDecorRight.getTextureRect().width + 8);
 		shadow.setPosition(sliderShapeSprite.getPosition());
@@ -53,9 +51,7 @@ void UI::initBackground()
 	shadow.setSize(size);
 	shadow.setPosition(position);
 	if (hasBackground){
-		background.setFillColor(color);
-		background.setSize(size);
-		background.setPosition(position);
+
 	}
 	if (hasSelector) {
 		selector.setSize(size);
@@ -82,15 +78,4 @@ void UI::setUIState(UI::UIState a_state)
 UI::UIState UI::getUIState()
 {
 	return v_UIState;
-}
-
-void UI::setColor(sf::Color a_color)
-{
-	color = a_color;
-	background.setFillColor(color);
-}
-
-sf::Color UI::getColor()
-{
-	return background.getFillColor();
 }

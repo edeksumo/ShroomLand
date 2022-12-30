@@ -39,7 +39,7 @@ public:
 		lastButtonState = buttonState;
 		selector.setFillColor(sf::Color(0, 0, 0, 50));
 	};
-	Button(sf::Vector2f m_size, sf::Vector2f m_pos, sf::Color m_color, std::string m_text, sf::Color m_textColor, DataMenager* m_dM) {
+	Button(sf::Vector2f m_size, sf::Vector2f m_pos, std::string m_text, sf::Color m_textColor, DataMenager* m_dM) {
 		hasText = true;
 		hasSelector = true;
 		hasBackground = true;
@@ -47,14 +47,12 @@ public:
 		screenPositionRect = sf::FloatRect(backgroundSprite.getLocalBounds().left + m_pos.x, backgroundSprite.getLocalBounds().top + m_pos.y, backgroundSprite.getLocalBounds().left + m_size.x + m_pos.x,
 			backgroundSprite.getLocalBounds().top + m_size.y + m_pos.y);
 		relativePosition = m_pos;
-		color = m_color;
 		textColor = m_textColor;
 		size = m_size;
 		p_dM = m_dM;
 		textPosition = sf::Vector2f(m_size.x / 2, m_size.y / 2);
 		v_UIState = UI::UIState::active;
 		position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
-		background.setFillColor(color);
 
 		backgroundSprite.setTexture(p_dM->buttonBackgroundTxt);
 		backgroundSprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));

@@ -12,9 +12,9 @@ void State::Keyboard()
 			return;
 		}
 		else {
-			PushWindow(999, sf::Vector2f(250, 40), sf::Vector2f(200, 100), sf::Color::Blue, p_dM->Lang.quitDial, sf::Vector2f(100, 30), sf::Color::Black);
-			Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 90), sf::Color(50, 40, 30), p_dM->Lang.yes, sf::Color(23, 23, 23));
-			Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), sf::Color(50, 40, 30), p_dM->Lang.no, sf::Color(23, 23, 23));
+			PushWindow(999, sf::Vector2f(250, 40), sf::Vector2f(200, 100), p_dM->Lang.quitDial, sf::Vector2f(100, 30), sf::Color::Black);
+			Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 90), p_dM->Lang.yes, sf::Color(23, 23, 23));
+			Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
 		}
 	}
 }
@@ -47,9 +47,9 @@ void State::updateOpenedWindowIt()
 /****************************************************/
 //Public
 /****************************************************/
-void State::PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, sf::Color a_color, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor)
+void State::PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor)
 {
-	Windows.push_front(Window(a_id, a_pos, a_size, a_color, a_text, a_textColor, a_textPos, p_window, p_dM));
+	Windows.push_front(Window(a_id, a_pos, a_size, a_text, a_textColor, a_textPos, p_window, p_dM));
 	OpenedWindow = Windows.begin();
 }
 

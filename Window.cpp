@@ -23,19 +23,19 @@ unsigned int Window::getID()
 	return ID;
 }
 
-void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, sf::Color a_color, std::string a_text, sf::Color a_textColor){
+void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor){
 
-	Buttons.emplace(a_name, Button(a_size, a_pos, a_color, a_text, a_textColor, p_dM));
+	Buttons.emplace(a_name, Button(a_size, a_pos, a_text, a_textColor, p_dM));
 }
 
-void Window::AddSwitch(std::string a_name, sf::Vector2f a_pos, sf::Color a_color)
+void Window::AddSwitch(std::string a_name, sf::Vector2f a_pos)
 {
-	Switches.emplace(a_name, Switch(a_pos, a_color, p_dM));
+	Switches.emplace(a_name, Switch(a_pos, p_dM));
 }
 
-void Window::AddSlider(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, float a_lenght, unsigned int a_maxValue)
+void Window::AddSlider(std::string a_name, sf::Vector2f a_pos, float a_lenght, unsigned int a_maxValue)
 {
-	Sliders.emplace(a_name, Slider(a_pos, a_color, a_lenght, a_maxValue, p_dM));
+	Sliders.emplace(a_name, Slider(a_pos, a_lenght, a_maxValue, p_dM));
 }
 
 void Window::AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, std::string a_text)
@@ -103,6 +103,7 @@ bool Window::IsSwitchOn(std::string a_eleName)
 			return it->second.isPressed();
 		}
 	}
+	return false;
 }
 
 void Window::Update(sf::Vector2i* a_mousePos) {

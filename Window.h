@@ -21,11 +21,10 @@ public:
 
     static bool CheckButton(const std::multimap<std::string, Button>::iterator& a_it, std::string a_name);
 
-    Window(unsigned int m_id, sf::Vector2f m_pos, sf::Vector2f m_size, sf::Color m_color, std::string m_text, sf::Color m_textColor, sf::Vector2f m_textPos, sf::Window * m_window, DataMenager* m_dM){
+    Window(unsigned int m_id, sf::Vector2f m_pos, sf::Vector2f m_size, std::string m_text, sf::Color m_textColor, sf::Vector2f m_textPos, sf::Window * m_window, DataMenager* m_dM){
         hasText = true;
         hasBackground = true;
         relativePosition = m_pos;
-        color = m_color;
         textColor = m_textColor;
         size = m_size;
         p_dM = m_dM;
@@ -35,17 +34,17 @@ public:
         v_UIState = UI::UIState::active;
         
         backgroundSprite.setTexture(p_dM->windowsBackgroundTxt);
-        backgroundSprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));
+        backgroundSprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x), static_cast<int>(size.y)));
         upperDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        upperDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->windowsDecorCornerTxt.getSize().x *2), p_dM->windowsDecorLineTxt.getSize().y));
+        upperDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorCornerTxt.getSize().x *2), p_dM->windowsDecorLineTxt.getSize().y));
         lowerDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        lowerDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
+        lowerDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
         lowerDecorLine.rotate(180);
         leftDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        leftDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
+        leftDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.y) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
         leftDecorLine.rotate(270);
         rightDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        rightDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
+        rightDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.y) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
         rightDecorLine.rotate(90);
         upperDecorLeftCorn.setTexture(p_dM->windowsDecorCornerTxt);
         lowerDecorLeftCorn.setTexture(p_dM->windowsDecorCornerTxt);
@@ -64,9 +63,9 @@ public:
     }
 
     unsigned int getID();
-    void AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, sf::Color a_color, std::string a_text, sf::Color a_textColor);
-    void AddSwitch(std::string a_name, sf::Vector2f a_pos, sf::Color a_color);
-    void AddSlider(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, float a_lenght, unsigned int a_maxValue);
+    void AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor);
+    void AddSwitch(std::string a_name, sf::Vector2f a_pos);
+    void AddSlider(std::string a_name, sf::Vector2f a_pos, float a_lenght, unsigned int a_maxValue);
     void AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, std::string a_text);
     void SetElementValue(std::string a_eleName, int a_val);
     void SetElementValue(std::string a_eleName, std::string a_val);

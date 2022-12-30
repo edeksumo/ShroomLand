@@ -18,8 +18,6 @@ protected:
 	UIState v_UIState;
 	DataMenager* p_dM;
 	
-	sf::RectangleShape background;//del after making sprites
-	
 	sf::Sprite backgroundSprite;
 	sf::Sprite upperDecorLine;
 	sf::Sprite lowerDecorLine;
@@ -42,7 +40,6 @@ protected:
 	sf::RectangleShape shadow;
 	
 	sf::RectangleShape selector;
-	sf::RectangleShape sliderShape;
 	sf::Text text;
 	sf::Vector2f size;
 	sf::View view;
@@ -50,8 +47,7 @@ protected:
 	sf::Vector2f position;
 	sf::Vector2f textPosition;
 	sf::Color textColor;
-	sf::Color color;
-	sf::Color secondColor;
+
 	bool hasSelector;
 	bool hasText;
 	bool hasSlider;
@@ -75,8 +71,6 @@ public:
 	
 	void setUIState(UI::UIState a_state);
 	UI::UIState getUIState();
-	void setColor(sf::Color a_color);
-	sf::Color getColor();
 	virtual void Render(sf::RenderTarget* a_target) = 0;
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;
 };

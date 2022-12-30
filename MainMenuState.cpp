@@ -42,9 +42,9 @@ void MainMenuState::createQuitDial()
 	if (!v_createQuitDial)
 		return;
 	v_createQuitDial = false;
-	PushWindow(999, sf::Vector2f(250, 40), sf::Vector2f(200, 100), sf::Color::Blue, p_dM->Lang.quitDial, sf::Vector2f(100, 30), sf::Color::Black);
-	OpenedWindow->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 90), sf::Color(50, 40, 30), p_dM->Lang.yes, sf::Color(23, 23, 23));
-	OpenedWindow->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), sf::Color(50, 40, 30), p_dM->Lang.no, sf::Color(23, 23, 23));
+	PushWindow(999, sf::Vector2f(250, 40), sf::Vector2f(200, 100), p_dM->Lang.quitDial, sf::Vector2f(100, 30), sf::Color::Black);
+	OpenedWindow->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(300, 90), p_dM->Lang.yes, sf::Color(23, 23, 23));
+	OpenedWindow->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
 }
 
 void MainMenuState::createSettingsWindow()
@@ -52,12 +52,12 @@ void MainMenuState::createSettingsWindow()
 	if (!openSettings)
 		return;
 	openSettings = false;
-	PushWindow(100, sf::Vector2f(150, 40), sf::Vector2f(420, 450), sf::Color::Red, p_dM->Lang.settings, sf::Vector2f(200, 30), sf::Color::Black);
-	OpenedWindow->AddSwitch(p_dM->EngineNames.settingsSwitch, sf::Vector2f(470, 100), sf::Color::Magenta);
-	OpenedWindow->AddSlider(p_dM->EngineNames.volumeSlider, sf::Vector2f(270, 200), sf::Color::Blue, 200, 100);
+	PushWindow(100, sf::Vector2f(150, 40), sf::Vector2f(420, 450), p_dM->Lang.settings, sf::Vector2f(200, 30), sf::Color::Black);
+	OpenedWindow->AddSwitch(p_dM->EngineNames.settingsSwitch, sf::Vector2f(470, 100));
+	OpenedWindow->AddSlider(p_dM->EngineNames.volumeSlider, sf::Vector2f(270, 200), 200, 100);
 	OpenedWindow->AddText(p_dM->Lang.volume, sf::Vector2f(210, 218), sf::Color::Black, p_dM->Lang.volume);
 	OpenedWindow->AddText(p_dM->EngineNames.volumeText, sf::Vector2f(535, 218), sf::Color::Black, to_string(p_dM->Settings.volume));
-	OpenedWindow->AddButton(p_dM->Lang.save, sf::Vector2f(100, 50), sf::Vector2f(300, 400), sf::Color(50, 40, 30), p_dM->Lang.save, sf::Color::Black);
+	OpenedWindow->AddButton(p_dM->Lang.save, sf::Vector2f(100, 50), sf::Vector2f(300, 400), p_dM->Lang.save, sf::Color::Black);
 	OpenedWindow->SetElementValue(p_dM->EngineNames.volumeSlider, p_dM->Settings.volume);
 }
 

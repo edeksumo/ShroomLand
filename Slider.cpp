@@ -42,8 +42,6 @@ void Slider::slider(sf::Vector2i* a_mousePos)
 				if (value > maxValue)
 					value = maxValue;
 
-				//screenPositionRect = sf::FloatRect(sliderShape.getLocalBounds().left + relativePosition.x + 5 + sliderOffset, sliderShape.getLocalBounds().top + relativePosition.y + 5, sliderShape.getLocalBounds().left + sliderShape.getSize().x + relativePosition.x + 5 + sliderOffset,
-				//	sliderShape.getLocalBounds().top + sliderShape.getSize().y + relativePosition.y + 5);
 				screenPositionRect = sf::FloatRect(sliderShapeSprite.getLocalBounds().left + relativePosition.x + sliderOffset, sliderShapeSprite.getLocalBounds().top + relativePosition.y, sliderShapeSprite.getLocalBounds().left +
 					sliderShapeSprite.getLocalBounds().width + relativePosition.x + sliderOffset, sliderShapeSprite.getLocalBounds().top + sliderShapeSprite.getLocalBounds().height + relativePosition.y);
 			}
@@ -63,8 +61,6 @@ void Slider::setOffset()
 	if (!isHold) {
 		sliderOffset = static_cast<int>(sliderPosVec[value]);
 		tempOffset = sliderOffset;
-		//screenPositionRect = sf::FloatRect(sliderShape.getLocalBounds().left + relativePosition.x + 5 + sliderOffset, sliderShape.getLocalBounds().top + relativePosition.y + 5, sliderShape.getLocalBounds().left + sliderShape.getSize().x + relativePosition.x + 5 + sliderOffset,
-		//	sliderShape.getLocalBounds().top + sliderShape.getSize().y + relativePosition.y + 5);
 		screenPositionRect = sf::FloatRect(sliderShapeSprite.getLocalBounds().left + relativePosition.x + sliderOffset, sliderShapeSprite.getLocalBounds().top + relativePosition.y, sliderShapeSprite.getLocalBounds().left +
 			sliderShapeSprite.getLocalBounds().width + relativePosition.x + sliderOffset, sliderShapeSprite.getLocalBounds().top + sliderShapeSprite.getLocalBounds().height + relativePosition.y);
 	}
@@ -102,15 +98,13 @@ void Slider::Render(sf::RenderTarget* a_target)
 {
 	view = a_target->getView();
 	keepOnPosition();
-	//a_target->draw(background);
-	//a_target->draw(sliderShape);
 	a_target->draw(backgroundSprite);
 	a_target->draw(sliderDecorLeft);
 	a_target->draw(SliderDecorRight);
 	a_target->draw(sliderShapeSprite);
 	if ((isHold) || (drawSelector))
 		a_target->draw(shadow);
-	//renderShadow(a_target);
+
 
 	//std::cout << "== SWITCH == Render Func" << std::endl;
 }
