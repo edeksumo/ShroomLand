@@ -43,7 +43,13 @@ public:
 	Lang Lang;
 	Settings Settings;
 	EngineNames EngineNames;
-
+	/****************************************************/
+	//Obj textures
+	/****************************************************/
+	sf::Texture grassTileSet;
+	/****************************************************/
+	//GUI textures
+	/****************************************************/
 	sf::Texture windowsBackgroundTxt;
 	sf::Texture windowsDecorLineTxt;
 	sf::Texture windowsDecorCornerTxt;
@@ -61,6 +67,15 @@ public:
 
 	DataMenager() {
 		//Texture loaders
+		/****************************************************/
+		//Obj textures
+		/****************************************************/
+		if (!grassTileSet.loadFromFile("data/textures/Grass.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: paper Grass.png" << std::endl;
+
+		/****************************************************/
+		//GUI textures
+		/****************************************************/
 		if(!windowsBackgroundTxt.loadFromFile("data/textures/paper background.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: paper background.png" << std::endl;
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Window.h"
 #include "MainMenuState.h"
+#include <string>
 class Game
 {
 private:
@@ -16,8 +17,10 @@ private:
 	sf::View view;
 
 	DataMenager dataMenager;
+	ObjectMenager* objMenager;
 	MainMenuState *MainMenu;
 
+	void LoadStages();
 	void Keyboard();
 	void Render();
 	void Begin();
@@ -27,6 +30,9 @@ protected:
 public:
 	sf::RenderWindow* Window;
 	sf::Event Event;
+
+	std::multimap<std::string, Stage> StageContainer;			//stores all stages in the game
+	std::multimap<int, Tile*> TilePtrContainer;					//stores all objects in the game 
 	/****************************************************/
 	//Constructors/ destructor
 	/****************************************************/
@@ -38,13 +44,16 @@ public:
 		view.setSize(static_cast<float> (Wight), static_cast<float> (Height));
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);
-		MainMenu = new MainMenuState(Window, &dataMenager, &States);
+		MainMenu = new MainMenuState(&StageContainer, Window, &dataMenager, objMenager, &States);
+		objMenager = new ObjectMenager(&dataMenager, &TilePtrContainer);
 		Begin();
+		LoadStages();
 		Update();
 	};
 	~Game() {
 		delete Window;
 		delete MainMenu;
+		delete objMenager;
 	};
 };
 

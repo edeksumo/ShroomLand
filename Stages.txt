@@ -1,0 +1,10 @@
+STAGE overworld
+OBJ tile 1 0 0
+OBJ tile 3 10 2
+OBJ tile 4 1 1
+STAGE house
+OBJ tile 5 9 10
+OBJ tile 6 11 10
+OBJ tile 6 10 10
+OBJ tile 7 12 10
+OBJ tile 4 15 15

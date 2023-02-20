@@ -2,6 +2,7 @@
 
 #include<SFML/Graphics.hpp>
 #include "Window.h"
+#include "ObjectMenager.h"
 #include <list>
 class State
 {
@@ -12,15 +13,19 @@ private:
 protected:
 	sf::Window* p_window;
 	DataMenager* p_dM;
+	ObjectMenager* p_oM;
 	std::stack<State*>* p_state;
+	std::multimap<std::string, Stage>* p_stageContainer;
 	std::list<Window> Windows;
 	std::list<Window>::iterator OpenedWindow;
 	void updateOpenedWindowIt();
 public:
 	State() {
 		p_dM = nullptr;
+		p_oM = nullptr;
 		p_state = nullptr;
 		p_window = nullptr;
+		p_stageContainer = nullptr;
 		stateQuit = false;
 		nbOfOpenedWindows = 0;
 	}
