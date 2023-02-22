@@ -44,7 +44,7 @@ public:
         delete p_game;
     }
 
-    void Update(sf::Vector2i * mousePos);
+    void Update(sf::Vector2i * mousePos, sf::Vector2f* a_mousePosOnCoords);
     void Render(sf::RenderTarget * target);
 };
 

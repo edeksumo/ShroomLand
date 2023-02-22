@@ -12,7 +12,7 @@
 //Public
 /****************************************************/
 
-void GameState::Update(sf::Vector2i* a_mousePos)
+void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
 {
 	updateOpenedWindowIt();
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;

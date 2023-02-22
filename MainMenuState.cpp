@@ -74,7 +74,7 @@ void MainMenuState::settingWindowUpdate()
 /****************************************************/
 //Public
 /****************************************************/
-void MainMenuState::Update(sf::Vector2i* mousePos) {
+void MainMenuState::Update(sf::Vector2i* mousePos, sf::Vector2f* a_mousePosOnCoords) {
 	updateOpenedWindowIt();
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();

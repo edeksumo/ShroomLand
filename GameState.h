@@ -19,7 +19,7 @@ public:
         PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(10, 10), "", sf::Vector2f(0, 0), sf::Color::Black);
     };
     
-    void Update(sf::Vector2i* a_mousePos);
+    void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);
     void Render(sf::RenderTarget* a_target);
 };
 

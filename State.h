@@ -2,7 +2,7 @@
 
 #include<SFML/Graphics.hpp>
 #include "Window.h"
-#include "ObjectMenager.h"
+#include "Stage.h"
 #include <list>
 class State
 {
@@ -35,6 +35,6 @@ public:
 	void RenderWindows(sf::RenderTarget* a_target);
 	void UpdateWindows(sf::Vector2i* a_mousePos);
 	virtual void Render(sf::RenderTarget *a_target) = 0;
-	virtual void Update(sf::Vector2i* a_mousePos) = 0;
+	virtual void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords) = 0;
 };
 

@@ -13,6 +13,7 @@ private:
 	sf::RectangleShape shape;
 	std::stack<State*> States;
 	sf::Vector2i mousePosition;
+	sf::Vector2f worldPos;
 
 	sf::View view;
 
@@ -32,7 +33,6 @@ public:
 	sf::Event Event;
 
 	std::multimap<std::string, Stage> StageContainer;			//stores all stages in the game
-	std::multimap<int, Tile*> TilePtrContainer;					//stores all objects in the game 
 	/****************************************************/
 	//Constructors/ destructor
 	/****************************************************/
@@ -45,7 +45,7 @@ public:
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);
 		MainMenu = new MainMenuState(&StageContainer, Window, &dataMenager, objMenager, &States);
-		objMenager = new ObjectMenager(&dataMenager, &TilePtrContainer);
+		objMenager = new ObjectMenager(&dataMenager);
 		Begin();
 		LoadStages();
 		Update();

@@ -10,11 +10,26 @@
 /****************************************************/
 //Public
 /****************************************************/
-void Stage::addTile(sf::Vector2f a_pos, Tile* a_tileptr)
+void Stage::addTile(Grid a_pos, unsigned int a_ID)
 {
-	TileDeque.push_back(*a_tileptr);
-	auto v = sf::Vector2f(a_pos.x * 32, a_pos.y * 32);
-	TileDeque.back().sprite.setPosition(v);
+	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
+	/// Keeps track of all tiles and deleting those ones that exist in one spot on the grid
+	int i = 0;
+	bool b = false;
+	for (auto &it : TileDeque) {
+		if (it.GetGridPosition() == a_pos) {
+			std::cout << "== STAGE == addTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
+			b = true;
+			break;
+		}
+		i++;
+	}
+	if (b)
+		TileDeque.erase(TileDeque.begin() + i);
+	/// ////////////////////////////////////////////////////////
+	TileDeque.push_back(*it->second);
+	TileDeque.back().SetPosition(a_pos);
+
 }
 
 void Stage::Update(sf::Vector2i* a_mousePos)
@@ -26,9 +41,8 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 
 void Stage::Render(sf::RenderTarget* a_target)
 {
-	for (Tile & i : TileDeque) {
+	for (Tile& i : TileDeque) {
 		i.Render(a_target);
-		
 		//std::cout << i.sprite.getPosition().x << " " << i.sprite.getPosition().y << std::endl;
 	}
 }
