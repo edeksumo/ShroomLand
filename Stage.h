@@ -23,6 +23,7 @@ public:
 	}
 
 	void addTile(Grid a_pos, unsigned int a_ID);		
+	void removeTile(Grid a_pos);
 
 	void Update(sf::Vector2i* a_mousePos);
 	void Render(sf::RenderTarget* a_target);

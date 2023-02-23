@@ -6,12 +6,12 @@
 class Sprite
 {
 private:
-	Grid posOnGrid;
 protected:
 	DataMenager* p_dM;
 public:
 	unsigned int ID;
 	sf::Sprite sprite;
+	Grid posOnGrid;
 	Sprite() {
 		p_dM = nullptr;
 		static unsigned int ID_COUNTER;

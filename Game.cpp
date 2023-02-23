@@ -32,7 +32,7 @@ void Game::LoadStages()
        OBJ tile 4 1 1
     */
     
-    std::ifstream file("Stages.txt");
+    std::ifstream file("Stages.dat");
     std::vector<std::string> v;
     std::string s;
     std::multimap<std::string, Stage>::iterator it;
@@ -40,7 +40,6 @@ void Game::LoadStages()
         v.push_back(s);
     }
     for (int i = 0; i < v.size(); i++) {
-        //std::cout << v[i] << std::endl;
         if (v[i] == "STAGE") {
             auto n = v[i + 1];
             StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager)));
@@ -52,7 +51,6 @@ void Game::LoadStages()
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                // to do: move it2 into addtile func and mady it by ID
                 it->second.addTile(Grid(x, y), j);
                 //.... adding tile objects to deque
             }

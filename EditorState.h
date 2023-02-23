@@ -6,7 +6,10 @@ class EditorState :
 private:
     Stage* currentStage;
 
-    //void addTile();
+    void mousePosUpdate(sf::Vector2f* a_mousePosOnCoords);
+    void saveStages();
+    void buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
+    void mouseFunctions();
 protected:
 
 public:  
@@ -20,7 +23,8 @@ public:
         p_oM = m_oM;
         p_stageContainer = m_stageContainer;
         currentStage = &p_stageContainer->begin()->second;
-        PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(100, 100), "", sf::Vector2f(0, 0), sf::Color::Black);
+        PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(100, 300), "", sf::Vector2f(0, 0), sf::Color::Black);
+        OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(70, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::Black);
     };
 
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);

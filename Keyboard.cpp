@@ -86,6 +86,7 @@ Keyboard::KeyState Keyboard::checkMouseButtonState(sf::Mouse::Button a_button)
 void Keyboard::keyAndButtonStateSetter()
 {
 	setMouseButtonState(sf::Mouse::Left);
+	setMouseButtonState(sf::Mouse::Right);
 	setKeyState(sf::Keyboard::A);
 	setKeyState(sf::Keyboard::Escape);
 }

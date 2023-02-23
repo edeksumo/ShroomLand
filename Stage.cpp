@@ -32,6 +32,21 @@ void Stage::addTile(Grid a_pos, unsigned int a_ID)
 
 }
 
+void Stage::removeTile(Grid a_pos)
+{
+	int i = 0;
+	bool b = false;
+	for (auto& it : TileDeque) {
+		if (it.GetGridPosition() == a_pos) {
+			b = true;
+			break;
+		}
+		i++;
+	}
+	if (b)
+		TileDeque.erase(TileDeque.begin() + i);
+}
+
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 	for (Tile& i : TileDeque) {
