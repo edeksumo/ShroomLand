@@ -40,9 +40,23 @@ public:
 		int volume;
 	};
 
+	struct SaveFormat {
+		string SaveFileName = "Stages.dat";
+		string StageDefiner = "STAGE";
+		string ObjectDefiner = "OBJ";
+		string TileDefiner = "TILE";
+	};
+
+	struct StagesNames {
+		string Overworld = "Owerwold";
+		string House_01 = "House_01";
+	};
+
 	Lang Lang;
 	Settings Settings;
 	EngineNames EngineNames;
+	SaveFormat SaveFormat;
+	StagesNames StagesNames;		//unused for now
 	/****************************************************/
 	//Obj textures
 	/****************************************************/

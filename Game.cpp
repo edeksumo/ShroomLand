@@ -23,16 +23,16 @@ void Game::LoadStages()
     /*
        save format:
        STAGE name_of_stage
-       OBJ obj_class_name   obj_id  obj_grid_posX   obj_grid posY
+       OBJ OBJ_CLASS_NAME   obj_id  obj_grid_posX   obj_grid posY
 
        example:
        STAGE overworld
-       OBJ tile 1 0 0
-       OBJ tile 2 1 2
-       OBJ tile 4 1 1
+       OBJ TILE 1 0 0
+       OBJ TILE 2 1 2
+       OBJ TILE 4 1 1
     */
     
-    std::ifstream file("Stages.dat");
+    std::ifstream file(dataMenager.SaveFormat.SaveFileName);
     std::vector<std::string> v;
     std::string s;
     std::multimap<std::string, Stage>::iterator it;
@@ -40,14 +40,14 @@ void Game::LoadStages()
         v.push_back(s);
     }
     for (int i = 0; i < v.size(); i++) {
-        if (v[i] == "STAGE") {
+        if (v[i] == dataMenager.SaveFormat.StageDefiner) {
             auto n = v[i + 1];
             StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager)));
             it = StageContainer.find(n);
             std::cout << "== GAME == Stage Created" << std::endl;
         }
-        if (v[i] == "OBJ") {
-            if (v[i + 1] == "tile") {
+        if (v[i] == dataMenager.SaveFormat.ObjectDefiner) {
+            if (v[i + 1] == dataMenager.SaveFormat.TileDefiner) {
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);

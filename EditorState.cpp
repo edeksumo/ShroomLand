@@ -10,15 +10,15 @@ void EditorState::mousePosUpdate(sf::Vector2f* a_mousePosOnCoords)
 void EditorState::saveStages()
 {
 	ofstream saveFile;
-	saveFile.open("Stages.dat");
+	saveFile.open(p_dM->SaveFormat.SaveFileName);
 	/// 
 	/// Making save format to match with load function in Game.cpp
 	/// 
 	for (auto it = p_stageContainer->rbegin(); it != p_stageContainer->rend();++it) {
-		saveFile << "STAGE" << " " << it->first << endl;
+		saveFile << p_dM->SaveFormat.StageDefiner << " " << it->first << endl;
 
 		for (const auto &it_01 : it->second.TileDeque) {
-			saveFile << "OBJ tile" << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << std::endl;
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << std::endl;
 		}
 		//each obj type must be added here...
 	}
