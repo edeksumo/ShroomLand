@@ -1,6 +1,7 @@
 #pragma once
 #include"Tile.h"
 #include<deque>
+#include<map>
 #include "ObjectMenager.h"
 class Stage
 {
@@ -10,9 +11,9 @@ protected:
 
 public:
 	std::deque<Tile> TileDeque;
-
-	//Tile TileArray[3800][3800];
-	//std::map<std::pair<int, int>, Tile> TileGridMap; //for keeping only one tile at posistion amybe check vector2i
+	std::deque<Tile> BackGroundTiles;
+	//std::vector<std::vector<Tile>> TileVector;
+	//std::map<int, std::map<int, Tile>> TileMap; //for keeping only one tile at posistion amybe check vector2i
 
 	Stage() {
 		p_objMenager = nullptr;
@@ -22,7 +23,9 @@ public:
 		p_objMenager = m_objMenager;
 	}
 
-	void addTile(Grid a_pos, unsigned int a_ID);		
+	void addTile(Grid a_pos, unsigned int a_ID);	
+	void addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted = 0);
+	Tile getTileByGrid(Grid a_pos);
 	void removeTile(Grid a_pos);
 
 	void Update(sf::Vector2i* a_mousePos);

@@ -142,7 +142,7 @@ void Window::Render(sf::RenderTarget* a_target) {
 	a_target->draw(lowerDecorRightCorn);
 
 	a_target->draw(text);
-	renderShadow(a_target);
+
 	std::multimap<std::string, Button>::iterator it = Buttons.begin();
 	for (it = Buttons.begin(); it != Buttons.end(); ++it) {
 		it->second.Render(a_target);
@@ -159,5 +159,6 @@ void Window::Render(sf::RenderTarget* a_target) {
 	for (it_3 = Texts.begin(); it_3 != Texts.end(); ++it_3) {
 		it_3->second.Render(a_target);
 	}
+	renderShadow(a_target);
 	//std::cout << "== WINDOW == Render Func" << std::endl;
 }

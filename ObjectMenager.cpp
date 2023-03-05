@@ -8,6 +8,8 @@ void ObjectMenager::tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrP
 		for (int j = 0; j < 8; j++) {
 			a_objArrPtr[j][i] = new Tile(a_texture, sf::IntRect(j * 32, i * 32, 32, 32), p_dM);
 			//std::cout << j * 32 << " " << i * 32 << std::endl;
+			if (a_objArrPtr[j][i]->ID % MAX_IDIES_FOR_TILES == 47)
+				a_objArrPtr[j][i]->sprite.setTextureRect(sf::IntRect(146, 19, 16, 16));
 			TilePtrContainer.insert(std::pair<int, Tile*>(a_objArrPtr[j][i]->ID, a_objArrPtr[j][i]));
 		}
 	}
