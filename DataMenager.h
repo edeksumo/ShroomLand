@@ -45,6 +45,7 @@ public:
 		string StageDefiner = "STAGE";
 		string ObjectDefiner = "OBJ";
 		string TileDefiner = "TILE";
+		string BackTileDefiner = "BACK_TILE";
 	};
 
 	struct StagesNames {

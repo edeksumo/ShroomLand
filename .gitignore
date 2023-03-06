@@ -45,3 +45,4 @@ Debug/
 Release/
 x64*/
 *.xcf
+Stages.olddat

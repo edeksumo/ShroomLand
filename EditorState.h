@@ -7,7 +7,6 @@ private:
     Stage* currentStage;
     sf::RectangleShape cursorShape;
 
-
     void mousePosUpdate(sf::Vector2f* a_mousePosOnCoords);
     void saveStages();
     void buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it);

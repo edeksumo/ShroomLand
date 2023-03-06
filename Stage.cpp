@@ -16,7 +16,7 @@ void Stage::addTile(Grid a_pos, unsigned int a_ID)
 	/// Keeps track of all tiles and deleting those ones that exist in one spot on the grid
 	int i = 0;
 	bool b = false;
-	for (auto &it : TileDeque) {
+	for (auto& it : TileDeque) {
 		if (it.GetGridPosition() == a_pos) {
 			std::cout << "== STAGE == addTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
 			b = true;
@@ -34,22 +34,9 @@ void Stage::addTile(Grid a_pos, unsigned int a_ID)
 void Stage::addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
-	/* Keeps track of all tiles and deleting those ones that exist in one spot on the grid
-	int i = 0;
-	bool b = false;
-	for (auto& it : BackGroundTiles) {
-		if (it.GetGridPosition() == a_pos) {
-			std::cout << "== STAGE == addBacgroundTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
-			b = true;
-			break;
-		}
-		i++;
-	}
-	if (b)
-		BackGroundTiles.erase(BackGroundTiles.begin() + i);*/
-	/// ////////////////////////////////////////////////////////
 	BackGroundTiles.push_back(*it->second);
 	BackGroundTiles.back().SetPosition(a_pos, a_shifted);
+	BackGroundTiles.back().setShift(static_cast<Tile::shifted>(a_shifted));
 }
 
 Tile Stage::getTileByGrid(Grid a_pos)

@@ -20,7 +20,10 @@ void EditorState::saveStages()
 		for (const auto &it_01 : it->second.TileDeque) {
 			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << std::endl;
 		}
-		 
+		for (const auto& it_01 : it->second.BackGroundTiles) {
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.BackTileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << " " 
+				<< static_cast<int>(it_01.shift) << std::endl;
+		}
 		
 		//each obj type must be added here...
 	}
@@ -87,6 +90,7 @@ void EditorState::mouseFunctions()
 		}
 		if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::released) {
 			updateTiles();
+			setBackgroundTiles();
 			std::cout << "relesd" << std::endl;
 		}
 		//////////to do: add to type of tile and function to update idies of tiles (tile 14 id default)
@@ -95,6 +99,7 @@ void EditorState::mouseFunctions()
 void EditorState::updateTiles()
 {
 	for (auto& it : currentStage->TileDeque) {
+	//for (auto it = currentStage->TileDeque.rbegin(); it != currentStage->TileDeque.rend(); ++it){	
 		auto sp = it.GetGridPosition();
 		auto a = Grid(sp.x + 1, sp.y);
 		auto b = Grid(sp.x, sp.y + 1);
@@ -169,8 +174,6 @@ void EditorState::updateTiles()
 				leftDown = false;
 			}
 		}
-		if (leftUp && up && rightUp && right && rightDown && down && leftDown && left)
-			continue;
 		int id = 14;
 		if (left)
 			id = 13;
@@ -273,10 +276,10 @@ void EditorState::updateTiles()
 			id = 44;
 		if (leftUp && !up && !rightUp && !right && rightDown && !down && !leftDown && !left)
 			id = 45;
-
-		currentStage->addTile(sp, (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) + id);
+		//if (it.ID - (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) != id)
+			currentStage->addTile(sp, (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) + id);
 	}
-	
+	std::cout << currentStage->TileDeque.size() << std::endl;
 }
 void EditorState::setBackgroundTiles()
 {
@@ -342,22 +345,22 @@ void EditorState::setBackgroundTiles()
 			}
 
 			if(left && it_01.GetGridPosition() == c && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), -1);
+				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 7);
 			if (right && it_01.GetGridPosition() == a && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 4);
+				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 3);
 			if (up && it_01.GetGridPosition() == d && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), -3);
+				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 1);
 			if (down && it_01.GetGridPosition() == b && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 2);
+				currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 5);
 			
 			if (rightUp && it_01.GetGridPosition() == h && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), -4);
+				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 2);
 			if (rightDown && it_01.GetGridPosition() == e && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 3);
+				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 4);
 			if (leftUp && it_01.GetGridPosition() == g && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), -2);
+				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 0);
 			if (leftDown && it_01.GetGridPosition() == f && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 1);
+				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 6);
 			//if (it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) == 13 && it_01.GetGridPosition() == c && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
 				//currentStage->addBackgroundTile(it_01.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()));
 		}
