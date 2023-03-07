@@ -31,6 +31,13 @@ void Stage::addTile(Grid a_pos, unsigned int a_ID)
 	TileDeque.back().SetPosition(a_pos);
 }
 
+void Stage::fillDeque(Grid a_pos, unsigned int a_ID)
+{
+	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
+	TileDeque.push_back(*it->second);
+	TileDeque.back().SetPosition(a_pos);
+}
+
 void Stage::addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);

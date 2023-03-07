@@ -3,6 +3,17 @@
 //Private
 /****************************************************/
 
+void Window::checkMousePos(sf::Vector2i* a_mousePos)
+{
+	if ((screenPositionRect.left <= a_mousePos->x) && (screenPositionRect.width >= a_mousePos->x))
+		if ((screenPositionRect.top <= a_mousePos->y) && (screenPositionRect.height >= a_mousePos->y)) {
+			isBlockingMouse = true;
+			return;
+		}
+	isBlockingMouse = false;
+
+}
+
 /****************************************************/
 //Protected
 /****************************************************/
@@ -13,8 +24,9 @@
 bool Window::CheckButton(const std::multimap<std::string, Button>::iterator& a_it, std::string a_name)
 {
 	if (a_it->first == a_name)
-		if (a_it->second.isPressed())
+		if (a_it->second.isPressed()) {
 			return true;
+		}
 	return false;
 }
 
@@ -106,6 +118,11 @@ bool Window::IsSwitchOn(std::string a_eleName)
 	return false;
 }
 
+bool Window::isWindowBlockingMouse()
+{
+	return isBlockingMouse;
+}
+
 void Window::Update(sf::Vector2i* a_mousePos) {
 	std::multimap<std::string, Button>::iterator it = Buttons.begin();
 	for (it = Buttons.begin(); it != Buttons.end(); ++it) {
@@ -123,11 +140,13 @@ void Window::Update(sf::Vector2i* a_mousePos) {
 	for (it_3 = Texts.begin(); it_3 != Texts.end(); ++it_3) {
 		it_3->second.Update(a_mousePos);
 	}
+	checkMousePos(a_mousePos);
 	//std::cout << "== WINDOW == Update Func"  << std::endl;
 }
 
 void Window::Render(sf::RenderTarget* a_target) {
 	view = a_target->getView();
+	p_rTarget = a_target;
 	keepOnPosition();
 	
 	//a_target->draw(background);

@@ -40,13 +40,13 @@ void Switch::Update(sf::Vector2i* a_mousePos)
 void Switch::Render(sf::RenderTarget* a_target)
 {
 	view = a_target->getView();
+	p_rTarget = a_target;
 	keepOnPosition();
 	//a_target->draw(background);
 	setTexture();
 	a_target->draw(backgroundSprite);
 	setTransparency();
 	drawSelector(a_target);
-	renderShadow(a_target);
 
 	//std::cout << "== SWITCH == Render Func" << std::endl;
 }

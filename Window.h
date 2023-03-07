@@ -7,9 +7,11 @@
 
 class Window : public UI
 {
-
 private:
     unsigned int ID;
+    sf::FloatRect screenPositionRect;
+    bool isBlockingMouse;
+    void checkMousePos(sf::Vector2i* a_mousePos);
 protected:
 
 public:
@@ -24,6 +26,7 @@ public:
     Window(unsigned int m_id, sf::Vector2f m_pos, sf::Vector2f m_size, std::string m_text, sf::Color m_textColor, sf::Vector2f m_textPos, sf::Window * m_window, DataMenager* m_dM){
         hasText = true;
         hasBackground = true;
+        isBlockingMouse = false;
         relativePosition = m_pos;
         textColor = m_textColor;
         size = m_size;
@@ -32,7 +35,9 @@ public:
         textPosition = m_textPos;
         position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
         v_UIState = UI::UIState::active;
-        
+        screenPositionRect = sf::FloatRect(backgroundSprite.getLocalBounds().left + m_pos.x, backgroundSprite.getLocalBounds().top + m_pos.y, backgroundSprite.getLocalBounds().left + m_size.x + m_pos.x,
+            backgroundSprite.getLocalBounds().top + m_size.y + m_pos.y);
+
         backgroundSprite.setTexture(p_dM->windowsBackgroundTxt);
         backgroundSprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x), static_cast<int>(size.y)));
         upperDecorLine.setTexture(p_dM->windowsDecorLineTxt);
@@ -71,6 +76,7 @@ public:
     void SetElementValue(std::string a_eleName, std::string a_val);
     int GetSliderValue(std::string a_eleName);
     bool IsSwitchOn(std::string a_eleName);
+    bool isWindowBlockingMouse();
     void Update(sf::Vector2i* a_mousePos);
     void Render(sf::RenderTarget* a_target);
 };

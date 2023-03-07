@@ -89,4 +89,8 @@ void Keyboard::keyAndButtonStateSetter()
 	setMouseButtonState(sf::Mouse::Right);
 	setKeyState(sf::Keyboard::A);
 	setKeyState(sf::Keyboard::Escape);
+	setKeyState(sf::Keyboard::Up);
+	setKeyState(sf::Keyboard::Down);
+	setKeyState(sf::Keyboard::Left);
+	setKeyState(sf::Keyboard::Right);
 }

@@ -17,7 +17,8 @@ private:
 protected:
 	UIState v_UIState;
 	DataMenager* p_dM;
-	
+	sf::RenderTarget* p_rTarget;
+
 	sf::Sprite backgroundSprite;
 	sf::Sprite upperDecorLine;
 	sf::Sprite lowerDecorLine;
@@ -61,6 +62,7 @@ protected:
 public:
 	UI() {
 		p_dM = nullptr;
+		p_rTarget = nullptr;
 		v_UIState = UI::UIState::active;
 		hasSelector = false;
 		hasText = false;

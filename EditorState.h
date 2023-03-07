@@ -14,6 +14,7 @@ private:
     void mouseFunctions();
     void updateTiles();
     void setBackgroundTiles();
+    int currentTyleType;
 protected:
 
 public:  
@@ -25,6 +26,7 @@ public:
         p_window = m_window;
         p_dM = m_dM;
         p_oM = m_oM;
+        currentTyleType = 0;
         p_stageContainer = m_stageContainer;
         cursorShape.setOutlineColor(sf::Color::White);
         cursorShape.setOutlineThickness(1.f);
@@ -33,7 +35,9 @@ public:
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, 300), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(70, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::Black);
         OpenedWindow->AddSlider("Cursor_Size", sf::Vector2f(38, 70), 60, 2);
-        OpenedWindow->AddSlider("Tile_Type", sf::Vector2f(38, 100), 66, 5);
+        OpenedWindow->AddButton("Tile_Type", sf::Vector2f(105, 40), sf::Vector2f(15, 110), "Grass", sf::Color::Black);
+        //OpenedWindow->AddButton("Update_Tiles", sf::Vector2f(105, 40), sf::Vector2f(15, 160), "Update Tl", sf::Color::Black);
+        OpenedWindow->AddSlider("SliderHe", sf::Vector2f(38, 150), 60, 5);
 
     };
 

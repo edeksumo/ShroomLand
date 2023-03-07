@@ -15,7 +15,18 @@ void Game::Render() {
 
 void Game::Keyboard()
 {
-
+    if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
+        view.move(0.f, -0.5);
+    }
+    else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
+        view.move(0.f, 0.5);
+    }
+    if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
+        view.move(-0.5, 0.f);
+    }
+    else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
+        view.move(0.5, 0.f);
+    }
 }
 
 void Game::LoadStages()
@@ -23,7 +34,7 @@ void Game::LoadStages()
     /*
        save format:
        STAGE name_of_stage
-       OBJ OBJ_CLASS_NAME   obj_id  obj_grid_posX   obj_grid posY
+       OBJ OBJ_CLASS_NAME   obj_id  obj_grid_posX   obj_grid posY   shifted
 
        example:
        STAGE overworld
@@ -51,7 +62,7 @@ void Game::LoadStages()
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                it->second.addTile(Grid(x, y), j);
+                it->second.fillDeque(Grid(x, y), j);
                 //.... adding tile objects to deque
             }
             if (v[i + 1] == dataMenager.SaveFormat.BackTileDefiner) {

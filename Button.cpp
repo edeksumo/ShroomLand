@@ -14,8 +14,10 @@ bool Button::onQuit()
 
 bool Button::isPressed()
 {
-	if (buttonState == ButtonState::Pressed)
+	if (buttonState == ButtonState::Pressed) {
+		buttonState = ButtonState::Hold;
 		return true;
+	}
 	return false;
 }
 /****************************************************/
@@ -23,7 +25,7 @@ bool Button::isPressed()
 /****************************************************/
 bool Button::mouseEnter(sf::Vector2i* a_mousePos)
 {
-	if (buttonState == ButtonState::Pressed) {
+	if (buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold) {
 		return false;
 	}
 	if ((screenPositionRect.left <= a_mousePos->x) && (screenPositionRect.width >= a_mousePos->x))
@@ -60,17 +62,29 @@ bool Button::pressed(sf::Vector2i* a_mousePos)
 				std::cout << "off";
 			}
 		}
+		std::cout << "pressed";
 		return true;
 	}
-	if ((buttonState == ButtonState::Pressed || (buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold))) {
+	if ((buttonState == ButtonState::Pressed || (buttonState == ButtonState::Hold)) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold)) {
 		buttonState = ButtonState::Hold;
+		std::cout << "hold";
+		return true;
+	}
+	if ((buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold)) {
+		buttonState = ButtonState::Hold;
+		std::cout << "hold";
 		return true;
 	}
 
-	if ((buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold)
-		&& (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::hold) || (Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::pressed)) {
+	if ((buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::free)) {
 		buttonState = ButtonState::Free;
+		std::cout << "free";
 		return false;
+	}
+	if ((buttonState != ButtonState::Free) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released)) {
+		buttonState = ButtonState::Free;
+			std::cout << "free";
+			return false;
 	}
 	return false;
 }
@@ -96,6 +110,16 @@ void Button::drawSelector(sf::RenderTarget* a_target)
 /****************************************************/
 //Public
 /****************************************************/
+void Button::setText(std::string a_text)
+{
+	text.setString(a_text);
+}
+
+void Button::setButtonState(Button::ButtonState a_state)
+{
+	buttonState = a_state;
+}
+
 void Button::Update(sf::Vector2i* a_mousePos) {
 	//std::cout << "== BUTTON == Update Func" << std::endl;
 	
@@ -106,6 +130,7 @@ void Button::Update(sf::Vector2i* a_mousePos) {
 
 void Button::Render(sf::RenderTarget* a_target) {
 	view = a_target->getView();
+	p_rTarget = a_target;
 	keepOnPosition();
 	a_target->draw(backgroundSprite);
 	a_target->draw(upperDecorLine);
@@ -119,6 +144,5 @@ void Button::Render(sf::RenderTarget* a_target) {
 	a_target->draw(text);
 	setTransparency();
 	drawSelector(a_target);
-	renderShadow(a_target);
 	//std::cout << "== BUTTON == Render Func" << std::endl;
 }

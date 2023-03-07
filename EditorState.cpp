@@ -36,6 +36,35 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 	if (Window::CheckButton(a_it, p_dM->Lang.save)) {
 		saveStages();
 	}
+	if (Window::CheckButton(a_it, "Tile_Type")) {
+		currentTyleType++;
+		if (currentTyleType == 0) {
+			a_it->second.setText("Grass");
+		}
+		else if (currentTyleType == 1) {
+			a_it->second.setText("Dirt");
+		}
+		else if (currentTyleType == 2) {
+			a_it->second.setText("Sand");
+		}
+		else if (currentTyleType == 3) {
+			a_it->second.setText("Gravel");
+		}
+		else if (currentTyleType == 4) {
+			a_it->second.setText("Forrest");
+		}
+		else if (currentTyleType == 5) {
+			a_it->second.setText("Water");
+		}
+		if (currentTyleType > 5) {
+			currentTyleType = 0;
+			a_it->second.setText("Grass");
+		}
+	}
+	//if (Window::CheckButton(a_it, "Update_Tiles")) {
+	//	updateTiles();
+	//	setBackgroundTiles();
+	//}
 }
 
 void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
@@ -52,8 +81,10 @@ void EditorState::mouseFunctions()
 {
 	if (OpenedWindow->getID() != 1)
 		return;
+	if (OpenedWindow->isWindowBlockingMouse())
+		return;
 	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
-	auto tileType = OpenedWindow->GetSliderValue("Tile_Type");
+	auto tileType = currentTyleType;
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize + 1; i++) {

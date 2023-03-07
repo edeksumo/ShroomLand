@@ -97,6 +97,7 @@ void Slider::Update(sf::Vector2i* a_mousePos)
 void Slider::Render(sf::RenderTarget* a_target)
 {
 	view = a_target->getView();
+	p_rTarget = a_target;
 	keepOnPosition();
 	a_target->draw(backgroundSprite);
 	a_target->draw(sliderDecorLeft);

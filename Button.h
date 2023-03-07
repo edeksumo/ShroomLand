@@ -32,7 +32,8 @@ protected:
 	bool mouseQuit(sf::Vector2i* a_mousePos);
 public:
 	bool isPressed();
-	
+	void setText(std::string a_text);
+	void setButtonState(Button::ButtonState a_state);
 	Button() {
 		isSwitch = false;
 		buttonState = ButtonState::Free;
@@ -52,7 +53,6 @@ public:
 		p_dM = m_dM;
 		textPosition = sf::Vector2f(m_size.x / 2, m_size.y / 2);
 		v_UIState = UI::UIState::active;
-		position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
 
 		backgroundSprite.setTexture(p_dM->buttonBackgroundTxt);
 		backgroundSprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));

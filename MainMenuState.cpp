@@ -81,7 +81,7 @@ void MainMenuState::Update(sf::Vector2i* mousePos, sf::Vector2f* a_mousePosOnCoo
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 		ButtonFunctions(it);
 	}
-
+	
 	settingWindowUpdate();
 	createQuitDial();
 	createSettingsWindow();

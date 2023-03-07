@@ -23,6 +23,7 @@ void Text::Update(sf::Vector2i* a_mousePos)
 void Text::Render(sf::RenderTarget* a_target)
 {
 	view = a_target->getView();
+	p_rTarget = a_target;
 	keepOnPosition();
 	a_target->draw(text);
 	//std::cout << "== TEXT == Render Func" << std::endl;

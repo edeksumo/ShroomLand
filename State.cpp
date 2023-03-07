@@ -84,10 +84,9 @@ void State::RenderWindows(sf::RenderTarget* a_target)
 
 void State::UpdateWindows(sf::Vector2i* a_mousePos)
 {
-
-	if (Windows.begin()->setToClose)
-		Windows.pop_front();
 	Keyboard();
+	if (Windows.front().setToClose)
+		Windows.pop_front();
 	if (Windows.size()) {
 		Windows.begin()->Update(a_mousePos);
 		std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();

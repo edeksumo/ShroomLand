@@ -8,7 +8,7 @@
 /****************************************************/
 void UI::keepOnPosition()
 {
-	position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
+	position = p_rTarget->mapPixelToCoords(sf::Vector2i(relativePosition));
 	shadow.setPosition(backgroundSprite.getPosition());
 	if (hasBackground) {
 		backgroundSprite.setPosition(position);
@@ -21,8 +21,8 @@ void UI::keepOnPosition()
 		upperDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y);
 		lowerDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + backgroundSprite.getTextureRect().height);
 	}
-	if(hasText)
-		text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
+	if (hasText)
+		text.setPosition(textPosition + position);
 	if(hasSelector)
 		selector.setPosition(backgroundSprite.getPosition());
 	if (hasSlider) {

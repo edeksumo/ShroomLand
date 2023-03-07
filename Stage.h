@@ -24,6 +24,7 @@ public:
 	}
 
 	void addTile(Grid a_pos, unsigned int a_ID);	
+	void fillDeque(Grid a_pos, unsigned int a_ID);
 	void addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted = 0);
 	Tile getTileByGrid(Grid a_pos);
 	void removeTile(Grid a_pos);

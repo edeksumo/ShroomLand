@@ -49,7 +49,7 @@ public:
         position = sf::Vector2f((relativePosition.x + (view.getCenter().x - (view.getSize().x / 2))), (relativePosition.y + (view.getCenter().y - (view.getSize().y / 2))));
         v_UIState = UI::UIState::active;
         initBackground();
-        pxPerVal = ((backgroundSprite.getLocalBounds().left + backgroundSprite.getLocalBounds().width) - sliderShapeSprite.getLocalBounds().width) / (maxValue);
+        pxPerVal = (m_lenght - sliderShapeSprite.getLocalBounds().width) / maxValue;
         shadow.setSize(sf::Vector2f(sliderShapeSprite.getTextureRect().width, sliderShapeSprite.getTextureRect().height));
         shadow.setFillColor(sf::Color(0, 0, 0, 60));
         calculateEachPos();
