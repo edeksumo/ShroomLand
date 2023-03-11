@@ -42,16 +42,16 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 			a_it->second.setText("Grass");
 		}
 		else if (currentTyleType == 1) {
-			a_it->second.setText("Dirt");
+			a_it->second.setText("Forrest");
 		}
 		else if (currentTyleType == 2) {
-			a_it->second.setText("Sand");
+			a_it->second.setText("Dirt");
 		}
 		else if (currentTyleType == 3) {
 			a_it->second.setText("Gravel");
 		}
 		else if (currentTyleType == 4) {
-			a_it->second.setText("Forrest");
+			a_it->second.setText("Sand");
 		}
 		else if (currentTyleType == 5) {
 			a_it->second.setText("Water");
@@ -62,8 +62,7 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 		}
 	}
 	//if (Window::CheckButton(a_it, "Update_Tiles")) {
-	//	updateTiles();
-	//	setBackgroundTiles();
+
 	//}
 }
 
@@ -129,6 +128,7 @@ void EditorState::mouseFunctions()
 }
 void EditorState::updateTiles()
 {
+	currentStage->DecorTiles.clear();
 	for (auto& it : currentStage->TileDeque) {
 	//for (auto it = currentStage->TileDeque.rbegin(); it != currentStage->TileDeque.rend(); ++it){	
 		auto sp = it.GetGridPosition();
@@ -309,8 +309,8 @@ void EditorState::updateTiles()
 			id = 45;
 		//if (it.ID - (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) != id)
 			currentStage->addTile(sp, (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) + id);
+			currentStage->addDecoration(sp, static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES + id);
 	}
-	std::cout << currentStage->TileDeque.size() << std::endl;
 }
 void EditorState::setBackgroundTiles()
 {
@@ -370,7 +370,7 @@ void EditorState::setBackgroundTiles()
 			if (it_01.GetGridPosition() == f && static_cast<int>(it.GetTileType()) < static_cast<int>(it_01.GetTileType())) {
 				leftDown = false;
 			}
-			
+		
 			
 			if (it.ID % MAX_IDIES_FOR_TILES == 0) {
 			}
@@ -392,10 +392,7 @@ void EditorState::setBackgroundTiles()
 				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 0);
 			if (leftDown && it_01.GetGridPosition() == f && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
 				currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()), 6);
-			//if (it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) == 13 && it_01.GetGridPosition() == c && static_cast<int>(it.GetTileType()) > static_cast<int>(it_01.GetTileType()))
-				//currentStage->addBackgroundTile(it_01.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(it_01.GetTileType()));
 		}
-		//currentStage->addBackgroundTile(it.GetGridPosition(), it_01.GetTileType());
 	}
 }
 /****************************************************/

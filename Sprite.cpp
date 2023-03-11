@@ -14,9 +14,9 @@ void Sprite::animation()
 {
 	animFrame++;
 	auto& r = sprite.getTextureRect();
-	if (animFrame == 120)
+	if (animFrame == 20)
 		sprite.setTextureRect(sf::IntRect(r.left + 256, r.top, r.width, r.height));
-	if (animFrame == 120)
+	if (animFrame == 20)
 		animFrame = 0;
 }
 void Sprite::SetPosition(Grid a_pos, int a_shifted)

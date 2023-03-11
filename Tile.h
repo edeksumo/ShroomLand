@@ -7,10 +7,10 @@ public:
     enum class groundTileType {
         none = -1,
         grass = 0,
-        dirt = 1,
-        sand = 2,
+        forrest = 1,
+        dirt = 2,
         gravel = 3,
-        forrest = 4,
+        sand = 4,
         water = 5
     };
 private:

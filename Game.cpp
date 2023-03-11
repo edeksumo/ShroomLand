@@ -4,6 +4,9 @@
 /****************************************************/
 void Game::Begin() {
     States.push(MainMenu);
+    
+    Window->setVerticalSyncEnabled(true);
+    //Window->setFramerateLimit(60);
 }
 
 void Game::Render() {
@@ -16,16 +19,16 @@ void Game::Render() {
 void Game::Keyboard()
 {
     if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
-        view.move(0.f, -0.5);
+        view.move(0.f, -2.5);
     }
     else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
-        view.move(0.f, 0.5);
+        view.move(0.f, 2.5);
     }
     if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
-        view.move(-0.5, 0.f);
+        view.move(-2.5, 0.f);
     }
     else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
-        view.move(0.5, 0.f);
+        view.move(2.5, 0.f);
     }
 }
 
@@ -53,7 +56,7 @@ void Game::LoadStages()
     for (int i = 0; i < v.size(); i++) {
         if (v[i] == dataMenager.SaveFormat.StageDefiner) {
             auto n = v[i + 1];
-            StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager)));
+            StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager, &dataMenager)));
             it = StageContainer.find(n);
             std::cout << "== GAME == Stage Created" << std::endl;
         }
@@ -80,9 +83,11 @@ void Game::LoadStages()
 
 }
 
-void Game::Update(){
 
-     while (Window->isOpen())
+void Game::Update(){
+    //sf::Thread thead(&Game::secondThead, this);
+    //thead.launch();
+    while (Window->isOpen())
      {
         while (Window->pollEvent(Event))
         {
@@ -107,9 +112,33 @@ void Game::Update(){
         if (States.size() == 0)
             Window->close();
         Window->setView(view);
+        
+        
+        //fps counter
+        //currentTime = clock.getElapsedTime();
+        //fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float
+        //std::cout << "fps =" << floor(fps) << std::endl; // flooring it will make the frame rate a rounded number
+        //previousTime = currentTime;
         //std::cout << "== GAME == Update Func" << std::endl;
 
      }
+}
+void Game::secondThead()
+{
+    while (Window->isOpen())
+    {
+
+        //States.top()->UpdateWindows(&mousePosition);
+        //States.top()->Update(&mousePosition, &worldPos);
+
+        //if (States.top()->stateQuit)
+        //    States.pop();
+
+        //if (States.size() == 0)
+        //    Window->close();
+        //std::cout << "== GAME == Update Func" << std::endl;
+
+    }
 }
 /****************************************************/
 //Protected

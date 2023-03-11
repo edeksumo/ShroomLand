@@ -67,6 +67,8 @@ public:
 	sf::Texture gravelTileSet;
 	sf::Texture forrestTileSet;
 	sf::Texture waterTileSet;
+
+	sf::Texture tilerDecorTxt;
 	/****************************************************/
 	//GUI textures
 	/****************************************************/
@@ -84,6 +86,12 @@ public:
 	sf::Texture sliderTxt;
 	sf::Texture sliderBackgroundTxt;
 	sf::Texture sliderDecorTxt;
+
+	/****************************************************/
+	// Global Variables
+	/****************************************************/
+
+	unsigned int seed;
 
 	DataMenager() {
 		//Texture loaders
@@ -103,6 +111,8 @@ public:
 		if (!waterTileSet.loadFromFile("data/textures/water.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: water.png" << std::endl;
 		waterTileSet.setRepeated(true);
+		if (!tilerDecorTxt.loadFromFile("data/textures/decor.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: decor.png" << std::endl;
 		/****************************************************/
 		//GUI textures
 		/****************************************************/
@@ -153,6 +163,13 @@ public:
 		settings->read(settingsINI);
 		std::string& volumeStr = settingsINI[EngineNames.settings][EngineNames.volume];
 		Settings.volume = std::stoi(volumeStr);
+
+	/****************************************************/
+	// Global Variables
+	/****************************************************/
+		srand(time(NULL));
+		seed = rand();
+		std::cout << seed << std::endl;
 	}
 	~DataMenager() {
 		delete settings;

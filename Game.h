@@ -21,10 +21,17 @@ private:
 	ObjectMenager* objMenager;
 	MainMenuState *MainMenu;
 
+	float fps;
+	sf::Clock clock = sf::Clock::Clock();
+	sf::Time previousTime;
+	sf::Time currentTime;
+
+
 	void LoadStages();
 	void Keyboard();
 	void Render();
 	void Begin();
+	void secondThead();
 	void Update();
 protected:
 
@@ -46,6 +53,8 @@ public:
 		Window->setKeyRepeatEnabled(false);
 		MainMenu = new MainMenuState(&StageContainer, Window, &dataMenager, objMenager, &States);
 		objMenager = new ObjectMenager(&dataMenager);
+		previousTime = clock.getElapsedTime();
+		
 		Begin();
 		LoadStages();
 		Update();

@@ -37,7 +37,6 @@ public:
         OpenedWindow->AddSlider("Cursor_Size", sf::Vector2f(38, 70), 60, 2);
         OpenedWindow->AddButton("Tile_Type", sf::Vector2f(105, 40), sf::Vector2f(15, 110), "Grass", sf::Color::Black);
         //OpenedWindow->AddButton("Update_Tiles", sf::Vector2f(105, 40), sf::Vector2f(15, 160), "Update Tl", sf::Color::Black);
-        OpenedWindow->AddSlider("SliderHe", sf::Vector2f(38, 150), 60, 5);
 
     };
 
