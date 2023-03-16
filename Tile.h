@@ -30,7 +30,7 @@ public:
         shift = shifted::none;
         int i = ID / MAX_IDIES_FOR_TILES;
         tileType = static_cast<groundTileType>(i);
-        std::cout << "constructor " << std::endl;
+        //std::cout << "constructor " << std::endl;
     };
 
     Tile(const Tile& p1) : Sprite(p1) {         //it make sure that the copy constructor of parent class is run
@@ -39,7 +39,7 @@ public:
         sprite.setTextureRect(p1.sprite.getTextureRect());
         shift = p1.shift;
         tileType = p1.tileType;
-        std::cout << "copy constructor" << std::endl;
+        //std::cout << "copy constructor" << std::endl;
     };
 
     void SetTileType(groundTileType a_type);

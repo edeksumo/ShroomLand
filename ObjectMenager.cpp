@@ -21,7 +21,7 @@ void ObjectMenager::decorPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr
 		for (int j = 0; j < 6; j++) {
 			a_objArrPtr[j][i] = new Tile(a_texture, sf::IntRect(j * 32, i * 32, 32, 32), p_dM);
 			DecorPtrContainer.insert(std::pair<int, Tile*>(a_objArrPtr[j][i]->ID - s, a_objArrPtr[j][i]));
-			std::cout << DecorPtrContainer.rbegin()->first << std::endl;
+			//std::cout << DecorPtrContainer.rbegin()->first << std::endl;
 		}
 	}
 }

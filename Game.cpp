@@ -65,7 +65,7 @@ void Game::LoadStages()
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                it->second.fillDeque(Grid(x, y), j);
+                it->second.fillDeque(GridCell(x, y), j);
                 //.... adding tile objects to deque
             }
             if (v[i + 1] == dataMenager.SaveFormat.BackTileDefiner) {
@@ -73,7 +73,7 @@ void Game::LoadStages()
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
                 auto z = stoi(v[i + 5]);
-                it->second.addBackgroundTile(Grid(x, y), j, z);
+                it->second.addBackgroundTile(GridCell(x, y), j, z);
                 //.... adding tile objects to deque
             }
             ///.... each type of obj must be specified here 

@@ -6,7 +6,7 @@
 unsigned int Stage::setDecor(unsigned int a_type)
 {
 	auto s = p_dM->seed;
-	s = s - reinterpret_cast<int>(&TileDeque.back()) % 133;
+	s = s - reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 133;
 	s = s % 12 + 1;
 	if (a_type == static_cast<int>(Tile::groundTileType::grass)) {
 		if (s <= 6)
@@ -70,35 +70,27 @@ bool Stage::isVisible(const Sprite& a_sprite, sf::RenderTarget* a_target)
 	return false;
 }
 
-void Stage::addTile(Grid a_pos, unsigned int a_ID)
+void Stage::addTile(GridCell a_pos, unsigned int a_ID)
 {
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
-	/// Keeps track of all tiles and deleting those ones that exist in one spot on the grid
-	int i = 0;
-	bool b = false;
-	for (auto& it : TileDeque) {
-		if (it.GetGridPosition() == a_pos) {
-			std::cout << "== STAGE == addTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
-			b = true;
-			break;
-		}
-		i++;
+		
+	if (TileGrid.isTileOccupied(a_pos)) {
+		TileGrid.RemoveTile(a_pos);
+		//std::cout << "== STAGE == addTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
 	}
-	if (b)
-		TileDeque.erase(TileDeque.begin() + i);
 	/// ////////////////////////////////////////////////////////
-	TileDeque.push_back(*it->second);
-	TileDeque.back().SetPosition(a_pos);
+	TileGrid.AddTile(a_pos, it->second);
 }
 
-void Stage::fillDeque(Grid a_pos, unsigned int a_ID)
+void Stage::fillDeque(GridCell a_pos, unsigned int a_ID)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
-	TileDeque.push_back(*it->second);
-	TileDeque.back().SetPosition(a_pos);
+	TileGrid.AddTile(a_pos, it->second);
 }
 
-void Stage::addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted)
+void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
 	BackGroundTiles.push_back(*it->second);
@@ -106,29 +98,31 @@ void Stage::addBackgroundTile(Grid a_pos, unsigned int a_ID, int a_shifted)
 	BackGroundTiles.back().setShift(static_cast<Tile::shifted>(a_shifted));
 }
 
-void Stage::addDecoration(Grid a_pos, unsigned int a_ID)
+void Stage::addDecoration(GridCell a_pos, unsigned int a_ID)
 {
-	auto p = reinterpret_cast<int>(&TileDeque.back()) % 11;
+	auto p = reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 11;
+	auto s = reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 17;
 
 	auto z = p % 8;
 	int a = a_ID / MAX_IDIES_FOR_TILES;
 	if (a == static_cast<int>(Tile::groundTileType::water))
 		return;
-	std::cout << a << std::endl;
 	std::multimap<int, Tile*>::iterator it_2 = p_objMenager->DecorPtrContainer.find(setDecor(a));
 	if (p == 1) {
 		a = a * MAX_IDIES_FOR_TILES;
 		if (a_ID - 14  - a == 0) {
-			DecorTiles.push_back(*it_2->second);
+			DecorTiles.push_back(*it_2->second); 
+			if(s > 7)
+				DecorTiles.back().flipSprite();
 			DecorTiles.back().SetPosition(a_pos, z);
 		}
 	}
 
 }
 
-Tile Stage::getTileByGrid(Grid a_pos)
+Tile Stage::getTileByGrid(GridCell a_pos)
 {
-	for (auto &it : TileDeque) {
+	for (auto &it : TileGrid.TileDeque) {
 		if (it.GetGridPosition() == a_pos) {
 			return it;
 		}
@@ -136,25 +130,10 @@ Tile Stage::getTileByGrid(Grid a_pos)
 	//return Tile();
 }
 
-void Stage::removeTile(Grid a_pos)
-{
-	int i = 0;
-	bool b = false;
-	for (auto& it : TileDeque) {
-		if (it.GetGridPosition() == a_pos) {
-			b = true;
-			break;
-		}
-		i++;
-	}
-	if (b)
-		TileDeque.erase(TileDeque.begin() + i);
-}
-
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 
-	for (Tile& i : TileDeque) {
+	for (Tile& i : TileGrid.TileDeque) {
 		if (isVisible(i, p_renderTarget))
 			i.Update(a_mousePos);
 	}
@@ -167,7 +146,7 @@ void Stage::Render(sf::RenderTarget* a_target)
 		if(isVisible(i, a_target))
 			i.Render(a_target);	
 	}
-	for (Tile& i : TileDeque) {
+	for (Tile& i : TileGrid.TileDeque) {
 		if (isVisible(i, a_target))
 			i.Render(a_target);
 		//std::cout << i.sprite.getPosition().x << " " << i.sprite.getPosition().y << std::endl;

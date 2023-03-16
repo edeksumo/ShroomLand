@@ -18,10 +18,10 @@ private:
 protected:
 
 public:  
-    Grid MousePosOnGrid;
+    GridCell MousePosOnGrid;
 
     EditorState(std::multimap<std::string, Stage>* m_stageContainer, sf::Window* m_window, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state) {
-        MousePosOnGrid = Grid(0, 0);
+        MousePosOnGrid = GridCell(0, 0);
         p_state = m_state;
         p_window = m_window;
         p_dM = m_dM;
