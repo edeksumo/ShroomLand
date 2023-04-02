@@ -5,22 +5,17 @@ class ObjectMenager
 {
 private:
 	DataMenager* p_dM;
-	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[8][6]);
-	void decorPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[6][2]);
+	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5]);		//default isTilable = true, needBackgroundTile = true
+	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_needBackgroundTile);		//customazible isTilable and needBackground
 protected:
 
 public:
-	Tile* grass[8][6];		//full tileset for grass in one array
-	Tile* dirt[8][6];
-	Tile* sand[8][6];
-	Tile* gravel[8][6];
-	Tile* forrest[8][6];
-	Tile* water[8][6];
-
-	Tile* decor[6][2];
+	Tile* grass[11][5];		//full tileset for grass in one array
+	Tile* mood01[11][5];
+	Tile* mood02[11][5];
+	Tile* water01[11][5];
 
 	std::multimap<int, Tile*> TilePtrContainer;					//stores all Tiles pointer in the game 
-	std::multimap<int, Tile*> DecorPtrContainer;					//stores all Tiles pointer in the game 
 
 	ObjectMenager() {
 
@@ -29,16 +24,12 @@ public:
 	ObjectMenager(DataMenager* m_dM) {
 		p_dM = m_dM;
 		tilesetPrefabCreater(&p_dM->grassTileSet, grass);
-		tilesetPrefabCreater(&p_dM->forrestTileSet, forrest);
-		tilesetPrefabCreater(&p_dM->dirtTileSet, dirt);
-		tilesetPrefabCreater(&p_dM->gravelTileSet, gravel);
-		tilesetPrefabCreater(&p_dM->sandTileSet, sand);
-		tilesetPrefabCreater(&p_dM->waterTileSet, water);
-
-		decorPrefabCreater(&p_dM->tilerDecorTxt, decor);
+		tilesetPrefabCreater(&p_dM->moodTileSet, mood01);
+		tilesetPrefabCreater(&p_dM->mood02TileSet, mood02);
+		tilesetPrefabCreater(&p_dM->water01TileSet, water01);
 	};
 	~ObjectMenager() {
-		//delete grass;
+		//delete grass[1][1];
 	}
 };
 

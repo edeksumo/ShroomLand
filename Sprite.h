@@ -3,7 +3,7 @@
 #include "DataMenager.h"
 #include "GridCell.h"
 
-const int MAX_IDIES_FOR_TILES = 48; //taken from ObjectMenager.h size of arr
+const int MAX_IDIES_FOR_TILES = 55; //taken from ObjectMenager.h size of arr
 
 class Sprite
 {

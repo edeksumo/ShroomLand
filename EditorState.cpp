@@ -42,21 +42,15 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 			a_it->second.setText("Grass");
 		}
 		else if (currentTyleType == 1) {
-			a_it->second.setText("Forrest");
+			a_it->second.setText("Mood");
 		}
 		else if (currentTyleType == 2) {
-			a_it->second.setText("Dirt");
+			a_it->second.setText("Mood02");
 		}
 		else if (currentTyleType == 3) {
-			a_it->second.setText("Gravel");
+			a_it->second.setText("Water01");
 		}
-		else if (currentTyleType == 4) {
-			a_it->second.setText("Sand");
-		}
-		else if (currentTyleType == 5) {
-			a_it->second.setText("Water");
-		}
-		if (currentTyleType > 5) {
+		if (currentTyleType > 3) {
 			currentTyleType = 0;
 			a_it->second.setText("Grass");
 		}
@@ -72,7 +66,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 	if (OpenedWindow->getID() != 1)
 		return;
 	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
-	cursorShape.setSize(sf::Vector2f((selectorSize + 1) * 32, (selectorSize + 1) * 32));
+	cursorShape.setSize(sf::Vector2f((selectorSize + 2) * 32, (selectorSize + 2) * 32));
 	a_target->draw(cursorShape);
 }
 
@@ -82,18 +76,24 @@ void EditorState::mouseFunctions()
 		return;
 	if (OpenedWindow->isWindowBlockingMouse())
 		return;
-	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
+	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size") + 1;
+	
 	auto tileType = currentTyleType;
+	
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize + 1; i++) {
-			currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 14);
-			if (selectorSize>0) {
-				currentStage->addTile(GridCell(MousePosOnGrid.x, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 14);
-				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y), (tileType * MAX_IDIES_FOR_TILES) + 14);
-				if (selectorSize>1) {
-					currentStage->addTile(GridCell(MousePosOnGrid.x + i / 2, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 14);
-					currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i / 2), (tileType * MAX_IDIES_FOR_TILES) + 14);
+			currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
+			if (selectorSize > 0) {
+				currentStage->addTile(GridCell(MousePosOnGrid.x, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
+				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y), (tileType * MAX_IDIES_FOR_TILES) + 34);
+				if (selectorSize > 1) {
+					currentStage->addTile(GridCell(MousePosOnGrid.x + i / 2, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
+					currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i / 2), (tileType * MAX_IDIES_FOR_TILES) + 34);
+					if (selectorSize > 2) {
+						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 3), (tileType * MAX_IDIES_FOR_TILES) + 34);
+						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 2), (tileType * MAX_IDIES_FOR_TILES) + 34);
+					}
 				}
 			}
 		}
@@ -115,13 +115,13 @@ void EditorState::mouseFunctions()
 
 		if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released) {
 			updateTiles();
+			updateTiles();
 			setBackgroundTiles();
-			std::cout << "relesd" << std::endl;
 		}
 		if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::released) {
 			updateTiles();
+			updateTiles();
 			setBackgroundTiles();
-			std::cout << "relesd" << std::endl;
 		}
 		//////////to do: add to type of tile and function to update idies of tiles (tile 14 id default)
 
@@ -129,16 +129,21 @@ void EditorState::mouseFunctions()
 void EditorState::updateTiles()
 {
 	currentStage->DecorTiles.clear();
+	auto RNG = p_dM->seed + 10000;
+	auto TileRNG = RNG;
+
 	for (auto& it : currentStage->TileGrid.TileDeque) {
+		if (!it.isTilable)
+			continue;
 		auto sp = it.GetGridPosition();
-		auto a = GridCell(sp.x + 1, sp.y);
-		auto b = GridCell(sp.x, sp.y + 1);
-		auto c = GridCell(sp.x - 1, sp.y);
-		auto d = GridCell(sp.x, sp.y - 1);
-		auto e = GridCell(sp.x + 1, sp.y + 1);
-		auto f = GridCell(sp.x - 1, sp.y + 1);
-		auto g = GridCell(sp.x - 1, sp.y - 1);
-		auto h = GridCell(sp.x + 1, sp.y - 1);
+		auto a = GridCell(sp.x + 1, sp.y);		//right
+		auto b = GridCell(sp.x, sp.y + 1);		//down
+		auto c = GridCell(sp.x - 1, sp.y);		//left
+		auto d = GridCell(sp.x, sp.y - 1);		//up
+		auto e = GridCell(sp.x + 1, sp.y + 1);	//right Down
+		auto f = GridCell(sp.x - 1, sp.y + 1);	//left Down
+		auto g = GridCell(sp.x - 1, sp.y - 1);	//left Up
+		auto h = GridCell(sp.x + 1, sp.y - 1);	//right Up			cgd	dha aeb bfc
 
 		bool right = true;
 		bool left = true;
@@ -148,6 +153,25 @@ void EditorState::updateTiles()
 		bool rightDown = true;
 		bool leftUp = true;
 		bool leftDown = true;
+
+		auto checker = false;
+
+		if (currentStage->TileGrid.GetTilePtr(c) != nullptr && currentStage->TileGrid.GetTilePtr(g) != nullptr && currentStage->TileGrid.GetTilePtr(d) != nullptr) {
+			checker = true;
+		}
+		if (currentStage->TileGrid.GetTilePtr(d) != nullptr && currentStage->TileGrid.GetTilePtr(h) != nullptr && currentStage->TileGrid.GetTilePtr(a) != nullptr) {
+			checker = true;
+		}
+		if (currentStage->TileGrid.GetTilePtr(a) != nullptr && currentStage->TileGrid.GetTilePtr(e) != nullptr && currentStage->TileGrid.GetTilePtr(b) != nullptr) {
+			checker = true;
+		}
+		if (currentStage->TileGrid.GetTilePtr(b) != nullptr && currentStage->TileGrid.GetTilePtr(f) != nullptr && currentStage->TileGrid.GetTilePtr(c) != nullptr) {
+			checker = true;
+		}
+		if (!checker) {
+			currentStage->TileGrid.TileGridPtr[sp.x][sp.y] = nullptr;
+			continue;
+		}
 
 		if (currentStage->TileGrid.isTileOccupied(a) && currentStage->TileGrid.GetTilePtr(a)->GetTileType() == it.GetTileType()) {
 			right = false;
@@ -198,111 +222,175 @@ void EditorState::updateTiles()
 		if (currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it.GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType())) {
 			leftDown = false;
 		}
-		int id = 14;
-		if (left)
-			id = 13;
-		if (right)
-			id = 15;
-		if (up)
-			id = 6;
-		if (down)
-			id = 22;
-		if (down && up)
-			id = 2;
-		if (left && right)
-			id = 12;
+
+		//////////////////////////////////////////////
+		/// seting up ID
+		//////////////////////////////////////////////
+		int id = 34;								//defaut all sides taken
+
+		if (left && !up && !rightUp && !right && !rightDown && !down) {		//left side free
+			if (TileRNG % 3 == 1)
+				id = 11;
+			else if (TileRNG % 3 > 1)
+				id = 22;
+			else
+				id = 33;
+			//int a[3] = { 30, 40, 50 };
+			//id = p_dM->RNG(TileRNG, a);
+			TileRNG--;
+		}
+		if (!left && !leftUp && !up && right && !down && !leftDown) {			//right side free
+			if (TileRNG % 3 == 1)
+				id = 15;
+			else if (TileRNG % 3 > 1)
+				id = 26;
+			else
+				id = 37;
+			TileRNG--;
+		}
+		if (!left && up && !right && !rightDown && !down && !leftDown) {		//up free
+			if (TileRNG % 3 == 1)
+				id = 1;
+			else if (TileRNG % 3 > 1)
+				id = 2;
+			else
+				id = 3;
+			TileRNG--;
+		}
+		if (!left && !leftUp && !up && !rightUp && !right && down) {			//down free
+			if (TileRNG % 3 == 1)
+				id = 45;
+			else if (TileRNG % 3 > 1)
+				id = 46;
+			else
+				id = 47;
+			TileRNG--;
+		}
+
 		if (left && up)
-			id = 5;
-		if (left && down)
-			id = 21;
-		if (right && down)
-			id = 23;
-		if (right && up)
-			id = 7;
-		if (left && right && up)
-			id = 4;
-		if (left && right && down)
-			id = 20;
-		if (left && up && down)
-			id = 1;
-		if (right && up && down)
-			id = 3;
-		if (left && right && down && up)
 			id = 0;
-
-		if (right && up && leftDown && !down && !left)
-			id = 9;
-		if (left && down && !right && !up && rightUp)
-			id = 16;
-		if (right && down && leftUp && !left && !up)
-			id = 17;
-		if (up && left && rightDown && !right && !down)
-			id = 8;
-
-		if (leftUp && !up && !rightUp && !right && !rightDown && !down && !leftDown && !left)
-			id = 37;
-		if (leftDown && !up && !rightUp && !right && !rightDown && !down && !leftUp && !left)
-			id = 29;
-		if (rightUp && !up && !leftUp && !right && !rightDown && !down && !leftDown && !left)
-			id = 36;
-		if (rightDown && !up && !rightUp && !right && !leftUp && !down && !leftDown && !left)
-			id = 28;
-
-
-		if (leftUp && !up && rightUp && !right && rightDown && !down && leftDown && !left)
-			id = 46;
-		if (leftUp && !up && rightUp && !right && down && !left)
-			id = 18;
-		if (up && !right && rightDown && !down && leftDown && !left)
-			id = 11;
-		if (leftUp && !up && right && !down && leftDown && !left)
-			id = 19;
-		if (!up && rightUp && !right && rightDown && !down && left)
-			id = 10;
-
-		if (leftUp && !up && rightUp && !right && !rightDown && !down && !leftDown && !left)
-			id = 40;
-		if (!leftUp && !up && !rightUp && !right && rightDown && !down && leftDown && !left)
-			id = 41;
-		if (!leftUp && !up && rightUp && !right && rightDown && !down && !leftDown && !left)
-			id = 42;
-		if (leftUp && !up && !rightUp && !right && !rightDown && !down && leftDown && !left)
-			id = 43;
-
-		if (leftUp && !up && !rightUp && !right && down && !left)
-			id = 35;
-		if (!leftUp && !up && rightUp && !right && down && !left)
-			id = 34;
-		if (up && !right && !rightDown && !down && leftDown && !left)
-			id = 27;
-		if (up && !right && rightDown && !down && !leftDown && !left)
-			id = 26;
-
-		if (!leftUp && !up && right && !down && leftDown && !left)
-			id = 25;
-		if (!up && !rightUp && !right && rightDown && !down && left)
-			id = 24;
-		if (!up && rightUp && !right && !rightDown && !down && left)
-			id = 32;
-		if (leftUp && !up && right && !down && !leftDown && !left)
-			id = 33;
-
-		if (!leftUp && !up && rightUp && !right && rightDown && !down && leftDown && !left)
-			id = 30;
-		if (leftUp && !up && !rightUp && !right && rightDown && !down && leftDown && !left)
-			id = 31;
-		if (leftUp && !up && rightUp && !right && rightDown && !down && !leftDown && !left)
-			id = 38;
-		if (leftUp && !up && rightUp && !right && !rightDown && !down && leftDown && !left)
-			id = 39;
-
-		if (!leftUp && !up && rightUp && !right && !rightDown && !down && leftDown && !left)
+		if (right && up)
+			id = 4;
+		if (left && down)
 			id = 44;
-		if (leftUp && !up && !rightUp && !right && rightDown && !down && !leftDown && !left)
-			id = 45;
-			currentStage->addTile(sp, (static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES) + id);
-			currentStage->addDecoration(sp, static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES + id);
+		if (right && down)
+			id = 48;
+
+		if (!left && leftUp && !up && !rightUp && !right && !rightDown && !down && !leftDown)
+			id = 12;
+		if (!left && !leftUp && !up && rightUp && !right && !rightDown && !down && !leftDown)
+			id = 13;
+		if (!left && !leftUp && !up && !rightUp && !right && !rightDown && !down && leftDown)
+			id = 23;
+		if (!left && !leftUp && !up && !rightUp && !right && rightDown && !down && !leftDown)
+			id = 24;
+
+		if (!left && leftUp && !up && !rightUp && !right && rightDown && !down && !leftDown)
+			id = 14;
+		if (!left && !leftUp && !up && rightUp && !right && !rightDown && !down && leftDown)
+			id = 36;
+
+		if (!left && leftUp && !up && !rightUp && right && rightDown && !down && !leftDown)
+			id = 4;
+		if (left && leftUp && !up && !rightUp && !right && rightDown && !down && !leftDown)
+			id = 44;
+		if (left && !leftUp && !up && rightUp && !right && !rightDown && !down && leftDown)
+			id = 0;
+		if (!left && !leftUp && !up && rightUp && right && !rightDown && !down && leftDown)
+			id = 48;
+
+		if (!left && !leftUp && !up && rightUp && !right && !rightDown && down && leftDown)
+			id = 48;
+		if (!left && !leftUp && up && rightUp && !right && !rightDown && !down && leftDown)
+			id = 0;
+		if (!left && leftUp && up && !rightUp && !right && rightDown && !down && !leftDown)
+			id = 4;
+		if (!left && leftUp && !up && !rightUp && !right && rightDown && down && !leftDown)
+			id = 44;
+
+		if (id == 34) {
+			int arr[] = { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 ,34, 34, 34, 34, 34 ,34 ,34, 34, 34, 34, 34, 16, 17, 18, 19, 20, 21, 27, 28, 29, 30, 31, 32, 38, 39, 40, 41, 42, 43, 49, 50, 51, 52, 53, 54 };
+			id = p_dM->RNG(TileRNG--, arr, sizeof(arr) / sizeof(int));
+		}
+			
+		//////////////////////////////////////////////
+		/// seting up type
+		//////////////////////////////////////////////
+
+		right = false;
+		left = false;
+		up = false;
+		down = false;
+		rightUp = false;
+		rightDown = false;
+		leftUp = false;
+		leftDown = false;
+		auto type = currentStage->getTileByGrid(sp).GetTileType();
+		bool keepType = false;
+
+		if (currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType())) {
+			right = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
+			left = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType())) {
+			down = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType())) {
+			up = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(e) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType())) {
+			rightDown = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(h) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType())) {
+			rightUp = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(g) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType())) {
+			leftUp = true;
+		}
+		if (currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it.GetTileType()) == static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType())) {
+			leftDown = true;
+		}
+
+		if (left && leftUp)
+			keepType = true;
+		if (up && rightUp)
+			keepType = true;
+		if (right && rightDown)
+			keepType = true;
+		if (down && leftDown)
+			keepType = true;
+
+		if (keepType) {
+			currentStage->addTile(sp, (static_cast<int>(type) * MAX_IDIES_FOR_TILES) + id);
+			continue;
+		}
+
+		if (!keepType) {
+			if (currentStage->TileGrid.isTileOccupied(a)) {
+				if (currentStage->TileGrid.GetTilePtr(a)->GetTileType() != it.GetTileType())
+					type = currentStage->TileGrid.GetTilePtr(a)->GetTileType();
+			}
+			if (currentStage->TileGrid.isTileOccupied(c)) {
+				if (currentStage->TileGrid.GetTilePtr(c)->GetTileType() != it.GetTileType())
+					type = currentStage->TileGrid.GetTilePtr(c)->GetTileType();
+			}
+			if (currentStage->TileGrid.isTileOccupied(b)) {
+				if (currentStage->TileGrid.GetTilePtr(b)->GetTileType() != it.GetTileType())
+					type = currentStage->TileGrid.GetTilePtr(b)->GetTileType();
+			}
+			if (currentStage->TileGrid.isTileOccupied(d)) {
+				if (currentStage->TileGrid.GetTilePtr(d)->GetTileType() != it.GetTileType()) 
+					type = currentStage->TileGrid.GetTilePtr(d)->GetTileType();
+			}
+		}
+
+		currentStage->addTile(sp, (static_cast<int>(type) * MAX_IDIES_FOR_TILES) + id);
+		//currentStage->addDecoration(sp, static_cast<int>(it.GetTileType()) * MAX_IDIES_FOR_TILES + id, RNG);
+		RNG--;
 	}
+	checkDeletedTiles();
 }
 void EditorState::setBackgroundTiles()
 {
@@ -311,6 +399,8 @@ void EditorState::setBackgroundTiles()
 		currentStage->BackGroundTiles.pop_front();
 	}
 	for (auto& it : currentStage->TileGrid.TileDeque) {
+		if (!it.needBackgroundTile)
+			continue;
 		auto sp = it.GetGridPosition();
 		auto a = GridCell(sp.x + 1, sp.y);
 		auto b = GridCell(sp.x, sp.y + 1);
@@ -360,24 +450,42 @@ void EditorState::setBackgroundTiles()
 		}
 
 
-		if (left && currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType()), 7);
-		if (right && currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType()), 3);
-		if (down && currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType()), 5);
-		if (up && currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), it.ID - MAX_IDIES_FOR_TILES * static_cast<int>(it.GetTileType()) + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType()), 1);
+		if (left && currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
+			if(currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a))
+				currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(c)->ID);	//7c
+		}
+		if (right && currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType())) {
+			if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a))
+				currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(a)->ID);	//3a
+		}
+		if (down && currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType())) {
+			if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d))
+				currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(b)->ID);	//5b
+		}
+		if (up && currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType())) {
+			if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d))
+				currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(d)->ID);	//1d
+		}
+
 
 
 		if (rightUp && currentStage->TileGrid.isTileOccupied(h) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType()), 2);
+			currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(h)->ID);	//2h
 		if (rightDown && currentStage->TileGrid.isTileOccupied(e) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType()), 4);
+			currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(e)->ID);	//4e
 		if (leftUp && currentStage->TileGrid.isTileOccupied(g) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType()), 0);
+			currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(g)->ID);	//0g
 		if (leftDown && currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it.GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType()))
-			currentStage->addBackgroundTile(it.GetGridPosition(), 0 + MAX_IDIES_FOR_TILES * static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType()), 6);
+			currentStage->addBackgroundTile(it.GetGridPosition(), currentStage->TileGrid.GetTilePtr(f)->ID);	//6 f
+	}
+}
+void EditorState::checkDeletedTiles()
+{
+	for (auto& it : currentStage->TileGrid.TileDeque) {
+		auto sp = it.GetGridPosition();
+		if (currentStage->TileGrid.GetTilePtr(sp) == nullptr) {
+			currentStage->TileGrid.RemoveTile(sp);
+		}
 	}
 }
 /****************************************************/

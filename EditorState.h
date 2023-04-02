@@ -14,6 +14,7 @@ private:
     void mouseFunctions();
     void updateTiles();
     void setBackgroundTiles();
+    void checkDeletedTiles();
     int currentTyleType;
 protected:
 

@@ -7,7 +7,7 @@ void Grid::AddTile(GridCell a_pos, Tile* a_tile)
 	TileDeque.push_back(*a_tile);
 	TileDeque.back().SetPosition(a_pos);
 	Tile* p = &TileDeque.back();
-	TileGridPtr[a_pos.x][a_pos.y] = p;
+	TileGridPtr[a_pos.x][a_pos.y] = &TileDeque.back();
 }
 
 void Grid::RemoveTile(GridCell a_pos)
@@ -24,8 +24,8 @@ void Grid::RemoveTile(GridCell a_pos)
 		i++;
 	}
 	if (b) {
-		TileDeque.erase(TileDeque.begin() + i);
 		TileGridPtr[a_pos.x][a_pos.y] = nullptr;
+		TileDeque.erase(TileDeque.begin() + i);
 	}
 }
 
@@ -33,8 +33,8 @@ void Grid::RemoveTile(GridCell a_pos, unsigned int a_it)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
-	TileDeque.erase(TileDeque.begin() + a_it);
 	TileGridPtr[a_pos.x][a_pos.y] = nullptr;
+	TileDeque.erase(TileDeque.begin() + a_it);
 }
 
 Tile* Grid::GetTilePtr(GridCell a_pos)

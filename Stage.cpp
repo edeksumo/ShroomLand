@@ -3,53 +3,6 @@
 //Private
 /****************************************************/
 
-unsigned int Stage::setDecor(unsigned int a_type)
-{
-	auto s = p_dM->seed;
-	s = s - reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 133;
-	s = s % 12 + 1;
-	if (a_type == static_cast<int>(Tile::groundTileType::grass)) {
-		if (s <= 6)
-			return s;
-		else
-			return s / 2;
-	}
-
-	if (a_type == static_cast<int>(Tile::groundTileType::forrest)) {
-		if (s >= 4) {
-			if (s <= 9) {
-				return s;
-			}
-			return 12;
-		}
-		else
-			return 9;
-	}
-
-	if (a_type == static_cast<int>(Tile::groundTileType::dirt)) {
-		if (s >= 8)
-			return s;
-		else if (s == 7)
-			return 6;
-		else if (s >= 3)
-			return s * 2;
-	}
-
-	if (a_type == static_cast<int>(Tile::groundTileType::gravel)) {
-		if (s <= 6)
-			return 10;
-		else if (s >= 7)
-			return 11;
-	}
-
-	if (a_type == static_cast<int>(Tile::groundTileType::sand)) {
-		if (s <= 4)
-			return 10;
-		else if (s <= 8)
-			return 11;
-	}
-	return 12;
-}
 /****************************************************/
 //Protected
 /****************************************************/
@@ -94,30 +47,8 @@ void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
 	BackGroundTiles.push_back(*it->second);
-	BackGroundTiles.back().SetPosition(a_pos, a_shifted);
+	BackGroundTiles.back().SetPosition(a_pos);	//HACKED NEED FIX
 	BackGroundTiles.back().setShift(static_cast<Tile::shifted>(a_shifted));
-}
-
-void Stage::addDecoration(GridCell a_pos, unsigned int a_ID)
-{
-	auto p = reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 11;
-	auto s = reinterpret_cast<int>(&TileGrid.TileDeque.back()) % 17;
-
-	auto z = p % 8;
-	int a = a_ID / MAX_IDIES_FOR_TILES;
-	if (a == static_cast<int>(Tile::groundTileType::water))
-		return;
-	std::multimap<int, Tile*>::iterator it_2 = p_objMenager->DecorPtrContainer.find(setDecor(a));
-	if (p == 1) {
-		a = a * MAX_IDIES_FOR_TILES;
-		if (a_ID - 14  - a == 0) {
-			DecorTiles.push_back(*it_2->second); 
-			if(s > 7)
-				DecorTiles.back().flipSprite();
-			DecorTiles.back().SetPosition(a_pos, z);
-		}
-	}
-
 }
 
 Tile Stage::getTileByGrid(GridCell a_pos)
@@ -134,7 +65,7 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 {
 
 	for (Tile& i : TileGrid.TileDeque) {
-		if (isVisible(i, p_renderTarget))
+		//if (isVisible(i, p_renderTarget))
 			i.Update(a_mousePos);
 	}
 }
@@ -150,9 +81,5 @@ void Stage::Render(sf::RenderTarget* a_target)
 		if (isVisible(i, a_target))
 			i.Render(a_target);
 		//std::cout << i.sprite.getPosition().x << " " << i.sprite.getPosition().y << std::endl;
-	}
-	for (Tile& i : DecorTiles) {
-		if (isVisible(i, a_target))
-			i.Render(a_target);
 	}
 }

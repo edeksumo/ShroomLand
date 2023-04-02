@@ -62,11 +62,11 @@ public:
 	//Obj textures
 	/****************************************************/
 	sf::Texture grassTileSet;
-	sf::Texture dirtTileSet;
-	sf::Texture sandTileSet;
-	sf::Texture gravelTileSet;
+	sf::Texture moodTileSet;
+	sf::Texture mood02TileSet;
+	sf::Texture cobbleTileSet;
 	sf::Texture forrestTileSet;
-	sf::Texture waterTileSet;
+	sf::Texture water01TileSet;
 
 	sf::Texture tilerDecorTxt;
 	/****************************************************/
@@ -93,24 +93,29 @@ public:
 
 	unsigned int seed;
 
+	/****************************************************/
+	// Functions
+	/****************************************************/
+	int RNG(int a_seed, int a_numbers[], unsigned int a_sizeofArr);
+
 	DataMenager() {
 		//Texture loaders
 		/****************************************************/
 		//Obj textures
 		/****************************************************/
-		if (!grassTileSet.loadFromFile("data/textures/grass.png"))
+		if (!grassTileSet.loadFromFile("data/textures/grass01.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: grass.png" << std::endl;
-		if (!dirtTileSet.loadFromFile("data/textures/dirt.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: dirt.png" << std::endl;
-		if (!sandTileSet.loadFromFile("data/textures/sand.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: sand.png" << std::endl;
-		if (!gravelTileSet.loadFromFile("data/textures/gravel.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: gravel.png" << std::endl;
+		if (!moodTileSet.loadFromFile("data/textures/Mood01.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: mood.png" << std::endl;
+		if (!mood02TileSet.loadFromFile("data/textures/Mood02.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: mood02.png" << std::endl;
+		if (!cobbleTileSet.loadFromFile("data/textures/cobble.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: cobble.png" << std::endl;
 		if (!forrestTileSet.loadFromFile("data/textures/forrest.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: forrest.png" << std::endl;
-		if (!waterTileSet.loadFromFile("data/textures/water.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: water.png" << std::endl;
-		waterTileSet.setRepeated(true);
+		if (!water01TileSet.loadFromFile("data/textures/water01.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: water01.png" << std::endl;
+		water01TileSet.setRepeated(true);
 		if (!tilerDecorTxt.loadFromFile("data/textures/decor.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: decor.png" << std::endl;
 		/****************************************************/

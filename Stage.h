@@ -7,7 +7,6 @@ private:
 	ObjectMenager* p_objMenager;
 	sf::RenderTarget* p_renderTarget;
 	DataMenager* p_dM;
-	unsigned int setDecor(unsigned int a_type);
 protected:
 
 public:
@@ -32,7 +31,6 @@ public:
 	void addTile(GridCell a_pos, unsigned int a_ID);	
 	void fillDeque(GridCell a_pos, unsigned int a_ID);
 	void addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted = 0);
-	void addDecoration(GridCell a_pos, unsigned int a_ID);
 	Tile getTileByGrid(GridCell a_pos);
 
 	void Update(sf::Vector2i* a_mousePos);

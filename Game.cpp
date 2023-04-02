@@ -19,16 +19,16 @@ void Game::Render() {
 void Game::Keyboard()
 {
     if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
-        view.move(0.f, -2.5);
+        view.move(0.f, -2);
     }
     else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
-        view.move(0.f, 2.5);
+        view.move(0.f, 2);
     }
     if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
-        view.move(-2.5, 0.f);
+        view.move(-2, 0.f);
     }
     else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
-        view.move(2.5, 0.f);
+        view.move(2, 0.f);
     }
 }
 
@@ -59,6 +59,7 @@ void Game::LoadStages()
             StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager, &dataMenager)));
             it = StageContainer.find(n);
             std::cout << "== GAME == Stage Created" << std::endl;
+            //printf("== GAME == Stage Created\n");
         }
         if (v[i] == dataMenager.SaveFormat.ObjectDefiner) {
             if (v[i + 1] == dataMenager.SaveFormat.TileDefiner) {

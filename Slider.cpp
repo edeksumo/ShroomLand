@@ -34,9 +34,9 @@ void Slider::slider(sf::Vector2i* a_mousePos)
 				if (tempOffset > sliderPosVec[maxValue])
 					tempOffset = sliderPosVec[maxValue];
 				for (int i = 0; i <= maxValue; i++) {
-					if (tempOffset == static_cast<int>(sliderPosVec[i])) {
+					//if (tempOffset == static_cast<int>(sliderPosVec[i])) {
 						sliderOffset = tempOffset;
-					}
+					//}
 				}
 				value = (sliderOffset) / pxPerVal;
 				if (value > maxValue)

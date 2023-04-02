@@ -23,9 +23,9 @@ Tile::groundTileType Tile::GetTileType()
 
 void Tile::Update(sf::Vector2i* a_mousePos)
 {
-	if (GetTileType() == Tile::groundTileType::water) {
-		animation();
-	}
+	//if (GetTileType() == Tile::groundTileType::water) {
+	//	animation();
+	//}
 	//std::cout << a_mousePos->x << " " << a_mousePos->y;
 	//system("cls");
 }
