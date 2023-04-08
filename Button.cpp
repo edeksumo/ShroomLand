@@ -113,6 +113,9 @@ void Button::drawSelector(sf::RenderTarget* a_target)
 void Button::setText(std::string a_text)
 {
 	text.setString(a_text);
+	auto textRect = text.getLocalBounds();
+	text.setOrigin(textRect.width / 2, textRect.height);
+	text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
 }
 
 void Button::setButtonState(Button::ButtonState a_state)

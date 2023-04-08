@@ -36,61 +36,19 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 	if (Window::CheckButton(a_it, p_dM->Lang.save)) {
 		saveStages();
 	}
-	if (Window::CheckButton(a_it, "Mouse_Func")) {
-
+	if (Window::CheckButton(a_it, "Editor_Func")) {
+		editorFunction(a_it);
 	}
 	//if (Window::CheckButton(a_it, "Update_Tiles")) {
 
 	//}
 }
 
-void EditorState::wheelFunctions()
+void EditorState::placeTiles()
 {
-	if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
-		currentTyleType--;
-		if (currentTyleType < 0) {
-			currentTyleType = MAX_TILE_TYPES;
-		}
-		updateText();
-	}
-	else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
-		currentTyleType++;
-		if (currentTyleType > MAX_TILE_TYPES) {
-			currentTyleType = 0;
-		}
-		updateText();
-	}
-}
-
-void EditorState::updateText()
-{
-	OpenedWindow->SetElementValue("Current_Obj_Name", p_dM->tileNames[currentTyleType]);
-	
-	Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + DEFAULT_BASE_TILE);	//need to be moved 
-	activeSprite = p->sprite;
-	OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
-}
-
-void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
-{
-	/////////////// setting up coursor size from slider /////////////
-	if (OpenedWindow->getID() != 1)
-		return;
-	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
-	cursorShape.setSize(sf::Vector2f((selectorSize + 2) * TILE_SIZE, (selectorSize + 2) * TILE_SIZE));
-	a_target->draw(cursorShape);
-}
-
-void EditorState::mouseFunctions()
-{
-	if (OpenedWindow->getID() != 1)
-		return;
-	if (OpenedWindow->isWindowBlockingMouse())
-		return;
 	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size") + 1;
-	
 	auto tileType = currentTyleType;
-	
+
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize + 1; i++) {
@@ -109,7 +67,7 @@ void EditorState::mouseFunctions()
 			}
 		}
 	}
-		if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::hold) {
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::hold) {
 		//currentStage->removeTile(MousePosOnGrid);
 		for (int i = 0; i < selectorSize + 1; i++) {
 			currentStage->TileGrid.RemoveTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i));
@@ -124,17 +82,105 @@ void EditorState::mouseFunctions()
 		}
 	}
 
-		if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released) {
-			updateTiles();
-			updateTiles();
-			setBackgroundTiles();
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released) {
+		updateTiles();
+		updateTiles();
+		setBackgroundTiles();
+	}
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::released) {
+		updateTiles();
+		updateTiles();
+		setBackgroundTiles();
+	}
+}
+
+void EditorState::changeVariants()
+{
+	if (selectedTile == nullptr)
+		return;
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed) {
+		selectedTile->changeVariant(true);
+	}
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::pressed) {
+		selectedTile->changeVariant(false);
+	}
+}
+
+void EditorState::placeObjects()
+{
+}
+
+void EditorState::wheelFunctions()
+{
+	if (currentFunction == EditorState::EditorFunction::placeTile) {
+		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
+			currentTyleType--;
+			if (currentTyleType < 0) {
+				currentTyleType = MAX_TILE_TYPES;
+			}
+			//updateText();
 		}
-		if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::released) {
-			updateTiles();
-			updateTiles();
-			setBackgroundTiles();
+		else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
+			currentTyleType++;
+			if (currentTyleType > MAX_TILE_TYPES) {
+				currentTyleType = 0;
+			}
+
 		}
-		//////////to do: add to type of tile and function to update idies of tiles (tile 14 id default)
+	}
+	updateText();
+}
+
+void EditorState::updateText()
+{
+	if(currentFunction == EditorState::EditorFunction::placeTile)
+		OpenedWindow->SetElementValue("Current_Obj_Name", p_dM->tileNames[currentTyleType]);
+	else if(currentFunction == EditorState::EditorFunction::changeVariant)
+		OpenedWindow->SetElementValue("Current_Obj_Name", " ");
+}
+
+void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
+{
+	if (OpenedWindow->getID() != 1)
+		return;
+	cursorShape.setPosition(MousePosOnGrid.x * TILE_SIZE, MousePosOnGrid.y * TILE_SIZE);
+	if (currentFunction == EditorState::EditorFunction::placeTile) {
+		auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
+		cursorShape.setSize(sf::Vector2f((selectorSize + 2) * TILE_SIZE, (selectorSize + 2) * TILE_SIZE));
+		Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + DEFAULT_BASE_TILE);
+		activeSprite = p->sprite;
+		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
+		a_target->draw(cursorShape);
+	}
+	if (currentFunction == EditorState::EditorFunction::changeVariant) {
+		cursorShape.setSize(sf::Vector2f(TILE_SIZE, TILE_SIZE));
+		selectedTile = currentStage->TileGrid.GetTilePtr(MousePosOnGrid);
+		if (selectedTile != nullptr) {
+			activeSprite = selectedTile->sprite;
+		}
+		else {
+			activeSprite.setTexture(p_dM->emptyTxt);
+		}
+		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
+		a_target->draw(cursorShape);
+	}
+}
+
+void EditorState::mouseFunctions()
+{
+	if (OpenedWindow->getID() != 1)
+		return;
+	if (OpenedWindow->isWindowBlockingMouse())
+		return;
+	if (currentFunction == EditorState::EditorFunction::placeTile) {
+		placeTiles();
+	}
+	else if (currentFunction == EditorState::EditorFunction::changeVariant) {
+		changeVariants();
+	}
+	else if (currentFunction == EditorState::EditorFunction::placeObject) {
+		placeObjects();
+	}
 
 }
 void EditorState::updateTiles()
@@ -146,6 +192,8 @@ void EditorState::updateTiles()
 	for (auto& it : currentStage->TileGrid.TileDeque) {
 		if (!it.isTilable)
 			continue;
+		//if (it.currentVariant != 0)
+		//	continue;
 		auto sp = it.GetGridPosition();
 		auto a = GridCell(sp.x + 1, sp.y);		//right
 		auto b = GridCell(sp.x, sp.y + 1);		//down
@@ -499,6 +547,25 @@ void EditorState::checkDeletedTiles()
 		}
 	}
 }
+void EditorState::editorFunction(const std::multimap<std::string, Button>::iterator& a_it)
+{
+	if (currentFunction == EditorState::EditorFunction::placeTile) {
+		currentFunction = EditorState::EditorFunction::changeVariant;
+		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
+		return;
+	}
+	if (currentFunction == EditorState::EditorFunction::changeVariant) {
+		currentFunction = EditorState::EditorFunction::placeObject;
+		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
+		return;
+	}
+	if (currentFunction == EditorState::EditorFunction::placeObject) {
+		currentFunction = EditorState::EditorFunction::placeTile;
+		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
+		return;
+	}
+		
+}
 /****************************************************/
 //Protected
 /****************************************************/
@@ -513,8 +580,6 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	currentStage->Update(a_mousePos);
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();
-
-	cursorShape.setPosition(MousePosOnGrid.x * TILE_SIZE, MousePosOnGrid.y * TILE_SIZE);
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {

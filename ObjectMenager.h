@@ -7,7 +7,7 @@ class ObjectMenager
 private:
 	DataMenager* p_dM;
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5]);		//default isTilable = true, needBackgroundTile = true
-	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_needBackgroundTile);		//customazible isTilable and needBackground
+	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
 protected:
 
 public:
@@ -29,7 +29,7 @@ public:
 		tilesetPrefabCreater(&p_dM->grassTileSet, grass);
 		tilesetPrefabCreater(&p_dM->moodTileSet, mood01);
 		tilesetPrefabCreater(&p_dM->mood02TileSet, mood02);
-		tilesetPrefabCreater(&p_dM->water01TileSet, water01);
+		tilesetPrefabCreater(&p_dM->water01TileSet, water01, true, true, 4);
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

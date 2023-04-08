@@ -13,6 +13,9 @@
 void Text::setText(string a_text)
 {
 	text.setString(a_text);
+	auto textRect = text.getLocalBounds();
+	text.setOrigin(textRect.width / 2, textRect.height);
+	text.setPosition(position.x + textPosition.x, position.y + textPosition.y);
 }
 
 void Text::Update(sf::Vector2i* a_mousePos)
