@@ -1,5 +1,9 @@
 #pragma once
 #include "Sprite.h"
+
+const int MAX_TILE_TYPES = 3;       //taken from groundTileType last element val
+const int DEFAULT_BASE_TILE = 34;   //taken from texture
+
 class Tile :
     public Sprite
 {

@@ -31,6 +31,9 @@ void UI::keepOnPosition()
 		SliderDecorRight.setPosition(position.x + backgroundSprite.getTextureRect().width + SliderDecorRight.getTextureRect().width, position.y + SliderDecorRight.getTextureRect().width + 8);
 		shadow.setPosition(sliderShapeSprite.getPosition());
 	}
+	if (hasImage) {
+		imageSprite.setPosition(position);
+	}
 }
 
 void UI::initText(std::string a_text)

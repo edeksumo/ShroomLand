@@ -90,13 +90,16 @@ void Game::Update(){
     //thead.launch();
     while (Window->isOpen())
      {
+        Keyboard::resetWheel();
         while (Window->pollEvent(Event))
         {
             if (Event.type == sf::Event::Closed)
                 Window->close();
+            if (Event.type == sf::Event::MouseWheelMoved)
+                Keyboard::setWheelState(&Event);
         }
+
         Keyboard::keyAndButtonStateSetter();
-        
         Keyboard();
         
         mousePosition = sf::Mouse::getPosition(*Window);

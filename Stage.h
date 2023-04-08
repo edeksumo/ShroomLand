@@ -32,6 +32,7 @@ public:
 	void fillDeque(GridCell a_pos, unsigned int a_ID);
 	void addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted = 0);
 	Tile getTileByGrid(GridCell a_pos);
+	Tile* getPrefTilePtr(int a_ID);
 
 	void Update(sf::Vector2i* a_mousePos);
 	void Render(sf::RenderTarget* a_target);

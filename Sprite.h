@@ -4,6 +4,7 @@
 #include "GridCell.h"
 
 const int MAX_IDIES_FOR_TILES = 55; //taken from ObjectMenager.h size of arr
+const int TILE_SIZE = 32;			//in pixels
 
 class Sprite
 {

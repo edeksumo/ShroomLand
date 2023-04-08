@@ -12,6 +12,7 @@
 /****************************************************/
 static std::array<Keyboard::KeyState, sf::Keyboard::KeyCount> keyState;
 static std::array<Keyboard::KeyState, sf::Mouse::ButtonCount> mouseButtonState;
+static Keyboard::MouseWheel wheelDelta;
 
 void Keyboard::setKeyState(sf::Keyboard::Key a_key)
 {
@@ -93,4 +94,24 @@ void Keyboard::keyAndButtonStateSetter()
 	setKeyState(sf::Keyboard::Down);
 	setKeyState(sf::Keyboard::Left);
 	setKeyState(sf::Keyboard::Right);
+}
+
+void Keyboard::resetWheel()
+{
+	wheelDelta = Keyboard::MouseWheel::free;
+}
+
+void Keyboard::setWheelState(sf::Event *a_event)
+{
+	if (a_event->mouseWheel.delta < 0)
+		wheelDelta = Keyboard::MouseWheel::down;
+	else if (a_event->mouseWheel.delta > 0)
+		wheelDelta = Keyboard::MouseWheel::up;
+	else
+		wheelDelta = Keyboard::MouseWheel::free;
+}
+
+Keyboard::MouseWheel Keyboard::mouseWheel()
+{
+	return wheelDelta;
 }

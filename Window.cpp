@@ -55,6 +55,11 @@ void Window::AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, 
 	Texts.emplace(a_name, Text(a_pos, a_text, a_color, p_dM));
 }
 
+void Window::AddImage(std::string a_name, sf::Vector2f a_pos, sf::Texture* a_texture)
+{
+	Images.emplace(a_name, Image(a_pos, a_texture, p_dM));
+}
+
 void Window::SetElementValue(std::string a_eleName, int a_val)
 {
 	std::multimap<std::string, Switch>::iterator it_1 = Switches.begin();
@@ -93,6 +98,16 @@ void Window::SetElementValue(std::string a_eleName, std::string a_val) {
 	for (it = Texts.begin(); it != Texts.end(); ++it) {
 		if (it->first == a_eleName) {
 			it->second.setText(a_val);
+		}
+	}
+}
+
+void Window::SetElementValue(std::string a_eleName, sf::Sprite* a_val)
+{
+	std::multimap<std::string, Image>::iterator it = Images.begin();
+	for (it = Images.begin(); it != Images.end(); ++it) {
+		if (it->first == a_eleName) {
+			it->second.setSprite(a_val);
 		}
 	}
 }
@@ -174,9 +189,13 @@ void Window::Render(sf::RenderTarget* a_target) {
 	for (it_2 = Sliders.begin(); it_2 != Sliders.end(); ++it_2) {
 		it_2->second.Render(a_target);
 	}
-	std::multimap<std::string, Text>::iterator it_3 = Texts.begin();
-	for (it_3 = Texts.begin(); it_3 != Texts.end(); ++it_3) {
+	std::multimap<std::string, Image>::iterator it_3 = Images.begin();
+	for (it_3 = Images.begin(); it_3 != Images.end(); ++it_3) {
 		it_3->second.Render(a_target);
+	}
+	std::multimap<std::string, Text>::iterator it_4 = Texts.begin();
+	for (it_4 = Texts.begin(); it_4 != Texts.end(); ++it_4) {
+		it_4->second.Render(a_target);
 	}
 	renderShadow(a_target);
 	//std::cout << "== WINDOW == Render Func" << std::endl;

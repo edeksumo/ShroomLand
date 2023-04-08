@@ -4,6 +4,7 @@
 #include "Switch.h"
 #include "Slider.h"
 #include "Text.h"
+#include "Image.h"
 
 class Window : public UI
 {
@@ -20,6 +21,7 @@ public:
     std::multimap<std::string, Switch> Switches;
     std::multimap<std::string, Slider> Sliders;
     std::multimap<std::string, Text> Texts;
+    std::multimap<std::string, Image> Images;
 
     static bool CheckButton(const std::multimap<std::string, Button>::iterator& a_it, std::string a_name);
 
@@ -72,8 +74,10 @@ public:
     void AddSwitch(std::string a_name, sf::Vector2f a_pos);
     void AddSlider(std::string a_name, sf::Vector2f a_pos, float a_lenght, unsigned int a_maxValue);
     void AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, std::string a_text);
+    void AddImage(std::string a_name, sf::Vector2f a_pos, sf::Texture* a_texture);
     void SetElementValue(std::string a_eleName, int a_val);
     void SetElementValue(std::string a_eleName, std::string a_val);
+    void SetElementValue(std::string a_eleName, sf::Sprite* a_val);
     int GetSliderValue(std::string a_eleName);
     bool IsSwitchOn(std::string a_eleName);
     bool isWindowBlockingMouse();

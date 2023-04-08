@@ -4,7 +4,7 @@
 /****************************************************/
 void EditorState::mousePosUpdate(sf::Vector2f* a_mousePosOnCoords)
 {
-	MousePosOnGrid = GridCell(a_mousePosOnCoords->x / 32, a_mousePosOnCoords->y / 32);
+	MousePosOnGrid = GridCell(a_mousePosOnCoords->x / TILE_SIZE, a_mousePosOnCoords->y / TILE_SIZE);
 	//std::cout << MousePosOnGrid.x << " " << MousePosOnGrid.y << std::endl;
 }
 void EditorState::saveStages()
@@ -36,28 +36,39 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 	if (Window::CheckButton(a_it, p_dM->Lang.save)) {
 		saveStages();
 	}
-	if (Window::CheckButton(a_it, "Tile_Type")) {
-		currentTyleType++;
-		if (currentTyleType == 0) {
-			a_it->second.setText("Grass");
-		}
-		else if (currentTyleType == 1) {
-			a_it->second.setText("Mood");
-		}
-		else if (currentTyleType == 2) {
-			a_it->second.setText("Mood02");
-		}
-		else if (currentTyleType == 3) {
-			a_it->second.setText("Water01");
-		}
-		if (currentTyleType > 3) {
-			currentTyleType = 0;
-			a_it->second.setText("Grass");
-		}
+	if (Window::CheckButton(a_it, "Mouse_Func")) {
+
 	}
 	//if (Window::CheckButton(a_it, "Update_Tiles")) {
 
 	//}
+}
+
+void EditorState::wheelFunctions()
+{
+	if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
+		currentTyleType--;
+		if (currentTyleType < 0) {
+			currentTyleType = MAX_TILE_TYPES;
+		}
+		updateText();
+	}
+	else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
+		currentTyleType++;
+		if (currentTyleType > MAX_TILE_TYPES) {
+			currentTyleType = 0;
+		}
+		updateText();
+	}
+}
+
+void EditorState::updateText()
+{
+	OpenedWindow->SetElementValue("Current_Obj_Name", p_dM->tileNames[currentTyleType]);
+	
+	Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + DEFAULT_BASE_TILE);	//need to be moved 
+	activeSprite = p->sprite;
+	OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
 }
 
 void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
@@ -66,7 +77,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 	if (OpenedWindow->getID() != 1)
 		return;
 	auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
-	cursorShape.setSize(sf::Vector2f((selectorSize + 2) * 32, (selectorSize + 2) * 32));
+	cursorShape.setSize(sf::Vector2f((selectorSize + 2) * TILE_SIZE, (selectorSize + 2) * TILE_SIZE));
 	a_target->draw(cursorShape);
 }
 
@@ -83,16 +94,16 @@ void EditorState::mouseFunctions()
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize + 1; i++) {
-			currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
+			currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
 			if (selectorSize > 0) {
-				currentStage->addTile(GridCell(MousePosOnGrid.x, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
-				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y), (tileType * MAX_IDIES_FOR_TILES) + 34);
+				currentStage->addTile(GridCell(MousePosOnGrid.x, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
+				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
 				if (selectorSize > 1) {
-					currentStage->addTile(GridCell(MousePosOnGrid.x + i / 2, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + 34);
-					currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i / 2), (tileType * MAX_IDIES_FOR_TILES) + 34);
+					currentStage->addTile(GridCell(MousePosOnGrid.x + i / 2, MousePosOnGrid.y + i), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
+					currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + i / 2), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
 					if (selectorSize > 2) {
-						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 3), (tileType * MAX_IDIES_FOR_TILES) + 34);
-						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 2), (tileType * MAX_IDIES_FOR_TILES) + 34);
+						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 3), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
+						currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + 2), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
 					}
 				}
 			}
@@ -226,7 +237,7 @@ void EditorState::updateTiles()
 		//////////////////////////////////////////////
 		/// seting up ID
 		//////////////////////////////////////////////
-		int id = 34;								//defaut all sides taken
+		int id = DEFAULT_BASE_TILE;								//defaut all sides taken
 
 		if (left && !up && !rightUp && !right && !rightDown && !down) {		//left side free
 			if (TileRNG % 3 == 1)
@@ -308,7 +319,7 @@ void EditorState::updateTiles()
 		if (!left && leftUp && !up && !rightUp && !right && rightDown && down && !leftDown)
 			id = 44;
 
-		if (id == 34) {
+		if (id == DEFAULT_BASE_TILE) {
 			int arr[] = { 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34, 34 ,34, 34, 34, 34, 34 ,34 ,34, 34, 34, 34, 34, 16, 17, 18, 19, 20, 21, 27, 28, 29, 30, 31, 32, 38, 39, 40, 41, 42, 43, 49, 50, 51, 52, 53, 54 };
 			id = p_dM->RNG(TileRNG--, arr, sizeof(arr) / sizeof(int));
 		}
@@ -503,12 +514,14 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();
 
-	cursorShape.setPosition(MousePosOnGrid.x * 32, MousePosOnGrid.y * 32);
+	cursorShape.setPosition(MousePosOnGrid.x * TILE_SIZE, MousePosOnGrid.y * TILE_SIZE);
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 		buttonFunctions(it);
 	}
+	
+	wheelFunctions();
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include"Tile.h"
+#include <map>
 
 class ObjectMenager
 {
@@ -16,6 +17,8 @@ public:
 	Tile* water01[11][5];
 
 	std::multimap<int, Tile*> TilePtrContainer;					//stores all Tiles pointer in the game 
+
+	Tile* getTilePtrById(int a_ID);
 
 	ObjectMenager() {
 

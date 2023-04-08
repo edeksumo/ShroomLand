@@ -58,9 +58,21 @@ public:
 	EngineNames EngineNames;
 	SaveFormat SaveFormat;
 	StagesNames StagesNames;		//unused for now
+	
+	/****************************************************/
+	//Obj names
+	/****************************************************/
+	std::string tileNames[4]{
+	"grass",
+	"mud_01",
+	"mud_02",
+	"water"
+	};
+	
 	/****************************************************/
 	//Obj textures
 	/****************************************************/
+	sf::Texture emptyTxt;
 	sf::Texture grassTileSet;
 	sf::Texture moodTileSet;
 	sf::Texture mood02TileSet;
@@ -103,6 +115,8 @@ public:
 		/****************************************************/
 		//Obj textures
 		/****************************************************/
+		if (!emptyTxt.loadFromFile("data/textures/empty.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: empty.png" << std::endl;
 		if (!grassTileSet.loadFromFile("data/textures/grass01.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: grass.png" << std::endl;
 		if (!moodTileSet.loadFromFile("data/textures/Mood01.png"))
@@ -123,6 +137,7 @@ public:
 		/****************************************************/
 		if(!windowsBackgroundTxt.loadFromFile("data/textures/paper background.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: paper background.png" << std::endl;
+		windowsBackgroundTxt.setRepeated(true);
 
 		if (!windowsDecorLineTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(893, 190, 73, 14))) {
 			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;

@@ -61,6 +61,12 @@ Tile Stage::getTileByGrid(GridCell a_pos)
 	//return Tile();
 }
 
+Tile* Stage::getPrefTilePtr(int a_ID)
+{
+	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
+	return it->second;
+}
+
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 

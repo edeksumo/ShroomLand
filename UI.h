@@ -37,6 +37,7 @@ protected:
 	sf::Sprite sliderDecorLeft;
 	sf::Sprite SliderDecorRight;
 
+	sf::Sprite imageSprite;
 
 	sf::RectangleShape shadow;
 	
@@ -53,6 +54,7 @@ protected:
 	bool hasText;
 	bool hasSlider;
 	bool hasBackground;
+	bool hasImage;
 	float sliderOffset;
 
 	void keepOnPosition();
@@ -68,6 +70,7 @@ public:
 		hasText = false;
 		hasSlider = false;
 		hasBackground = false;
+		hasImage = false;
 		sliderOffset = 0;
 	}
 	
