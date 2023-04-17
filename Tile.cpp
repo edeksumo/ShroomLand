@@ -11,9 +11,6 @@
 /****************************************************/
 //Public
 /****************************************************/
-void Tile::SetTileType(groundTileType a_type)
-{
-}
 
 
 Tile::groundTileType Tile::GetTileType()

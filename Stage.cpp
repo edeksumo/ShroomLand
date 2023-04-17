@@ -51,16 +51,6 @@ void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted)
 	BackGroundTiles.back().setShift(static_cast<Tile::shifted>(a_shifted));
 }
 
-Tile Stage::getTileByGrid(GridCell a_pos)
-{
-	for (auto &it : TileGrid.TileDeque) {
-		if (it.GetGridPosition() == a_pos) {
-			return it;
-		}
-	}
-	//return Tile();
-}
-
 Tile* Stage::getPrefTilePtr(int a_ID)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
@@ -70,9 +60,13 @@ Tile* Stage::getPrefTilePtr(int a_ID)
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 
-	for (Tile& i : TileGrid.TileDeque) {
-		//if (isVisible(i, p_renderTarget))
-			i.Update(a_mousePos);
+	for (int i = 0; i < TileGrid.GetSize().x; i++) {
+		for (int j = 0; j < TileGrid.GetSize().y; j++) {
+			if (TileGrid.TileGridPtr[i][j] != nullptr) {
+				//if (isVisible(i, p_renderTarget))
+				TileGrid.TileGridPtr[i][j]->Update(a_mousePos);
+			}
+		}
 	}
 }
 
@@ -83,9 +77,12 @@ void Stage::Render(sf::RenderTarget* a_target)
 		if(isVisible(i, a_target))
 			i.Render(a_target);	
 	}
-	for (Tile& i : TileGrid.TileDeque) {
-		if (isVisible(i, a_target))
-			i.Render(a_target);
-		//std::cout << i.sprite.getPosition().x << " " << i.sprite.getPosition().y << std::endl;
+	for (int i = 0; i < TileGrid.GetSize().x; i++) {
+		for (int j = 0; j < TileGrid.GetSize().y; j++) {
+			if (TileGrid.TileGridPtr[i][j] != nullptr) {
+				//if(isVisible(*TileGrid.TileGridPtr[i][j], a_target))
+				TileGrid.TileGridPtr[i][j]->Render(a_target);
+			}
+		}
 	}
 }

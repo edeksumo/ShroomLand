@@ -64,9 +64,7 @@ public:
         //std::cout << "copy constructor" << std::endl;
     };
 
-    void SetTileType(groundTileType a_type);
     Tile::groundTileType GetTileType();
     void changeVariant(bool a_up);
-
     void Update(sf::Vector2i* a_mousePos);
 };

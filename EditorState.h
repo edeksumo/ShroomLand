@@ -16,6 +16,7 @@ private:
     EditorFunction currentFunction;
     int currentTyleType;
     Tile* selectedTile;
+    std::map<int, std::map<int, GridCell>> tileUpdateMap;
     std::string editorFuncNames[3]{
         "Tiles",
         "Variants",
@@ -27,6 +28,7 @@ private:
     void saveStages();
     void buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
     void placeTiles();
+    void addTilesToUpdate(int a_x, int a_y);
     void changeVariants();
     void placeObjects();
     void wheelFunctions();
@@ -35,7 +37,6 @@ private:
     void mouseFunctions();
     void updateTiles();
     void setBackgroundTiles();
-    void checkDeletedTiles();
     void editorFunction(const std::multimap<std::string, Button>::iterator& a_it);
 protected:
 
@@ -63,6 +64,7 @@ public:
         OpenedWindow->AddButton("Editor_Func", sf::Vector2f(105, 40), sf::Vector2f(15, 110), editorFuncNames[0], sf::Color::Black);
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
+        OpenedWindow->SetElementValue("Cursor_Size", 1);
         //OpenedWindow->AddButton("Update_Tiles", sf::Vector2f(105, 40), sf::Vector2f(15, 160), "Update Tl", sf::Color::Black);
         updateText();
     };
