@@ -17,6 +17,8 @@ public:
 		down
 	};
 	
+	static void print(std::string a_text, bool a_nextLine = true);
+	static void print(int a_text, bool a_nextLine = true);
 	static void setKeyState(sf::Keyboard::Key a_key);
 	static void setMouseButtonState(sf::Mouse::Button a_button);
 	static Keyboard::KeyState checkKeyState(sf::Keyboard::Key a_key);

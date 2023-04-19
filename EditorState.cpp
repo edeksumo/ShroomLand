@@ -56,7 +56,7 @@ void EditorState::placeTiles()
 		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize; i++) {
 			for (int j = 0; j < selectorSize; j++) {
-				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + j), (tileType * MAX_IDIES_FOR_TILES) + DEFAULT_BASE_TILE);
+				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + j), (tileType * MAX_IDIES_FOR_TILES) + currentTileID);
 				addTilesToUpdate(MousePosOnGrid.x + i, MousePosOnGrid.y + j);
 			}
 		}
@@ -118,13 +118,43 @@ void EditorState::wheelFunctions()
 {
 	if (currentFunction == EditorState::EditorFunction::placeTile) {
 		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
-			currentTyleType--;
+			if(!singleTileMode)
+				currentTyleType--;
+			
 			if (currentTyleType < 0) {
 				currentTyleType = MAX_TILE_TYPES;
 			}
+			
+			if (currentTyleType == static_cast<int>(Tile::groundTileType::other)) {
+				if (!singleTileMode)
+					currentTileID = Tile::g_lastID + 1;
+				singleTileMode = true;
+				currentTileID--;
+				if (currentTileID < 0) {
+					singleTileMode = false;
+					currentTyleType--;
+					currentTileID = DEFAULT_BASE_TILE;
+				}
+			}
+			else {
+				currentTileID = DEFAULT_BASE_TILE;
+			}
 		}
 		else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
-			currentTyleType++;
+			if (!singleTileMode)
+				currentTyleType++;
+			
+			if (currentTyleType == static_cast<int>(Tile::groundTileType::other)) {
+				if (!singleTileMode)
+					currentTileID = 0;
+				singleTileMode = true;
+				currentTileID++;
+				if (currentTileID > Tile::g_lastID) {
+					singleTileMode = false;
+					currentTyleType++;
+					currentTileID = DEFAULT_BASE_TILE;
+				}
+			}
 			if (currentTyleType > MAX_TILE_TYPES) {
 				currentTyleType = 0;
 			}
@@ -150,7 +180,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 	if (currentFunction == EditorState::EditorFunction::placeTile) {
 		auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
 		cursorShape.setSize(sf::Vector2f((selectorSize + 1) * TILE_SIZE, (selectorSize + 1) * TILE_SIZE));
-		Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + DEFAULT_BASE_TILE);
+		Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + currentTileID);
 		activeSprite = p->sprite;
 		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
 		a_target->draw(cursorShape);

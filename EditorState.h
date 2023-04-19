@@ -15,8 +15,10 @@ private:
     sf::Sprite activeSprite;
     EditorFunction currentFunction;
     int currentTyleType;
+    int currentTileID;
     Tile* selectedTile;
     std::map<int, std::map<int, GridCell>> tileUpdateMap;
+    bool singleTileMode;
     std::string editorFuncNames[3]{
         "Tiles",
         "Variants",
@@ -57,6 +59,8 @@ public:
         currentStage = &p_stageContainer->begin()->second;
         selectedTile = nullptr;
         currentFunction = EditorState::EditorFunction::placeTile;
+        currentTileID = DEFAULT_BASE_TILE;
+        singleTileMode = false;
 
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, p_window->getSize().y), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(70, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::Black);
@@ -65,7 +69,6 @@ public:
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
-        //OpenedWindow->AddButton("Update_Tiles", sf::Vector2f(105, 40), sf::Vector2f(15, 160), "Update Tl", sf::Color::Black);
         updateText();
     };
 

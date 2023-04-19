@@ -14,6 +14,18 @@ static std::array<Keyboard::KeyState, sf::Keyboard::KeyCount> keyState;
 static std::array<Keyboard::KeyState, sf::Mouse::ButtonCount> mouseButtonState;
 static Keyboard::MouseWheel wheelDelta;
 
+void Keyboard::print(std::string a_text, bool a_nextLine)
+{
+	std::cout << a_text;
+	if (a_nextLine)
+		std::cout << std::endl;
+}
+
+void Keyboard::print(int a_text, bool a_nextLine)
+{
+	print(std::to_string(a_text), a_nextLine);
+}
+
 void Keyboard::setKeyState(sf::Keyboard::Key a_key)
 {
 	if (a_key > sf::Keyboard::KeyCount)

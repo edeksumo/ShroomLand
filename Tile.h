@@ -1,20 +1,29 @@
 #pragma once
 #include "Sprite.h"
 
-const int MAX_TILE_TYPES = 3;       //taken from groundTileType last element val
+const int MAX_TILE_TYPES = 5;       //taken from groundTileType last element val
 const int DEFAULT_BASE_TILE = 34;   //taken from texture
 const int BASE_TEXTURE_SIZE_X = 352;
-
 class Tile :
     public Sprite
 {
 public:
+    /// <summary>
+    /// Adding new tileset:
+    /// 1: adding new texture and tileset name in tileNames[] in Datamenager.h
+    /// 2: adding new groundTileType into this file and rise MAX_TILE_TYPES constatn
+    /// 3: adding Tile*[][] that size depends on texture and make prefabs in ObMg constructor (for strange size of texture you need to use **var and for loop;
+    ///  
+    /// </summary>
     enum class groundTileType {
         none = -1,
         grass = 0,
-        mood01 = 1,
-        mood02 = 2,
-        water01 = 3
+        muddyGrass = 1,
+        mood01 = 2,
+        mood02 = 3,
+        water01 = 4,
+        lastTilable = 4, 
+        other
     };
 private:
     groundTileType tileType;
@@ -26,7 +35,7 @@ public:
     bool needBackgroundTile;
     unsigned int nbOfVariants;
     unsigned int currentVariant;
-
+    static int g_lastID;
     Tile() {
         tileType = groundTileType::none;
         isTilable = false;
@@ -47,7 +56,9 @@ public:
         needBackgroundTile = m_needBackgroundTile;
         int i = ID / MAX_IDIES_FOR_TILES;
         tileType = static_cast<groundTileType>(i);
-        std::cout << ID << " " << i << "constructor " << std::endl;
+        int a = ID - ((static_cast<int>(tileType) * MAX_IDIES_FOR_TILES));
+        g_lastID = a;
+        //std::cout << ID << " " << i << "constructor " << g_lastID << std::endl;
     };
 
     Tile(const Tile& p1) : Sprite(p1) {         //it make sure that the copy constructor of parent class is run
