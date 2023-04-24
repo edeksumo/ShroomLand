@@ -36,7 +36,7 @@ public:
 	void setButtonState(Button::ButtonState a_state);
 	Button() {
 		isSwitch = false;
-		buttonState = ButtonState::Free;
+		buttonState = Button::ButtonState::Free;
 		lastButtonState = buttonState;
 		selector.setFillColor(sf::Color(0, 0, 0, 50));
 	};

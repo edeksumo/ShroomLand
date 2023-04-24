@@ -55,35 +55,35 @@ bool Button::pressed(sf::Vector2i* a_mousePos)
 		if (isSwitch) {
 			if (state == SwitchState::off) {
 				state = SwitchState::on;
-				std::cout << "on";
+				//std::cout << "on";
 			}
 			else {
 				state = SwitchState::off;
-				std::cout << "off";
+				//std::cout << "off";
 			}
 		}
-		std::cout << "pressed";
+		//std::cout << "pressed";
 		return true;
 	}
 	if ((buttonState == ButtonState::Pressed || (buttonState == ButtonState::Hold)) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold)) {
 		buttonState = ButtonState::Hold;
-		std::cout << "hold";
+		//std::cout << "hold";
 		return true;
 	}
 	if ((buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold)) {
 		buttonState = ButtonState::Hold;
-		std::cout << "hold";
+		//std::cout << "hold";
 		return true;
 	}
 
 	if ((buttonState == ButtonState::Pressed || buttonState == ButtonState::Hold) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::free)) {
 		buttonState = ButtonState::Free;
-		std::cout << "free";
+		//std::cout << "free";
 		return false;
 	}
 	if ((buttonState != ButtonState::Free) && (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::released)) {
 		buttonState = ButtonState::Free;
-			std::cout << "free";
+			//std::cout << "free";
 			return false;
 	}
 	return false;

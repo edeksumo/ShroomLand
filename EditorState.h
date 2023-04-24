@@ -21,6 +21,7 @@ private:
     bool singleTileMode;
     bool v_createClearDial;
     bool v_closeClearDial;
+
     std::string editorFuncNames[3]{
         "Tiles",
         "Variants",

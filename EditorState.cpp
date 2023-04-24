@@ -536,9 +536,6 @@ void EditorState::setBackgroundTiles()
 				auto g = GridCell(sp.x - 1, sp.y - 1);	//left Up
 				auto h = GridCell(sp.x + 1, sp.y - 1);	//right Up
 
-				if (currentStage->TileGrid.isTileOccupied(c))
-					std::cout << static_cast<int>(it->GetTileType()) <<" " << static_cast<int>(currentStage->TileGrid.TileGridPtr[i-1][j]->GetTileType()) << endl;
-
 				if (currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
 					if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a)) {
 						currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(c)->ID);	//7c

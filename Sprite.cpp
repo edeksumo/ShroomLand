@@ -19,29 +19,10 @@ void Sprite::animation()
 	if (animFrame == 20)
 		animFrame = 0;
 }
-void Sprite::SetPosition(GridCell a_pos, int a_shifted)
+void Sprite::SetPosition(GridCell a_pos)
 {
 	posOnGrid = a_pos;
 	sprite.setPosition(sf::Vector2f(a_pos.x * TILE_SIZE, a_pos.y * TILE_SIZE));
-	
-	if(a_shifted == 0)
-		sprite.setPosition(sf::Vector2f((a_pos.x * TILE_SIZE) - 16, (a_pos.y * TILE_SIZE) - 16));	//left up
-	else if (a_shifted == 1)
-		sprite.setPosition(sf::Vector2f(a_pos.x * TILE_SIZE, (a_pos.y * TILE_SIZE) - 16));	//up
-	if (a_shifted == 2)
-		sprite.setPosition(sf::Vector2f((a_pos.x * TILE_SIZE) + 16, (a_pos.y * TILE_SIZE) - 16));	// right up
-	else if (a_shifted == 3)
-		sprite.setPosition(sf::Vector2f(a_pos.x * TILE_SIZE + 16, (a_pos.y * TILE_SIZE)));	//right
-	else if (a_shifted == 4)
-		sprite.setPosition(sf::Vector2f(a_pos.x * TILE_SIZE + 16, (a_pos.y * TILE_SIZE) + 16));	//right down 
-	else if (a_shifted == 5)
-		sprite.setPosition(sf::Vector2f(a_pos.x * TILE_SIZE, (a_pos.y * TILE_SIZE) + 16));	//down
-	else if (a_shifted == 6)
-		sprite.setPosition(sf::Vector2f((a_pos.x * TILE_SIZE) - 16, (a_pos.y * TILE_SIZE) + 16));	//left down
-	else if (a_shifted == 7)
-		sprite.setPosition(sf::Vector2f((a_pos.x * TILE_SIZE) - 16, a_pos.y * TILE_SIZE));	//left
-	
-
 }
 
 void Sprite::flipSprite()

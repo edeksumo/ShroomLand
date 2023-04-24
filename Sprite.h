@@ -9,7 +9,7 @@ const bool DEFAULT_MASK_FOR_BACKGROUND[MAX_IDIES_FOR_TILES] = { 1, 1, 1, 1, 1, 0
 																1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 																1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0,
 																1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
-																1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
+																1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };		//premade bitmask for all tilesets
 
 class Sprite
 {
@@ -41,7 +41,7 @@ public:
 		//std::cout << "sprite copy constructor " << ID << endl;
 	};
 
-	void SetPosition(GridCell a_pos, int a_shifted = -1);	//sets position on grid and multiplias it by 32 for in game pos; shifted -2, -1, 0, 1, 2 up left none right down
+	void SetPosition(GridCell a_pos);	//sets position on grid and multiplias it by 32 for in game pos
 	void flipSprite();
 	GridCell GetGridPosition();
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;

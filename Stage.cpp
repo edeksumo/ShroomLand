@@ -31,7 +31,6 @@ void Stage::addTile(GridCell a_pos, unsigned int a_ID)
 		
 	if (TileGrid.isTileOccupied(a_pos)) {
 		TileGrid.RemoveTile(a_pos);
-		//std::cout << "== STAGE == addTile func: Two Tiles on one spot on the grid; old one will be eresed" << std::endl;
 	}
 	/// ////////////////////////////////////////////////////////
 	TileGrid.AddTile(a_pos, it->second);
@@ -49,7 +48,7 @@ void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID)
 		return;
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
 	BackGroundTiles.push_back(*it->second);
-	BackGroundTiles.back().SetPosition(a_pos);	//HACKED NEED FIX
+	BackGroundTiles.back().SetPosition(a_pos);
 }
 
 Tile* Stage::getPrefTilePtr(int a_ID)
@@ -81,8 +80,8 @@ void Stage::Render(sf::RenderTarget* a_target)
 	for (int i = 0; i < TileGrid.GetSize().x; i++) {
 		for (int j = 0; j < TileGrid.GetSize().y; j++) {
 			if (TileGrid.TileGridPtr[i][j] != nullptr) {
-				//if(isVisible(*TileGrid.TileGridPtr[i][j], a_target))
-				TileGrid.TileGridPtr[i][j]->Render(a_target);
+				if(isVisible(*TileGrid.TileGridPtr[i][j], a_target))
+					TileGrid.TileGridPtr[i][j]->Render(a_target);
 			}
 		}
 	}
