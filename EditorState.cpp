@@ -20,12 +20,12 @@ void EditorState::saveStages()
 		for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
 			for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
 				if (currentStage->TileGrid.TileGridPtr[i][j] != nullptr) 
-					saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << currentStage->TileGrid.TileGridPtr[i][j]->ID << " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.x << " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.y << std::endl;
+					saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << currentStage->TileGrid.TileGridPtr[i][j]->ID << " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.x 
+					<< " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.y << " " << currentStage->TileGrid.TileGridPtr[i][j]->currentVariant << std::endl;
 			}
 		}
 		for (const auto& it_01 : it->second.BackGroundTiles) {
-			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.BackTileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << " " 
-				<< static_cast<int>(it_01.shift) << std::endl;
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.BackTileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << std::endl;
 		}
 		
 		//each obj type must be added here...
@@ -36,11 +36,25 @@ void EditorState::saveStages()
 }
 void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
 {
-	if (Window::CheckButton(a_it, p_dM->Lang.save)) {
-		saveStages();
+	if (Windows.begin()->getID() == 1) {
+		if (Window::CheckButton(a_it, p_dM->Lang.save)) {
+			saveStages();
+		}
+		if (Window::CheckButton(a_it, "Editor_Func")) {
+			editorFunction(a_it);
+		}
+		if (Window::CheckButton(a_it, "Clear_Stage")) {
+			v_createClearDial = true;
+		}
 	}
-	if (Window::CheckButton(a_it, "Editor_Func")) {
-		editorFunction(a_it);
+	else if (Windows.begin()->getID() == 99)
+	{
+		if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
+			clearStage();
+		}
+		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
+			v_closeClearDial = true;
+		}
 	}
 	//if (Window::CheckButton(a_it, "Update_Tiles")) {
 
@@ -93,7 +107,10 @@ void EditorState::addTilesToUpdate(int a_x, int a_y)
 	//int a = 0;
 	for (int i = -1; i < 2; i++) {
 		for (int j = -1; j < 2; j++) {
+			if (a_x + i <= 0 || a_y + j <= 0)
+				continue;
 			tileUpdateMap[a_x + i][a_y + j] = GridCell(a_x + i, a_y + j);
+		
 		}
 	}
 }
@@ -129,9 +146,11 @@ void EditorState::wheelFunctions()
 				if (!singleTileMode)
 					currentTileID = Tile::g_lastID + 1;
 				singleTileMode = true;
+				OpenedWindow->SetElementValue("Cursor_Size", 0);
 				currentTileID--;
 				if (currentTileID < 0) {
 					singleTileMode = false;
+					OpenedWindow->SetElementValue("Cursor_Size", 1);
 					currentTyleType--;
 					currentTileID = DEFAULT_BASE_TILE;
 				}
@@ -146,11 +165,13 @@ void EditorState::wheelFunctions()
 			
 			if (currentTyleType == static_cast<int>(Tile::groundTileType::other)) {
 				if (!singleTileMode)
-					currentTileID = 0;
+					currentTileID = -1;
 				singleTileMode = true;
+				OpenedWindow->SetElementValue("Cursor_Size", 0);
 				currentTileID++;
 				if (currentTileID > Tile::g_lastID) {
 					singleTileMode = false;
+					OpenedWindow->SetElementValue("Cursor_Size", 1);
 					currentTyleType++;
 					currentTileID = DEFAULT_BASE_TILE;
 				}
@@ -168,8 +189,14 @@ void EditorState::updateText()
 {
 	if(currentFunction == EditorState::EditorFunction::placeTile)
 		OpenedWindow->SetElementValue("Current_Obj_Name", p_dM->tileNames[currentTyleType]);
-	else if(currentFunction == EditorState::EditorFunction::changeVariant)
-		OpenedWindow->SetElementValue("Current_Obj_Name", " ");
+	else if (currentFunction == EditorState::EditorFunction::changeVariant) {
+		if (selectedTile == nullptr) {
+			OpenedWindow->SetElementValue("Current_Obj_Name", "");
+		}
+		else {
+			OpenedWindow->SetElementValue("Current_Obj_Name", p_dM->tileNames[static_cast<int>(selectedTile->GetTileType())]);
+		}
+	}
 }
 
 void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
@@ -306,20 +333,26 @@ void EditorState::updateTiles()
 			if (!keepType) {
 				if (currentStage->TileGrid.isTileOccupied(a)) {
 					if (currentStage->TileGrid.GetTilePtr(a)->GetTileType() != it->GetTileType())
-						type = currentStage->TileGrid.GetTilePtr(a)->GetTileType();
+						if(currentStage->TileGrid.GetTilePtr(a)->GetTileType() != Tile::groundTileType::other)
+							type = currentStage->TileGrid.GetTilePtr(a)->GetTileType();
+
 				}
 				if (currentStage->TileGrid.isTileOccupied(c)) {
 					if (currentStage->TileGrid.GetTilePtr(c)->GetTileType() != it->GetTileType())
-						type = currentStage->TileGrid.GetTilePtr(c)->GetTileType();
+						if (currentStage->TileGrid.GetTilePtr(c)->GetTileType() != Tile::groundTileType::other)
+							type = currentStage->TileGrid.GetTilePtr(c)->GetTileType();
 				}
 				if (currentStage->TileGrid.isTileOccupied(b)) {
 					if (currentStage->TileGrid.GetTilePtr(b)->GetTileType() != it->GetTileType())
-						type = currentStage->TileGrid.GetTilePtr(b)->GetTileType();
+						if (currentStage->TileGrid.GetTilePtr(b)->GetTileType() != Tile::groundTileType::other)
+							type = currentStage->TileGrid.GetTilePtr(b)->GetTileType();
 				}
 				if (currentStage->TileGrid.isTileOccupied(d)) {
 					if (currentStage->TileGrid.GetTilePtr(d)->GetTileType() != it->GetTileType())
-						type = currentStage->TileGrid.GetTilePtr(d)->GetTileType();
+						if (currentStage->TileGrid.GetTilePtr(d)->GetTileType() != Tile::groundTileType::other)
+							type = currentStage->TileGrid.GetTilePtr(d)->GetTileType();
 				}
+				////if still type is the same add corner options
 			}
 
 			//////////////////////////////////////////////
@@ -494,80 +527,52 @@ void EditorState::setBackgroundTiles()
 				if (!it->needBackgroundTile)
 					continue;
 				auto sp = it->GetGridPosition();
-				auto a = GridCell(sp.x + 1, sp.y);
-				auto b = GridCell(sp.x, sp.y + 1);
-				auto c = GridCell(sp.x - 1, sp.y);
-				auto d = GridCell(sp.x, sp.y - 1);
-				auto e = GridCell(sp.x + 1, sp.y + 1);
-				auto f = GridCell(sp.x - 1, sp.y + 1);
-				auto g = GridCell(sp.x - 1, sp.y - 1);
-				auto h = GridCell(sp.x + 1, sp.y - 1);
+				auto a = GridCell(sp.x + 1, sp.y);		//right
+				auto b = GridCell(sp.x, sp.y + 1);		//down
+				auto c = GridCell(sp.x - 1, sp.y);		//left
+				auto d = GridCell(sp.x, sp.y - 1);		//up
+				auto e = GridCell(sp.x + 1, sp.y + 1);	//right Down
+				auto f = GridCell(sp.x - 1, sp.y + 1);	//left Down
+				auto g = GridCell(sp.x - 1, sp.y - 1);	//left Up
+				auto h = GridCell(sp.x + 1, sp.y - 1);	//right Up
 
-				bool right = true;
-				bool left = true;
-				bool up = true;
-				bool down = true;
-				bool rightUp = true;
-				bool rightDown = true;
-				bool leftUp = true;
-				bool leftDown = true;
+				if (currentStage->TileGrid.isTileOccupied(c))
+					std::cout << static_cast<int>(it->GetTileType()) <<" " << static_cast<int>(currentStage->TileGrid.TileGridPtr[i-1][j]->GetTileType()) << endl;
 
-				int i = it->ID - 14 - (MAX_IDIES_FOR_TILES * static_cast<int>(it->GetTileType()));
-				if (i == 0)
-					continue;
-
-				if (currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType())) {
-					right = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
-					left = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType())) {
-					down = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType())) {
-					up = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(e) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType())) {
-					rightDown = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(h) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType())) {
-					rightUp = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(g) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType())) {
-					leftUp = false;
-				}
-				if (currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it->GetTileType()) < static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType())) {
-					leftDown = false;
-				}
-
-
-				if (left && currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
-					if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a))
+				if (currentStage->TileGrid.isTileOccupied(c) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(c)->GetTileType())) {
+					if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a)) {
 						currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(c)->ID);	//7c
+						continue;
+					}
 				}
-				if (right && currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType())) {
-					if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a))
+				if (currentStage->TileGrid.isTileOccupied(a) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(a)->GetTileType())) {
+					if (currentStage->TileGrid.isTileOccupied(c) && currentStage->TileGrid.isTileOccupied(a)) {
 						currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(a)->ID);	//3a
+						continue;
+					}
 				}
-				if (down && currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType())) {
-					if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d))
+				if (currentStage->TileGrid.isTileOccupied(b) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(b)->GetTileType())) {
+					if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d)) {
 						currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(b)->ID);	//5b
+						continue;
+					}
 				}
-				if (up && currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType())) {
-					if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d))
+				if (currentStage->TileGrid.isTileOccupied(d) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(d)->GetTileType())) {
+					if (currentStage->TileGrid.isTileOccupied(b) && currentStage->TileGrid.isTileOccupied(d)) {
 						currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(d)->ID);	//1d
+						continue;
+					}
 				}
 
 
 
-				if (rightUp && currentStage->TileGrid.isTileOccupied(h) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType()))
+				if (currentStage->TileGrid.isTileOccupied(h) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(h)->GetTileType()))
 					currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(h)->ID);	//2h
-				if (rightDown && currentStage->TileGrid.isTileOccupied(e) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType()))
+				if (currentStage->TileGrid.isTileOccupied(e) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(e)->GetTileType()))
 					currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(e)->ID);	//4e
-				if (leftUp && currentStage->TileGrid.isTileOccupied(g) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType()))
+				if (currentStage->TileGrid.isTileOccupied(g) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(g)->GetTileType()))
 					currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(g)->ID);	//0g
-				if (leftDown && currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType()))
+				if (currentStage->TileGrid.isTileOccupied(f) && static_cast<int>(it->GetTileType()) > static_cast<int>(currentStage->TileGrid.GetTilePtr(f)->GetTileType()))
 					currentStage->addBackgroundTile(it->GetGridPosition(), currentStage->TileGrid.GetTilePtr(f)->ID);	//6 f
 			}
 		}
@@ -593,6 +598,46 @@ void EditorState::editorFunction(const std::multimap<std::string, Button>::itera
 	}
 		
 }
+void EditorState::clearStage()
+{
+	while (!currentStage->BackGroundTiles.empty())
+	{
+		currentStage->BackGroundTiles.pop_front();
+	}
+	std::map<int, std::map<int, GridCell>> _temp;
+	for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
+		for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
+			if (currentStage->TileGrid.TileGridPtr[i][j] != nullptr) {
+				_temp[i][j] = GridCell(i, j);
+			}
+		}
+	}
+	for (const auto& it_01 : _temp) {
+		for (const auto& it_02 : it_01.second) {
+			currentStage->TileGrid.RemoveTile(GridCell(it_02.second.x, it_02.second.y));
+		}
+	}
+	v_closeClearDial = true;
+}
+void EditorState::closeDialWindow()
+{
+	if (!v_closeClearDial)
+		return;
+	v_closeClearDial = false;
+	if (Windows.size()) {
+		Windows.begin()->setToClose = true;
+		return;
+	}
+}
+void EditorState::createClearDial()
+{
+	if (!v_createClearDial)
+		return;
+	v_createClearDial = false;
+	PushWindow(99, sf::Vector2f(260, 40), sf::Vector2f(260, 100), "Do you want clear stage?", sf::Vector2f(128, 30), sf::Color::Black);
+	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 90), p_dM->Lang.yes, sf::Color(23, 23, 23));
+	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
+}
 /****************************************************/
 //Protected
 /****************************************************/
@@ -604,6 +649,8 @@ void EditorState::editorFunction(const std::multimap<std::string, Button>::itera
 void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
 {
 	updateOpenedWindowIt();
+	createClearDial();
+	closeDialWindow();
 	currentStage->Update(a_mousePos);
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();

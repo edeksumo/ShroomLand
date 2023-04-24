@@ -36,6 +36,15 @@ void Tile::changeVariant(bool a_up)
 	sprite.setTextureRect(sf::IntRect(basicRect.left + (BASE_TEXTURE_SIZE_X * currentVariant), basicRect.top, basicRect.width, basicRect.height));
 }
 
+void Tile::setVariant(unsigned int a_variant)
+{
+	if (a_variant > nbOfVariants)
+		return;
+	currentVariant = a_variant;
+	sprite.setTextureRect(sf::IntRect(basicRect.left + (BASE_TEXTURE_SIZE_X * currentVariant), basicRect.top, basicRect.width, basicRect.height));
+}
+
+
 void Tile::Update(sf::Vector2i* a_mousePos)
 {
 	//if (GetTileType() == Tile::groundTileType::water) {

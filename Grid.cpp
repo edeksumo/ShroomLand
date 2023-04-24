@@ -1,12 +1,16 @@
 #include "Grid.h"
 
-void Grid::AddTile(GridCell a_pos, Tile* a_tile)
+void Grid::AddTile(GridCell a_pos, Tile* a_tile, unsigned int a_variant)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 
 	Tile* p = new Tile(*a_tile);
 	p->SetPosition(a_pos);
+	
+	if(a_variant != 0)
+		p->setVariant(a_variant);
+	
 	TileGridPtr[a_pos.x][a_pos.y] = p;
 }
 

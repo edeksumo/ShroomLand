@@ -32,7 +32,7 @@ public:
 			//std::cout << "a";
 		}
 	}
-	void AddTile(GridCell a_pos, Tile* a_tile);
+	void AddTile(GridCell a_pos, Tile* a_tile, unsigned int a_variant = 0);
 	void RemoveTile(GridCell a_pos);
 	Tile* GetTilePtr(GridCell a_pos);
 	GridCell GetSize();

@@ -23,7 +23,7 @@ public:
         mood02 = 3,
         water01 = 4,
         lastTilable = 4, 
-        other
+        other = 5
     };
 private:
     groundTileType tileType;
@@ -49,12 +49,13 @@ public:
         sprite.setTexture(*m_texture);
         sprite.setTextureRect(m_area);
         basicRect = sprite.getTextureRect();
-        shift = shifted::none;
         nbOfVariants = m_nbOfVariants;
         currentVariant = 0;
         isTilable = m_isTilable;
         needBackgroundTile = m_needBackgroundTile;
         int i = ID / MAX_IDIES_FOR_TILES;
+        if (i > static_cast<int>(Tile::groundTileType::other))
+            i = static_cast<int>(Tile::groundTileType::other);
         tileType = static_cast<groundTileType>(i);
         int a = ID - ((static_cast<int>(tileType) * MAX_IDIES_FOR_TILES));
         g_lastID = a;
@@ -66,7 +67,6 @@ public:
         sprite.setTexture(*p1.sprite.getTexture());
         sprite.setTextureRect(p1.sprite.getTextureRect());
         basicRect = p1.basicRect;
-        shift = p1.shift;
         nbOfVariants = p1.nbOfVariants;
         currentVariant = p1.currentVariant;
         tileType = p1.tileType;
@@ -77,5 +77,6 @@ public:
 
     Tile::groundTileType GetTileType();
     void changeVariant(bool a_up);
+    void setVariant(unsigned int a_variant);
     void Update(sf::Vector2i* a_mousePos);
 };

@@ -19,6 +19,8 @@ private:
     Tile* selectedTile;
     std::map<int, std::map<int, GridCell>> tileUpdateMap;
     bool singleTileMode;
+    bool v_createClearDial;
+    bool v_closeClearDial;
     std::string editorFuncNames[3]{
         "Tiles",
         "Variants",
@@ -40,6 +42,10 @@ private:
     void updateTiles();
     void setBackgroundTiles();
     void editorFunction(const std::multimap<std::string, Button>::iterator& a_it);
+    void clearStage();
+    void closeDialWindow();
+    void createClearDial();
+
 protected:
 
 public:  
@@ -61,13 +67,16 @@ public:
         currentFunction = EditorState::EditorFunction::placeTile;
         currentTileID = DEFAULT_BASE_TILE;
         singleTileMode = false;
+        v_createClearDial = false;
+        v_closeClearDial = false;
 
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, p_window->getSize().y), "", sf::Vector2f(0, 0), sf::Color::Black);
-        OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(70, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::Black);
+        OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(105, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::White);
         OpenedWindow->AddSlider("Cursor_Size", sf::Vector2f(38, 70), 60, 2);
         OpenedWindow->AddButton("Editor_Func", sf::Vector2f(105, 40), sf::Vector2f(15, 110), editorFuncNames[0], sf::Color::Black);
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
+        OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Clear Lvl", sf::Color::White);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
         updateText();
     };

@@ -44,20 +44,10 @@ void Sprite::SetPosition(GridCell a_pos, int a_shifted)
 
 }
 
-void Sprite::setShift(Sprite::shifted a_shift)
-{
-	shift = a_shift;
-}
-
 void Sprite::flipSprite()
 {
 	auto r = sprite.getTextureRect();
 	sprite.setTextureRect(sf::IntRect(r.left + r.width, r.top, -r.width, r.height));
-}
-
-Sprite::shifted Sprite::getShift()
-{
-	return shift;
 }
 
 GridCell Sprite::GetGridPosition()

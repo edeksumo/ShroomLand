@@ -29,8 +29,8 @@ public:
 
 	bool isVisible(const Sprite& a_sprite, sf::RenderTarget* a_target);
 	void addTile(GridCell a_pos, unsigned int a_ID);	
-	void fillDeque(GridCell a_pos, unsigned int a_ID);
-	void addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted = 0);
+	void fillDeque(GridCell a_pos, unsigned int a_ID, unsigned int a_vatiant);
+	void addBackgroundTile(GridCell a_pos, unsigned int a_ID);
 	Tile* getPrefTilePtr(int a_ID);
 
 	void Update(sf::Vector2i* a_mousePos);

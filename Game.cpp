@@ -37,7 +37,7 @@ void Game::LoadStages()
     /*
        save format:
        STAGE name_of_stage
-       OBJ OBJ_CLASS_NAME   obj_id  obj_grid_posX   obj_grid posY   shifted
+       OBJ OBJ_CLASS_NAME   obj_id  obj_grid_posX   obj_grid posY   variant
 
        example:
        STAGE overworld
@@ -66,15 +66,15 @@ void Game::LoadStages()
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                it->second.fillDeque(GridCell(x, y), j);
+                auto va = stoi(v[i + 5]);
+                it->second.fillDeque(GridCell(x, y), j, va);
                 //.... adding tile objects to deque
             }
             if (v[i + 1] == dataMenager.SaveFormat.BackTileDefiner) {
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                auto z = stoi(v[i + 5]);
-                it->second.addBackgroundTile(GridCell(x, y), j, z);
+                it->second.addBackgroundTile(GridCell(x, y), j);
                 //.... adding tile objects to deque
             }
             ///.... each type of obj must be specified here 

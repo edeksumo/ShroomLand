@@ -21,16 +21,18 @@ void State::Keyboard()
 
 void State::defaultButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
 {
-	if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
-		if (p_state->size()) {
-			stateQuit = true;
-			return;
+	if (Windows.begin()->getID() == 999) {
+		if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
+			if (p_state->size()) {
+				stateQuit = true;
+				return;
+			}
 		}
-	}
-	if (Window::CheckButton(a_it, p_dM->Lang.no)) {
-		if (Windows.size()) {
-			Windows.begin()->setToClose = true;
-			return;
+		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
+			if (Windows.size()) {
+				Windows.begin()->setToClose = true;
+				return;
+			}
 		}
 	}
 }

@@ -37,18 +37,19 @@ void Stage::addTile(GridCell a_pos, unsigned int a_ID)
 	TileGrid.AddTile(a_pos, it->second);
 }
 
-void Stage::fillDeque(GridCell a_pos, unsigned int a_ID)
+void Stage::fillDeque(GridCell a_pos, unsigned int a_ID, unsigned int a_vatiant)
 {
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
-	TileGrid.AddTile(a_pos, it->second);
+	TileGrid.AddTile(a_pos, it->second, a_vatiant);
 }
 
-void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID, int a_shifted)
+void Stage::addBackgroundTile(GridCell a_pos, unsigned int a_ID)
 {
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
 	std::multimap<int, Tile*>::iterator it = p_objMenager->TilePtrContainer.find(a_ID);
 	BackGroundTiles.push_back(*it->second);
 	BackGroundTiles.back().SetPosition(a_pos);	//HACKED NEED FIX
-	BackGroundTiles.back().setShift(static_cast<Tile::shifted>(a_shifted));
 }
 
 Tile* Stage::getPrefTilePtr(int a_ID)
