@@ -74,6 +74,7 @@ public:
 	/****************************************************/
 	//Obj textures
 	/****************************************************/
+	//Tiles
 	sf::Texture emptyTxt;
 	sf::Texture grassTileSet;
 	sf::Texture muddyGrassTileSet;
@@ -84,6 +85,10 @@ public:
 	sf::Texture clif01Tiles;
 
 	sf::Texture tilerDecorTxt;
+
+	//Objects
+	sf::Texture objectsTxt;
+
 	/****************************************************/
 	//GUI textures
 	/****************************************************/
@@ -118,6 +123,7 @@ public:
 		/****************************************************/
 		//Obj textures
 		/****************************************************/
+		//tiles
 		if (!emptyTxt.loadFromFile("data/textures/empty.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: empty.png" << std::endl;
 		if (!grassTileSet.loadFromFile("data/textures/grass01.png"))
@@ -137,6 +143,11 @@ public:
 			cout << "== DATAMENAGER ERROR == Texture not loaded: clif.png" << std::endl;
 		if (!tilerDecorTxt.loadFromFile("data/textures/decor.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: decor.png" << std::endl;
+
+		//objects
+		if (!objectsTxt.loadFromFile("data/textures/Dec_props2.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: Dec_props2.png" << std::endl;
+
 		/****************************************************/
 		//GUI textures
 		/****************************************************/

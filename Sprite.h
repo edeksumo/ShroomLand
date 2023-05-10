@@ -14,14 +14,16 @@ const bool DEFAULT_MASK_FOR_BACKGROUND[MAX_IDIES_FOR_TILES] = { 1, 1, 1, 1, 1, 0
 class Sprite
 {
 private:
+	sf::Vector2f hitboxPos;
 protected:
+	sf::RectangleShape hitbox;
 	DataMenager* p_dM;
+	bool hasHitbox;
 public:
+	
 	unsigned int ID;
 	sf::Sprite sprite;
 	GridCell posOnGrid;
-	int animFrame;
-	void animation();
 	
 		
 	Sprite() {
@@ -29,15 +31,26 @@ public:
 		static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
 		posOnGrid = GridCell(0, 0);
-		animFrame = 0;
+		hasHitbox = false;
+		//std::cout << "sprite constructor " << ID << endl;
+	};
+
+	Sprite(sf::IntRect m_hitboxPos) {
+		p_dM = nullptr;
+		static unsigned int ID_COUNTER;
+		ID = ID_COUNTER++;
+		posOnGrid = GridCell(0, 0);
+		hasHitbox = true;
+		hitboxPos = sf::Vector2f(m_hitboxPos.left, m_hitboxPos.top);
 		//std::cout << "sprite constructor " << ID << endl;
 	};
 
 	Sprite(const Sprite& p1) {
 		ID = p1.ID;
 		p_dM = p1.p_dM;
-		animFrame = p1.animFrame;
 		posOnGrid = p1.posOnGrid;
+		hasHitbox = p1.hasHitbox;
+		hitboxPos = p1.hitboxPos;
 		//std::cout << "sprite copy constructor " << ID << endl;
 	};
 

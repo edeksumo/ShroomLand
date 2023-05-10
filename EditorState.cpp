@@ -129,6 +129,12 @@ void EditorState::changeVariants()
 
 void EditorState::placeObjects()
 {
+	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed) {
+		//currentStage->addTile(MousePosOnGrid, 14);
+		//std::cout << Tile::g_lastTileID;
+		auto a = Tile::g_lastTileID;
+		currentStage->addObject(MousePosOnGrid, a);
+	}
 }
 
 void EditorState::wheelFunctions()

@@ -1,6 +1,7 @@
 #include "Tile.h"
 
 int Tile::g_lastID = 0;
+int Tile::g_lastTileID = 0;
 /****************************************************/
 //Private
 /****************************************************/
@@ -47,9 +48,5 @@ void Tile::setVariant(unsigned int a_variant)
 
 void Tile::Update(sf::Vector2i* a_mousePos)
 {
-	//if (GetTileType() == Tile::groundTileType::water) {
-	//	animation();
-	//}
-	//std::cout << a_mousePos->x << " " << a_mousePos->y;
-	//system("cls");
+
 }

@@ -36,12 +36,14 @@ public:
     unsigned int nbOfVariants;
     unsigned int currentVariant;
     static int g_lastID;
+    static int g_lastTileID;
     Tile() {
         tileType = groundTileType::none;
         isTilable = false;
         needBackgroundTile = false;
         nbOfVariants = 0;
         currentVariant = 0;
+        hasHitbox = false;
     };
 
     Tile(sf::Texture* m_texture, sf::IntRect m_area, bool m_isTilable, bool m_needBackgroundTile, unsigned int m_nbOfVariants, DataMenager* m_dM) {
@@ -53,12 +55,14 @@ public:
         currentVariant = 0;
         isTilable = m_isTilable;
         needBackgroundTile = m_needBackgroundTile;
+        hasHitbox = false; 
         int i = ID / MAX_IDIES_FOR_TILES;
         if (i > static_cast<int>(Tile::groundTileType::other))
             i = static_cast<int>(Tile::groundTileType::other);
         tileType = static_cast<groundTileType>(i);
         int a = ID - ((static_cast<int>(tileType) * MAX_IDIES_FOR_TILES));
         g_lastID = a;
+        g_lastTileID++;
         //std::cout << ID << " " << i << "constructor " << g_lastID << std::endl;
     };
 

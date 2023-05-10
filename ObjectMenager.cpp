@@ -38,12 +38,24 @@ void ObjectMenager::tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrP
 	}
 }
 
+void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+{
+	a_staticObjPtr = new StaticObject(a_texture, m_area, true, m_hitbox, p_dM);
+	std::cout << a_staticObjPtr->ID << std::endl;
+	ObjectPtrContainer.insert(std::pair<int, StaticObject*>(a_staticObjPtr->ID, a_staticObjPtr));
+}
+
 Tile* ObjectMenager::getTilePtrById(int a_ID)
 {
 	std::cout << "2";
 	//std::multimap<int, Tile*>::iterator it = TilePtrContainer.find(a_ID);
 	//std::cout << "2";
 	return TilePtrContainer.find(a_ID)->second;
+}
+
+Object* ObjectMenager::getObjectPtrById(int a_ID)
+{
+	return ObjectPtrContainer.find(a_ID)->second;
 }
 
 /****************************************************/
