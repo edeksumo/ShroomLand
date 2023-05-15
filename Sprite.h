@@ -24,11 +24,11 @@ public:
 	unsigned int ID;
 	sf::Sprite sprite;
 	GridCell posOnGrid;
-	
+	static unsigned int ID_COUNTER;
 		
 	Sprite() {
 		p_dM = nullptr;
-		static unsigned int ID_COUNTER;
+		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
 		posOnGrid = GridCell(0, 0);
 		hasHitbox = false;
@@ -37,7 +37,7 @@ public:
 
 	Sprite(sf::IntRect m_hitboxPos) {
 		p_dM = nullptr;
-		static unsigned int ID_COUNTER;
+		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
 		posOnGrid = GridCell(0, 0);
 		hasHitbox = true;

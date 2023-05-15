@@ -66,11 +66,13 @@ void Window::SetElementValue(std::string a_eleName, int a_val)
 	for (it_1 = Switches.begin(); it_1 != Switches.end(); ++it_1) {
 		if (it_1->first == a_eleName) {
 			if (a_val == 1) {
-				it_1->second.setState(Button::ButtonState::Pressed);
+				//it_1->second.setState(Button::ButtonState::Pressed);
+				it_1->second.setState(Button::SwitchState::on);
 				return;
 			}
 			else if (a_val == 0) {
-				it_1->second.setState(Button::ButtonState::Free);
+				//it_1->second.setState(Button::ButtonState::Free);
+				it_1->second.setState(Button::SwitchState::off);
 				return;
 			}
 			else {
@@ -120,6 +122,18 @@ int Window::GetSliderValue(std::string a_eleName)
 			return it->second.getValue();
 		}
 	}
+}
+
+Button::SwitchState Window::GetSwitchValue(std::string a_eleName)
+{
+	std::multimap<std::string, Switch>::iterator it_1 = Switches.begin();
+	for (it_1 = Switches.begin(); it_1 != Switches.end(); ++it_1) {
+		if (it_1->first == a_eleName) {
+			return it_1->second.getState();
+		}
+	}
+	std::cout << "== WINDOW == GetSwitchValue Func: Is not switch" << std::endl;
+	return Button::SwitchState::off;
 }
 
 bool Window::IsSwitchOn(std::string a_eleName)

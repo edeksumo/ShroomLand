@@ -133,7 +133,7 @@ void EditorState::placeObjects()
 		//currentStage->addTile(MousePosOnGrid, 14);
 		//std::cout << Tile::g_lastTileID;
 		auto a = Tile::g_lastTileID;
-		currentStage->addObject(MousePosOnGrid, a);
+		currentStage->addObject(MousePosOnGrid, a + 1);
 	}
 }
 

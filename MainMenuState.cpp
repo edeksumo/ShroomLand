@@ -26,6 +26,12 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 			p_dM->settings->write(p_dM->settingsINI);
 			v_closeSettings = true;
 		}
+		if (OpenedWindow->GetSwitchValue(p_dM->EngineNames.hitboxSwitch) == Button::SwitchState::off) {
+			p_dM->Settings.hitboxes = false;
+		}
+		else {
+			p_dM->Settings.hitboxes = true;
+		}
 	}
 }
 
@@ -53,7 +59,9 @@ void MainMenuState::createSettingsWindow()
 		return;
 	openSettings = false;
 	PushWindow(100, sf::Vector2f(150, 40), sf::Vector2f(420, 450), p_dM->Lang.settings, sf::Vector2f(200, 30), sf::Color::Black);
-	OpenedWindow->AddSwitch(p_dM->EngineNames.settingsSwitch, sf::Vector2f(470, 100));
+	OpenedWindow->AddText(p_dM->Lang.hitboxes, sf::Vector2f(240, 111), sf::Color::Black, p_dM->Lang.hitboxes);
+	OpenedWindow->AddSwitch(p_dM->EngineNames.hitboxSwitch, sf::Vector2f(470, 100));
+	OpenedWindow->SetElementValue(p_dM->EngineNames.hitboxSwitch, p_dM->Settings.hitboxes);
 	OpenedWindow->AddSlider(p_dM->EngineNames.volumeSlider, sf::Vector2f(270, 200), 200, 100);
 	OpenedWindow->AddText(p_dM->Lang.volume, sf::Vector2f(210, 218), sf::Color::Black, p_dM->Lang.volume);
 	OpenedWindow->AddText(p_dM->EngineNames.volumeText, sf::Vector2f(535, 218), sf::Color::Black, to_string(p_dM->Settings.volume));

@@ -1,4 +1,5 @@
 #include "Sprite.h"
+unsigned int Sprite::ID_COUNTER = 0;
 /****************************************************/
 //Private
 /****************************************************/
@@ -33,7 +34,8 @@ GridCell Sprite::GetGridPosition()
 
 void Sprite::Render(sf::RenderTarget* a_target)
 {
-	//if (hasHitbox)
-	//	a_target->draw(hitbox);
+	if (hasHitbox)
+		if(p_dM->Settings.hitboxes)
+			a_target->draw(hitbox);
 	a_target->draw(sprite);
 }

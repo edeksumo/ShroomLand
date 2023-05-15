@@ -79,6 +79,7 @@ public:
     void SetElementValue(std::string a_eleName, std::string a_val);
     void SetElementValue(std::string a_eleName, sf::Sprite* a_val);
     int GetSliderValue(std::string a_eleName);
+    Button::SwitchState GetSwitchValue(std::string a_eleName);
     bool IsSwitchOn(std::string a_eleName);
     bool isWindowBlockingMouse();
     void Update(sf::Vector2i* a_mousePos);

@@ -26,6 +26,7 @@ public:
 		string save = "Save";
 		string load = "Load";
 		string volume = "Volume";
+		string hitboxes = "Show Hitboxes:";
 	};
 
 	struct EngineNames {
@@ -33,11 +34,12 @@ public:
 		string settings = "settings";
 		string volumeText = "volumeText";
 		string volumeSlider = "volumeSlider";
-		string settingsSwitch = "settingsSwitch";
+		string hitboxSwitch = "hitboxSwitch";
 	};
 
 	struct Settings {
 		int volume;
+		bool hitboxes;
 	};
 
 	struct SaveFormat {
@@ -199,6 +201,7 @@ public:
 		settings->read(settingsINI);
 		std::string& volumeStr = settingsINI[EngineNames.settings][EngineNames.volume];
 		Settings.volume = std::stoi(volumeStr);
+		Settings.hitboxes = true;
 
 	/****************************************************/
 	// Global Variables

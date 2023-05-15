@@ -5,10 +5,10 @@
 
 void Switch::setTexture()
 {
-	if (state == SwitchState::off) {
+	if (state == Button::SwitchState::off) {
 		backgroundSprite.setTexture(p_dM->switchBackgroundTxt);
 	}
-	else {
+	else if (state == Button::SwitchState::on) {
 		backgroundSprite.setTexture(p_dM->switchBackgroundTickTxt);
 	}
 }
@@ -19,14 +19,15 @@ void Switch::setTexture()
 /****************************************************/
 //Public
 /****************************************************/
-void Switch::setState(Button::ButtonState a_state)
+void Switch::setState(Button::SwitchState a_state)
 {
-	buttonState = a_state;
+	//buttonState = a_state;
+	state = a_state;
 }
 
-Button::ButtonState Switch::getState()
+Button::SwitchState Switch::getState()
 {
-	return buttonState;
+	return state;
 }
 
 void Switch::Update(sf::Vector2i* a_mousePos)

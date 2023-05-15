@@ -25,8 +25,8 @@ public:
         initBackground();
     };
 
-    void setState(Button::ButtonState a_state);
-    Button::ButtonState getState();
+    void setState(Button::SwitchState a_state);
+    Button::SwitchState getState();
     void Update(sf::Vector2i* a_mousePos);
     void Render(sf::RenderTarget* a_target);
 };
