@@ -23,6 +23,9 @@ private:
     bool v_createClearDial;
     bool v_closeClearDial;
     sf::Vector2f mousePosVec;
+    sf::Vector2f mousePosPressed;
+    sf::Vector2f tempObjPos;
+    unsigned int objectIdOffset;
 
     std::string editorFuncNames[3]{
         "Tiles",
@@ -73,6 +76,9 @@ public:
         singleTileMode = false;
         v_createClearDial = false;
         v_closeClearDial = false;
+        mousePosPressed = sf::Vector2f(0, 0);
+        tempObjPos = sf::Vector2f(0, 0);
+        objectIdOffset = 0;
 
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, p_window->getSize().y), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(105, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::White);
@@ -80,7 +86,7 @@ public:
         OpenedWindow->AddButton("Editor_Func", sf::Vector2f(105, 40), sf::Vector2f(15, 110), editorFuncNames[0], sf::Color::Black);
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Tile_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
-        OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 400), &p_dM->emptyTxt);
+        OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 340), &p_dM->emptyTxt);
         OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Clear Lvl", sf::Color::White);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
         updateText();

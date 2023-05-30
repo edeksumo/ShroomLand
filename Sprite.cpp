@@ -1,5 +1,6 @@
 #include "Sprite.h"
 unsigned int Sprite::ID_COUNTER = 0;
+unsigned int Sprite::LAST_ID = 0;
 /****************************************************/
 //Private
 /****************************************************/

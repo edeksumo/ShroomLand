@@ -83,6 +83,12 @@ void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
 	//std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
 
+void Grid::MoveOnPos(sf::Vector2f a_pos, Object* a_obj)
+{
+	a_obj->SetPosition(a_pos);
+	std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
+}
+
 void Grid::RemoveObject(Object* a_obj)
 {
 	int a = 0;
@@ -104,7 +110,6 @@ void Grid::RemoveObject(Object* a_obj)
 		}
 		b++;
 	}
-	std::cout << "henlo " << a << " " << b << endl;
 	StaticObjStorageVec.erase(StaticObjStorageVec.begin() + a);
 	RenderObjPtrVec.erase(RenderObjPtrVec.begin() + b);
 }

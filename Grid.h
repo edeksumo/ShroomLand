@@ -45,6 +45,7 @@ public:
 	bool isTileOccupied(GridCell a_pos);
 
 	void AddObject(sf::Vector2f a_pos, StaticObject* a_obj);
+	void MoveOnPos(sf::Vector2f a_pos, Object* a_obj);	//used for already placed objects for seting position (updates render order)
 	void RemoveObject(Object* a_obj);
 	bool isTileObjOccupied(GridCell a_pos);
 };

@@ -131,20 +131,27 @@ void EditorState::changeVariants()
 void EditorState::placeObjects()
 {
 	int a = 0;
-	for (auto i : currentStage->TileGrid.RenderObjPtrVec) {
-		if (i->getHitboxWorldRect().contains(mousePosVec)) {
-			selectedObject = i;
-			break;
-		}
-		else {
-			selectedObject = nullptr;
+	if(Keyboard::checkMouseButtonState(sf::Mouse::Left) != Keyboard::KeyState::hold){
+		for (auto i : currentStage->TileGrid.RenderObjPtrVec) {
+			if (i->getHitboxWorldRect().contains(mousePosVec)) {
+				selectedObject = i;
+				break;
+			}
+			else {
+				selectedObject = nullptr;
+			}
 		}
 	}
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		//std::cout << Tile::g_lastTileID;
+		mousePosPressed = mousePosVec;
+		if (selectedObject != nullptr) {
+			tempObjPos = selectedObject->sprite.getPosition();
+			return;
+		}
 		auto a = Tile::g_lastTileID;
-		currentStage->addObject(mousePosVec, a + 1);
+		currentStage->addObject(mousePosVec, a + objectIdOffset);
 	}
 	else if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::pressed) {
 		if (selectedObject == nullptr)
@@ -152,6 +159,13 @@ void EditorState::placeObjects()
 		Object* tmp = selectedObject;
 		selectedObject = nullptr;
 		currentStage->TileGrid.RemoveObject(tmp);
+	}else if(Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold){
+		if (selectedObject == nullptr)
+			return;
+		auto tempMouse = mousePosVec - mousePosPressed;
+		
+		currentStage->TileGrid.MoveOnPos(tempObjPos + tempMouse, selectedObject);
+		//selectedObject->SetPosition(tempObjPos + tempMouse);
 	}
 }
 
@@ -206,6 +220,20 @@ void EditorState::wheelFunctions()
 
 		}
 	}
+	else if (currentFunction == EditorState::EditorFunction::placeObject) {
+		auto a = Tile::g_lastTileID;
+		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
+			objectIdOffset++;
+			if (a + objectIdOffset > Sprite::LAST_ID) {
+				objectIdOffset = 0;
+			}
+		}
+		else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
+			objectIdOffset--;
+			if (objectIdOffset == UINT_MAX)
+				objectIdOffset = Sprite::LAST_ID - a;
+		}
+	}
 	updateText();
 }
 
@@ -255,7 +283,10 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 		} 
 		else
 		{
-			activeSprite.setTexture(p_dM->emptyTxt);
+			auto a = Tile::g_lastTileID;
+			Object* p = currentStage->getPrefObjPtr(a + objectIdOffset);
+			activeSprite = p->sprite;
+			//activeSprite.setTexture(p_dM->emptyTxt);
 		}
 		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
 	}

@@ -72,6 +72,12 @@ Tile* Stage::getPrefTilePtr(int a_ID)
 	return it->second;
 }
 
+Object* Stage::getPrefObjPtr(int a_ID)
+{
+	std::multimap<int, StaticObject*>::iterator it = p_objMenager->ObjectPtrContainer.find(a_ID);
+	return it->second;
+}
+
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 

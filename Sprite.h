@@ -25,11 +25,13 @@ public:
 	sf::Sprite sprite;
 	GridCell posOnGrid;
 	static unsigned int ID_COUNTER;
+	static unsigned int LAST_ID;
 		
 	Sprite() {
 		p_dM = nullptr;
 		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
+		LAST_ID = ID;
 		posOnGrid = GridCell(0, 0);
 		hasHitbox = false;
 		//std::cout << "sprite constructor " << ID << endl;
@@ -39,6 +41,7 @@ public:
 		p_dM = nullptr;
 		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
+		LAST_ID = ID;
 		posOnGrid = GridCell(0, 0);
 		hasHitbox = true;
 		hitboxPos = sf::Vector2f(m_hitboxPos.left, m_hitboxPos.top);
