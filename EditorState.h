@@ -17,10 +17,12 @@ private:
     int currentTyleType;
     int currentTileID;
     Tile* selectedTile;
+    Object* selectedObject;
     std::map<int, std::map<int, GridCell>> tileUpdateMap;
     bool singleTileMode;
     bool v_createClearDial;
     bool v_closeClearDial;
+    sf::Vector2f mousePosVec;
 
     std::string editorFuncNames[3]{
         "Tiles",
@@ -65,6 +67,7 @@ public:
         cursorShape.setFillColor(sf::Color(0, 0, 0, 0));
         currentStage = &p_stageContainer->begin()->second;
         selectedTile = nullptr;
+        selectedObject = nullptr;
         currentFunction = EditorState::EditorFunction::placeTile;
         currentTileID = DEFAULT_BASE_TILE;
         singleTileMode = false;
@@ -76,7 +79,8 @@ public:
         OpenedWindow->AddSlider("Cursor_Size", sf::Vector2f(38, 70), 60, 2);
         OpenedWindow->AddButton("Editor_Func", sf::Vector2f(105, 40), sf::Vector2f(15, 110), editorFuncNames[0], sf::Color::Black);
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
-        OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
+        OpenedWindow->AddImage("Tile_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
+        OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 400), &p_dM->emptyTxt);
         OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Clear Lvl", sf::Color::White);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
         updateText();

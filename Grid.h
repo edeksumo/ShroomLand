@@ -11,21 +11,17 @@ private:
 protected:
 
 public:
-	std::vector<std::vector<Tile*>> TileGridPtr;\
-	std::vector<std::vector<Object*>> ObjGridPtr;
+	std::vector<std::vector<Tile*>> TileGridPtr;
+	std::vector<Object*> RenderObjPtrVec;
+	std::vector<StaticObject*> StaticObjStorageVec;
 	Grid() {
 		size_x = 100;
 		size_y = 100;
 		TileGridPtr.resize(size_x);
-		ObjGridPtr.resize(size_x);
 		/// <summary>
 		/// prepering empty stage
 		/// </summary>
 		for (auto& i : TileGridPtr) {
-			i.resize(size_y);
-			std::fill(i.begin(), i.end(), nullptr);
-		}
-		for (auto& i : ObjGridPtr) {
 			i.resize(size_y);
 			std::fill(i.begin(), i.end(), nullptr);
 		}
@@ -34,15 +30,10 @@ public:
 		size_x = m_sizex;
 		size_y = m_sizey;
 		TileGridPtr.resize(size_x);
-		ObjGridPtr.resize(size_x);
 		/// <summary>
 		/// prepering empty stage
 		/// </summary>
 		for (auto& i : TileGridPtr) {
-			i.resize(size_y);
-			std::fill(i.begin(), i.end(), nullptr);
-		}
-		for (auto& i : ObjGridPtr) {
 			i.resize(size_y);
 			std::fill(i.begin(), i.end(), nullptr);
 		}
@@ -53,8 +44,8 @@ public:
 	GridCell GetSize();
 	bool isTileOccupied(GridCell a_pos);
 
-	void AddObject(GridCell a_pos, StaticObject* a_obj);
-	void RemoveObject(GridCell a_pos);
+	void AddObject(sf::Vector2f a_pos, StaticObject* a_obj);
+	void RemoveObject(Object* a_obj);
 	bool isTileObjOccupied(GridCell a_pos);
 };
 

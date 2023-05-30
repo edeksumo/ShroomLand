@@ -1,4 +1,9 @@
 #include "Grid.h"
+bool sortingFunc(Object* a_o1, Object* a_o2)
+{
+	//std::cout << "sorting";
+	return (*a_o1 < *a_o2);
+}
 /****************************************************/
 //Private
 /****************************************************/
@@ -57,32 +62,58 @@ bool Grid::isTileOccupied(GridCell a_pos)
 	return true;
 }
 
-void Grid::AddObject(GridCell a_pos, StaticObject* a_obj)
+void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 
 	StaticObject* p = new StaticObject(*a_obj);
 	p->SetPosition(a_pos);
-
-	ObjGridPtr[a_pos.x][a_pos.y] = p;
+	StaticObjStorageVec.push_back(p);
+	int a = 0;
+	for (auto i : RenderObjPtrVec) {
+		if (a_pos.y > i->sprite.getPosition().y)
+			a++;
+	}
+	RenderObjPtrVec.insert(RenderObjPtrVec.begin() + a, StaticObjStorageVec.back());
+	/////////////////////////////////////////////
+	//////	IT WILL Be usefull while moving 
+	////////////////////////////////////////////
+	//RenderObjPtrVec.push_back(StaticObjStorageVec.back());
+	//std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
 
-void Grid::RemoveObject(GridCell a_pos)
+void Grid::RemoveObject(Object* a_obj)
 {
-	if (a_pos.x < 0 || a_pos.y < 0)
-		return;
-	if (ObjGridPtr[a_pos.x][a_pos.y] == nullptr)
-		return;
-	delete ObjGridPtr[a_pos.x][a_pos.y];
-	ObjGridPtr[a_pos.x][a_pos.y] = nullptr;
+	int a = 0;
+	for (int i = 0; i < StaticObjStorageVec.size(); i++) {
+		if (StaticObjStorageVec[i] == a_obj) {
+			break;
+		}
+		a++;
+	}
+
+	/// 
+	/// removing adress from rendering vector 
+	/// 
+
+	int b = 0;
+	for (int i = 0; i < RenderObjPtrVec.size(); i++) {
+		if (RenderObjPtrVec[i] == a_obj) {
+			break;
+		}
+		b++;
+	}
+	std::cout << "henlo " << a << " " << b << endl;
+	StaticObjStorageVec.erase(StaticObjStorageVec.begin() + a);
+	RenderObjPtrVec.erase(RenderObjPtrVec.begin() + b);
 }
 
 bool Grid::isTileObjOccupied(GridCell a_pos)
 {
-	if (a_pos.x < 0 || a_pos.y < 0)
-		return false;
-	if (ObjGridPtr[a_pos.x][a_pos.y] == nullptr)
-		return false;
+	//if (a_pos.x < 0 || a_pos.y < 0)
+	//	return false;
+	//if (ObjGridPtr[a_pos.x][a_pos.y] == nullptr)
+	//	return false;
 	return true;
 }

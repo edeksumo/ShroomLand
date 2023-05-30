@@ -55,7 +55,7 @@ public:
 		tilesetPrefabCreater(&p_dM->clif01Tiles, clif01, false, true, 0);
 
 		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(0, 0, 160, 224));
-		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(0, 0, 160, 224));
+		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120));
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

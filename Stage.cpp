@@ -7,6 +7,7 @@
 //Protected
 /****************************************************/
 
+
 /****************************************************/
 //Public
 /****************************************************/
@@ -36,19 +37,16 @@ void Stage::addTile(GridCell a_pos, unsigned int a_ID)
 	TileGrid.AddTile(a_pos, it->second);
 }
 
-void Stage::addObject(GridCell a_pos, unsigned int a_ID)
+void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 	std::cout << a_ID << endl;
 	std::multimap<int, StaticObject*>::iterator it = p_objMenager->ObjectPtrContainer.find(a_ID);
-	//for (auto& it1 : p_objMenager->ObjectPtrContainer) {
-	//	std::cout << it1.first<< " " << it1.second->ID << endl;
+
+	//if (TileGrid.isTileObjOccupied(a_pos)) {
+	//	TileGrid.RemoveObject(a_pos);
 	//}
-	//std::cout<<it->second->ID;
-	if (TileGrid.isTileObjOccupied(a_pos)) {
-		TileGrid.RemoveObject(a_pos);
-	}
 	/// ////////////////////////////////////////////////////////
 	TileGrid.AddObject(a_pos, it->second);
 }
@@ -102,13 +100,17 @@ void Stage::Render(sf::RenderTarget* a_target)
 			}
 		}
 	}
-	for (int y = 0; y < TileGrid.GetSize().y; y++) {
-		for (int x = 0; x < TileGrid.GetSize().x; x++) {
-			if (TileGrid.ObjGridPtr[x][y] != nullptr) {
-				if (isVisible(*TileGrid.ObjGridPtr[x][y], a_target))
-					TileGrid.ObjGridPtr[x][y]->Render(a_target);
-			
-			}
-		}
+	
+	for (const auto& i : TileGrid.RenderObjPtrVec) {
+		i->Render(a_target);
 	}
+	//for (int y = 0; y < TileGrid.GetSize().y; y++) {
+	//	for (int x = 0; x < TileGrid.GetSize().x; x++) {
+	//		if (TileGrid.ObjGridPtr[x][y] != nullptr) {
+	//			if (isVisible(*TileGrid.ObjGridPtr[x][y], a_target))
+	//				TileGrid.ObjGridPtr[x][y]->Render(a_target);
+	//		
+	//		}
+	//	}
+	//}
 }

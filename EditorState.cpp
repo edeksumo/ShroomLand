@@ -4,6 +4,7 @@
 /****************************************************/
 void EditorState::mousePosUpdate(sf::Vector2f* a_mousePosOnCoords)
 {
+	mousePosVec = *a_mousePosOnCoords;
 	MousePosOnGrid = GridCell(a_mousePosOnCoords->x / TILE_SIZE, a_mousePosOnCoords->y / TILE_SIZE);
 	//std::cout << MousePosOnGrid.x << " " << MousePosOnGrid.y << std::endl;
 }
@@ -129,11 +130,28 @@ void EditorState::changeVariants()
 
 void EditorState::placeObjects()
 {
+	int a = 0;
+	for (auto i : currentStage->TileGrid.RenderObjPtrVec) {
+		if (i->getHitboxWorldRect().contains(mousePosVec)) {
+			selectedObject = i;
+			break;
+		}
+		else {
+			selectedObject = nullptr;
+		}
+	}
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::pressed) {
 		//currentStage->addTile(MousePosOnGrid, 14);
 		//std::cout << Tile::g_lastTileID;
 		auto a = Tile::g_lastTileID;
-		currentStage->addObject(MousePosOnGrid, a + 1);
+		currentStage->addObject(mousePosVec, a + 1);
+	}
+	else if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::pressed) {
+		if (selectedObject == nullptr)
+			return;
+		Object* tmp = selectedObject;
+		selectedObject = nullptr;
+		currentStage->TileGrid.RemoveObject(tmp);
 	}
 }
 
@@ -215,7 +233,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 		cursorShape.setSize(sf::Vector2f((selectorSize + 1) * TILE_SIZE, (selectorSize + 1) * TILE_SIZE));
 		Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + currentTileID);
 		activeSprite = p->sprite;
-		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
+		OpenedWindow->SetElementValue("Tile_Image", &activeSprite);
 		a_target->draw(cursorShape);
 	}
 	if (currentFunction == EditorState::EditorFunction::changeVariant) {
@@ -227,8 +245,19 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 		else {
 			activeSprite.setTexture(p_dM->emptyTxt);
 		}
-		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
+		OpenedWindow->SetElementValue("Tile_Image", &activeSprite);
 		a_target->draw(cursorShape);
+	}
+	if (currentFunction == EditorState::EditorFunction::placeObject)
+	{
+		if (selectedObject != nullptr) {
+			activeSprite = selectedObject->sprite;
+		} 
+		else
+		{
+			activeSprite.setTexture(p_dM->emptyTxt);
+		}
+		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
 	}
 }
 

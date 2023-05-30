@@ -21,6 +21,14 @@ void Sprite::SetPosition(GridCell a_pos)
 	}
 }
 
+void Sprite::SetPosition(sf::Vector2f a_pos)
+{
+	sprite.setPosition(sf::Vector2f(a_pos.x, a_pos.y));
+	if (hasHitbox) {
+		hitbox.setPosition(sprite.getPosition().x + hitboxPos.x, sprite.getPosition().y + hitboxPos.y);
+	}
+}
+
 void Sprite::flipSprite()
 {
 	auto r = sprite.getTextureRect();
@@ -32,10 +40,15 @@ GridCell Sprite::GetGridPosition()
 	return posOnGrid;
 }
 
+sf::FloatRect Sprite::getHitboxWorldRect()
+{
+	return hitbox.getGlobalBounds();
+}
+
 void Sprite::Render(sf::RenderTarget* a_target)
 {
-	if (hasHitbox)
-		if(p_dM->Settings.hitboxes)
-			a_target->draw(hitbox);
 	a_target->draw(sprite);
+	if (hasHitbox)
+		if (p_dM->Settings.hitboxes)
+			a_target->draw(hitbox);
 }

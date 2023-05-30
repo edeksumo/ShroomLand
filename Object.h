@@ -32,6 +32,9 @@ public:
         hitbox = p1.hitbox;
         setObjectCenterOrigin();
     }
+    bool operator <(const Object& p1) {
+        return (sprite.getPosition().y < p1.sprite.getPosition().y);
+    }
     bool isSolid();
     void setObjectCenterOrigin();
     virtual void Update(sf::Vector2i* a_mousePos) = 0;

@@ -55,8 +55,10 @@ public:
 	};
 
 	void SetPosition(GridCell a_pos);	//sets position on grid and multiplias it by 32 for in game pos
+	void SetPosition(sf::Vector2f a_pos);	//sets position in pixels
 	void flipSprite();
 	GridCell GetGridPosition();
+	sf::FloatRect getHitboxWorldRect();
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;
 	void Render(sf::RenderTarget* a_target);
 };
