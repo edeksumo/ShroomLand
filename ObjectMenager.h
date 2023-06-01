@@ -37,6 +37,8 @@ public:
 	StaticObject* tree;
 	StaticObject* tree2;
 	StaticObject* bush_01;
+	StaticObject* bush_02;
+	StaticObject* stemp_01;
 
 	std::multimap<int, StaticObject*> ObjectPtrContainer;					//stores all Object pointer in the game 
 	
@@ -58,6 +60,8 @@ public:
 		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120));
 		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(160, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120));
 		createStaticObjPrefab(&p_dM->objectsTxt, bush_01, sf::IntRect(0, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55));
+		createStaticObjPrefab(&p_dM->objectsTxt, bush_02, sf::IntRect(64, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55));
+		createStaticObjPrefab(&p_dM->objectsTxt, stemp_01, sf::IntRect(128, 224, 96, 128), true, sf::IntRect(0, -20, 40, 55));
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

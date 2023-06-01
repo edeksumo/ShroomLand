@@ -26,6 +26,7 @@ private:
     sf::Vector2f mousePosPressed;
     sf::Vector2f tempObjPos;
     unsigned int objectIdOffset;
+    sf::Sprite emptySprite;
 
     std::string editorFuncNames[3]{
         "Tiles",
@@ -79,6 +80,7 @@ public:
         mousePosPressed = sf::Vector2f(0, 0);
         tempObjPos = sf::Vector2f(0, 0);
         objectIdOffset = 0;
+
 
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, p_window->getSize().y), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(105, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::White);

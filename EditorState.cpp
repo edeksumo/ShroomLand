@@ -17,7 +17,9 @@ void EditorState::saveStages()
 	/// 
 	for (auto it = p_stageContainer->rbegin(); it != p_stageContainer->rend();++it) {
 		saveFile << p_dM->SaveFormat.StageDefiner << " " << it->first << endl;
-
+		
+		// saving tiles
+		
 		for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
 			for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
 				if (currentStage->TileGrid.TileGridPtr[i][j] != nullptr) 
@@ -25,8 +27,17 @@ void EditorState::saveStages()
 					<< " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.y << " " << currentStage->TileGrid.TileGridPtr[i][j]->currentVariant << std::endl;
 			}
 		}
+
+		// saving background tiles
+
 		for (const auto& it_01 : it->second.BackGroundTiles) {
 			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.BackTileDefiner << " " << it_01.ID << " " << it_01.posOnGrid.x << " " << it_01.posOnGrid.y << std::endl;
+		}
+
+		// saving static objects
+
+		for (const auto& it_02 : it->second.TileGrid.StaticObjStorageVec) {
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.StaticObjectDefiner << " " << it_02->ID << " " << it_02->sprite.getPosition().x << " " << it_02->sprite.getPosition().y << std::endl;
 		}
 		
 		//each obj type must be added here...
@@ -262,6 +273,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 		Tile* p = currentStage->getPrefTilePtr(MAX_IDIES_FOR_TILES * currentTyleType + currentTileID);
 		activeSprite = p->sprite;
 		OpenedWindow->SetElementValue("Tile_Image", &activeSprite);
+		OpenedWindow->SetElementValue("Obj_Image", &emptySprite);
 		a_target->draw(cursorShape);
 	}
 	if (currentFunction == EditorState::EditorFunction::changeVariant) {
@@ -288,6 +300,8 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 			activeSprite = p->sprite;
 			//activeSprite.setTexture(p_dM->emptyTxt);
 		}
+		OpenedWindow->SetElementValue("Tile_Image", &emptySprite);
+		OpenedWindow->SetElementValue("Current_Obj_Name", "");
 		OpenedWindow->SetElementValue("Obj_Image", &activeSprite);
 	}
 }
