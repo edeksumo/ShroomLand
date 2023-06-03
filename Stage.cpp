@@ -42,13 +42,22 @@ void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 	std::cout << a_ID << endl;
-	std::multimap<int, StaticObject*>::iterator it = p_objMenager->ObjectPtrContainer.find(a_ID);
+	/////////////////////
+	/// searching for object by ID in corresponding multimap 
+	///////////////////
 
-	//if (TileGrid.isTileObjOccupied(a_pos)) {
-	//	TileGrid.RemoveObject(a_pos);
-	//}
-	/// ////////////////////////////////////////////////////////
-	TileGrid.AddObject(a_pos, it->second);
+	std::multimap<int, StaticObject*>::iterator it = p_objMenager->StaticObjectPtrContainer.find(a_ID);
+	if (it != p_objMenager->StaticObjectPtrContainer.end()) {
+		TileGrid.AddObject(a_pos, it->second);
+		return;
+	}
+	std::multimap<int, InteractableObject*>::iterator it_01 = p_objMenager->InteractableObjectPtrContainer.find(a_ID);
+	if (it_01 != p_objMenager->InteractableObjectPtrContainer.end()) {
+		TileGrid.AddObject(a_pos, it_01->second);
+		return;
+	}
+
+	
 }
 
 void Stage::fillDeque(GridCell a_pos, unsigned int a_ID, unsigned int a_vatiant)
@@ -74,7 +83,7 @@ Tile* Stage::getPrefTilePtr(int a_ID)
 
 Object* Stage::getPrefObjPtr(int a_ID)
 {
-	std::multimap<int, StaticObject*>::iterator it = p_objMenager->ObjectPtrContainer.find(a_ID);
+	std::multimap<int, Object*>::iterator it = p_objMenager->ObjectsPrefabs.find(a_ID);
 	return it->second;
 }
 

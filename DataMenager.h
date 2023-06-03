@@ -91,6 +91,7 @@ public:
 
 	//Objects
 	sf::Texture objectsTxt;
+	sf::Texture chestsTxt;
 
 	/****************************************************/
 	//GUI textures
@@ -150,6 +151,8 @@ public:
 		//objects
 		if (!objectsTxt.loadFromFile("data/textures/Dec_props2.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: Dec_props2.png" << std::endl;
+		if (!chestsTxt.loadFromFile("data/textures/chest.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: chest.png" << std::endl;
 
 		/****************************************************/
 		//GUI textures

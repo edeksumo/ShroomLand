@@ -38,11 +38,27 @@ void ObjectMenager::tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrP
 	}
 }
 
+void ObjectMenager::addPrefab(int a_ID, Object* a_obj)
+{
+	ObjectsPrefabs.insert(std::pair<int, Object*>(a_ID, a_obj));
+}
+
 void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
 {
 	a_staticObjPtr = new StaticObject(a_texture, m_area, true, m_hitbox, p_dM);
-	std::cout << a_staticObjPtr->ID << std::endl;
-	ObjectPtrContainer.insert(std::pair<int, StaticObject*>(a_staticObjPtr->ID, a_staticObjPtr));
+	//std::cout << a_staticObjPtr->ID << std::endl;
+	StaticObjectPtrContainer.insert(std::pair<int, StaticObject*>(a_staticObjPtr->ID, a_staticObjPtr));
+	auto o = StaticObjectPtrContainer.find(a_staticObjPtr->ID);
+	addPrefab(a_staticObjPtr->ID, o->second);
+}
+
+void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+{
+	a_intractableObjPtr = new InteractableObject(a_texture, m_area, true, m_hitbox, p_dM);
+	//std::cout << a_intractableObjPtr->ID << std::endl;
+	InteractableObjectPtrContainer.insert(std::pair<int, InteractableObject*>(a_intractableObjPtr->ID, a_intractableObjPtr));
+	auto o = InteractableObjectPtrContainer.find(a_intractableObjPtr->ID);
+	addPrefab(a_intractableObjPtr->ID, o->second);
 }
 
 Tile* ObjectMenager::getTilePtrById(int a_ID)
@@ -55,7 +71,7 @@ Tile* ObjectMenager::getTilePtrById(int a_ID)
 
 Object* ObjectMenager::getObjectPtrById(int a_ID)
 {
-	return ObjectPtrContainer.find(a_ID)->second;
+	return StaticObjectPtrContainer.find(a_ID)->second;
 }
 
 /****************************************************/

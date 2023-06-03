@@ -1,6 +1,7 @@
 #pragma once
 #include"Tile.h"
 #include"StaticObject.h"
+#include"InteractableObject.h"
 #include <map>
 
 class ObjectMenager
@@ -10,7 +11,10 @@ private:
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5]);		//default isTilable = true, needBackgroundTile = true
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[5][7], bool a_isTilable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
+	
+	void addPrefab(int a_ID, Object* a_obj);
 	void createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox);
+	void createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox);
 
 protected:
 
@@ -40,7 +44,11 @@ public:
 	StaticObject* bush_02;
 	StaticObject* stemp_01;
 
-	std::multimap<int, StaticObject*> ObjectPtrContainer;					//stores all Object pointer in the game 
+	InteractableObject* chest_01;
+
+	std::multimap<int, StaticObject*> StaticObjectPtrContainer;					//stores all StaticObject pointer in the game
+	std::multimap<int, InteractableObject*> InteractableObjectPtrContainer;		//stores all InteractableObject pointer in the game
+	std::multimap<int, Object*> ObjectsPrefabs;									//Stores all object pointers to prefabs
 	
 	Object* getObjectPtrById(int a_ID);
 
@@ -62,6 +70,8 @@ public:
 		createStaticObjPrefab(&p_dM->objectsTxt, bush_01, sf::IntRect(0, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55));
 		createStaticObjPrefab(&p_dM->objectsTxt, bush_02, sf::IntRect(64, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55));
 		createStaticObjPrefab(&p_dM->objectsTxt, stemp_01, sf::IntRect(128, 224, 96, 128), true, sf::IntRect(0, -20, 40, 55));
+
+		createInteractableObjPrefab(&p_dM->chestsTxt, chest_01, sf::IntRect(0, 0, 64, 64), true, sf::IntRect(0, 0, 64, 64));
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

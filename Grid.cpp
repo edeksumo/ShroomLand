@@ -62,25 +62,41 @@ bool Grid::isTileOccupied(GridCell a_pos)
 	return true;
 }
 
-void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
+void Grid::AddObjectToRender(sf::Vector2f a_pos, Object* a_obj)
 {
-	if (a_pos.x < 0 || a_pos.y < 0)
-		return;
-
-	StaticObject* p = new StaticObject(*a_obj);
-	p->SetPosition(a_pos);
-	StaticObjStorageVec.push_back(p);
 	int a = 0;
 	for (auto i : RenderObjPtrVec) {
 		if (a_pos.y > i->sprite.getPosition().y)
 			a++;
 	}
-	RenderObjPtrVec.insert(RenderObjPtrVec.begin() + a, StaticObjStorageVec.back());
+	RenderObjPtrVec.insert(RenderObjPtrVec.begin() + a, a_obj);
 	/////////////////////////////////////////////
 	//////	IT WILL Be usefull while moving 
 	////////////////////////////////////////////
 	//RenderObjPtrVec.push_back(StaticObjStorageVec.back());
 	//std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
+}
+
+void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
+{
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
+
+	auto* p = new StaticObject(*a_obj);
+	p->SetPosition(a_pos);
+	StaticObjStorageVec.push_back(p);
+	AddObjectToRender(a_pos, StaticObjStorageVec.back());
+}
+
+void Grid::AddObject(sf::Vector2f a_pos, InteractableObject* a_obj)
+{
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
+
+	auto p = new InteractableObject(*a_obj);
+	p->SetPosition(a_pos);
+	InteractableObjStorageVec.push_back(p);
+	AddObjectToRender(a_pos, InteractableObjStorageVec.back());
 }
 
 void Grid::MoveOnPos(sf::Vector2f a_pos, Object* a_obj)
