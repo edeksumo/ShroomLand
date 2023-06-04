@@ -20,11 +20,11 @@ void EditorState::saveStages()
 		
 		// saving tiles
 		
-		for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
-			for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
-				if (currentStage->TileGrid.TileGridPtr[i][j] != nullptr) 
-					saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << currentStage->TileGrid.TileGridPtr[i][j]->ID << " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.x 
-					<< " " << currentStage->TileGrid.TileGridPtr[i][j]->posOnGrid.y << " " << currentStage->TileGrid.TileGridPtr[i][j]->currentVariant << std::endl;
+		for (int i = 0; i < it->second.TileGrid.GetSize().x; i++) {
+			for (int j = 0; j < it->second.TileGrid.GetSize().y; j++) {
+				if (it->second.TileGrid.TileGridPtr[i][j] != nullptr)
+					saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.TileDefiner << " " << it->second.TileGrid.TileGridPtr[i][j]->ID << " " << it->second.TileGrid.TileGridPtr[i][j]->posOnGrid.x
+					<< " " << it->second.TileGrid.TileGridPtr[i][j]->posOnGrid.y << " " << it->second.TileGrid.TileGridPtr[i][j]->currentVariant << std::endl;
 			}
 		}
 
@@ -55,6 +55,12 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 		if (Window::CheckButton(a_it, "Editor_Func")) {
 			editorFunction(a_it);
 		}
+		if (Window::CheckButton(a_it, "Add_Stage")) {
+			v_addStageDial = true;
+		}
+		if (Window::CheckButton(a_it, "Next_Stage")) {
+			changeStage(true);
+		}
 		if (Window::CheckButton(a_it, "Clear_Stage")) {
 			v_createClearDial = true;
 		}
@@ -68,9 +74,14 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 			v_closeClearDial = true;
 		}
 	}
-	//if (Window::CheckButton(a_it, "Update_Tiles")) {
-
-	//}
+	else if (Windows.begin()->getID() == 201) {
+		if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
+			addStage();
+		}
+		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
+			v_closeAddStageDial = true;
+		}
+	}
 }
 
 void EditorState::placeTiles()
@@ -79,7 +90,6 @@ void EditorState::placeTiles()
 	auto tileType = currentTyleType;
 
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Left) == Keyboard::KeyState::hold) {
-		//currentStage->addTile(MousePosOnGrid, 14);
 		for (int i = 0; i < selectorSize; i++) {
 			for (int j = 0; j < selectorSize; j++) {
 				currentStage->addTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + j), (tileType * MAX_IDIES_FOR_TILES) + currentTileID);
@@ -88,7 +98,6 @@ void EditorState::placeTiles()
 		}
 	}
 	if (Keyboard::checkMouseButtonState(sf::Mouse::Right) == Keyboard::KeyState::hold) {
-		//currentStage->removeTile(MousePosOnGrid);
 		for (int i = 0; i < selectorSize; i++) {
 			for (int j = 0; j < selectorSize; j++) {
 				currentStage->TileGrid.RemoveTile(GridCell(MousePosOnGrid.x + i, MousePosOnGrid.y + j));
@@ -266,6 +275,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 {
 	if (OpenedWindow->getID() != 1)
 		return;
+	OpenedWindow->SetElementValue("Current_Stage_Name", currentStage->Name);
 	cursorShape.setPosition(MousePosOnGrid.x * TILE_SIZE, MousePosOnGrid.y * TILE_SIZE);
 	if (currentFunction == EditorState::EditorFunction::placeTile) {
 		auto selectorSize = OpenedWindow->GetSliderValue("Cursor_Size");
@@ -696,6 +706,7 @@ void EditorState::clearStage()
 	}
 	v_closeClearDial = true;
 }
+
 void EditorState::closeDialWindow()
 {
 	if (!v_closeClearDial)
@@ -706,6 +717,7 @@ void EditorState::closeDialWindow()
 		return;
 	}
 }
+
 void EditorState::createClearDial()
 {
 	if (!v_createClearDial)
@@ -714,6 +726,83 @@ void EditorState::createClearDial()
 	PushWindow(99, sf::Vector2f(260, 40), sf::Vector2f(260, 100), "Do you want clear stage?", sf::Vector2f(128, 30), sf::Color::Black);
 	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 90), p_dM->Lang.yes, sf::Color(23, 23, 23));
 	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
+}
+
+void EditorState::closeAddStageDial()
+{
+	if (!v_closeAddStageDial)
+		return;
+	v_closeAddStageDial = false;
+	if (Windows.size()) {
+		Windows.begin()->setToClose = true;
+		return;
+	}
+}
+
+void EditorState::addStageWindow()
+{
+
+	if (Windows.begin()->getID() == 201) {
+		inputTimer();
+		if (p_event->type == sf::Event::TextEntered) {
+			if (p_event->text.unicode < 128) {
+				if (v_inputTimer != 0)
+					return;
+				v_inputTimer = 8;
+				input += p_event->text.unicode;
+				newStageName = input;
+				OpenedWindow->SetElementValue("New_Stage_Name", newStageName);
+			}
+		}
+	}
+}
+
+void EditorState::inputTimer()
+{
+	if(v_inputTimer != 0)
+		v_inputTimer--;
+}
+
+void EditorState::createAddStageDial()
+{
+	if (!v_addStageDial)
+		return;
+	v_addStageDial = false;
+	newStageName = "";
+	input = newStageName;
+	PushWindow(201, sf::Vector2f(260, 40), sf::Vector2f(260, 150), "Enter Stage name?", sf::Vector2f(128, 30), sf::Color::Black);
+	Windows.begin()->AddText("New_Stage_Name", sf::Vector2f(375, 90), sf::Color::Black, newStageName);
+	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 140), p_dM->Lang.yes, sf::Color(23, 23, 23));
+	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 140), p_dM->Lang.no, sf::Color(23, 23, 23));
+}
+void EditorState::changeStage(bool a_next)
+{
+	if (a_next)
+		stageOffset++;
+	else
+		stageOffset--;
+	if (stageOffset == UINT_MAX)
+		stageOffset = p_stageNames->size() - 1;
+	if (stageOffset > p_stageNames->size() - 1)
+		stageOffset = 0;
+	auto s = p_stageNames->at(stageOffset);
+	std::multimap<std::string, Stage>::iterator it; 
+	it = p_stageContainer->find(s);
+	currentStage = &it->second;
+	std::cout << it->first << endl;
+}
+
+void EditorState::addStage()
+{
+	cout << newStageName << endl;
+	p_stageContainer->insert(std::pair<std::string, Stage>(newStageName, Stage(p_oM, newStageName, p_dM)));
+	p_stageNames->push_back(newStageName);
+	std::multimap<std::string, Stage>::iterator it;
+	it = p_stageContainer->find(newStageName);
+	currentStage = &it->second;
+	v_closeAddStageDial = true;
+	std::cout << "== EDITOR STATE == Stage Created" << std::endl;
+	
 }
 /****************************************************/
 //Protected
@@ -728,6 +817,10 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	updateOpenedWindowIt();
 	createClearDial();
 	closeDialWindow();
+	createAddStageDial();
+	closeAddStageDial();
+	addStageWindow();
+
 	currentStage->Update(a_mousePos);
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();

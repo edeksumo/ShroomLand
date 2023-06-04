@@ -42,10 +42,9 @@ void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 	std::cout << a_ID << endl;
-	/////////////////////
+	////////////////////////////////////////////////////////
 	/// searching for object by ID in corresponding multimap 
-	///////////////////
-
+	///////////////////////////////////////////////////////
 	std::multimap<int, StaticObject*>::iterator it = p_objMenager->StaticObjectPtrContainer.find(a_ID);
 	if (it != p_objMenager->StaticObjectPtrContainer.end()) {
 		TileGrid.AddObject(a_pos, it->second);

@@ -14,8 +14,10 @@ protected:
 	sf::Window* p_window;
 	DataMenager* p_dM;
 	ObjectMenager* p_oM;
+	sf::Event* p_event;
 	std::stack<State*>* p_state;
 	std::multimap<std::string, Stage>* p_stageContainer;
+	std::vector<std::string>* p_stageNames;
 	std::list<Window> Windows;
 	std::list<Window>::iterator OpenedWindow;
 	void updateOpenedWindowIt();
@@ -23,9 +25,11 @@ public:
 	State() {
 		p_dM = nullptr;
 		p_oM = nullptr;
+		p_event = nullptr;
 		p_state = nullptr;
 		p_window = nullptr;
 		p_stageContainer = nullptr;
+		p_stageNames = nullptr;
 		stateQuit = false;
 		nbOfOpenedWindows = 0;
 	}

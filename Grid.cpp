@@ -107,27 +107,38 @@ void Grid::MoveOnPos(sf::Vector2f a_pos, Object* a_obj)
 
 void Grid::RemoveObject(Object* a_obj)
 {
-	int a = 0;
+	int a = 0, b = 0, r = 0;
+	bool _static = false, _interactable = false;
 	for (int i = 0; i < StaticObjStorageVec.size(); i++) {
 		if (StaticObjStorageVec[i] == a_obj) {
+			_static = true;
 			break;
 		}
 		a++;
+	}
+	for (int i = 0; i < InteractableObjStorageVec.size(); i++) {
+
+		if (InteractableObjStorageVec[i] == a_obj) {
+			_interactable = true;
+			break;
+		}
+		b++;
 	}
 
 	/// 
 	/// removing adress from rendering vector 
 	/// 
-
-	int b = 0;
 	for (int i = 0; i < RenderObjPtrVec.size(); i++) {
 		if (RenderObjPtrVec[i] == a_obj) {
 			break;
 		}
-		b++;
+		r++;
 	}
-	StaticObjStorageVec.erase(StaticObjStorageVec.begin() + a);
-	RenderObjPtrVec.erase(RenderObjPtrVec.begin() + b);
+	if (_static)
+		StaticObjStorageVec.erase(StaticObjStorageVec.begin() + a);
+	if (_interactable)
+		InteractableObjStorageVec.erase(InteractableObjStorageVec.begin() + b);
+	RenderObjPtrVec.erase(RenderObjPtrVec.begin() + r);
 }
 
 bool Grid::isTileObjOccupied(GridCell a_pos)

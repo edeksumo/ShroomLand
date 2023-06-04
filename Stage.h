@@ -13,6 +13,7 @@ public:
 	std::deque<Tile> BackGroundTiles;
 	std::deque<Tile> DecorTiles;
 
+	std::string Name;
 	Grid TileGrid;
 
 	Stage() {
@@ -21,10 +22,11 @@ public:
 		p_dM = nullptr;
 	}
 
-	Stage(ObjectMenager* m_objMenager, DataMenager* m_dM) {
+	Stage(ObjectMenager* m_objMenager, std::string m_name, DataMenager* m_dM) {
 		p_objMenager = m_objMenager;
 		p_dM = m_dM;
 		p_renderTarget = nullptr;
+		Name = m_name;
 	}
 
 	bool isVisible(const Sprite& a_sprite, sf::RenderTarget* a_target);

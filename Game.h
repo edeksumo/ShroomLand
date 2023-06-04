@@ -40,6 +40,7 @@ public:
 	sf::Event Event;
 
 	std::multimap<std::string, Stage> StageContainer;			//stores all stages in the game
+	std::vector<std::string> StageNames;						//stores all stage names
 	/****************************************************/
 	//Constructors/ destructor
 	/****************************************************/
@@ -51,8 +52,8 @@ public:
 		view.setSize(static_cast<float> (Wight), static_cast<float> (Height));
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);
-		MainMenu = new MainMenuState(&StageContainer, Window, &dataMenager, objMenager, &States);
 		objMenager = new ObjectMenager(&dataMenager);
+		MainMenu = new MainMenuState(&StageContainer, &StageNames, Window, &dataMenager, objMenager, &States, &Event);
 		previousTime = clock.getElapsedTime();
 		
 		Begin();

@@ -56,7 +56,8 @@ void Game::LoadStages()
     for (int i = 0; i < v.size(); i++) {
         if (v[i] == dataMenager.SaveFormat.StageDefiner) {
             auto n = v[i + 1];
-            StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager, &dataMenager)));
+            StageContainer.insert(std::pair<std::string, Stage>(n, Stage(objMenager, n, &dataMenager)));
+            StageNames.push_back(n);
             it = StageContainer.find(n);
             std::cout << "== GAME == Stage Created" << std::endl;
             //printf("== GAME == Stage Created\n");

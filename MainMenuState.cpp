@@ -13,7 +13,7 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 		p_state->push(p_game);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.editor)) {
-		p_editor = new EditorState(p_stageContainer, p_window, p_dM, p_oM, p_state);
+		p_editor = new EditorState(p_stageContainer, p_stageNames, p_window, p_dM, p_oM, p_state, p_event);
 		p_state->push(p_editor);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.settings)) {
