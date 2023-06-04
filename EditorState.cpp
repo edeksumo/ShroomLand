@@ -64,6 +64,9 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 		if (Window::CheckButton(a_it, "Clear_Stage")) {
 			v_createClearDial = true;
 		}
+		if (Window::CheckButton(a_it, "Delete_Stage")) {
+			v_delStageDial = true;
+		}
 	}
 	else if (Windows.begin()->getID() == 99)
 	{
@@ -80,6 +83,14 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 		}
 		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
 			v_closeAddStageDial = true;
+		}
+	}
+	else if (Windows.begin()->getID() == 202) {
+		if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
+			deleteStage();
+		}
+		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
+			v_closeDelStageDial = true;
 		}
 	}
 }
@@ -763,6 +774,17 @@ void EditorState::inputTimer()
 		v_inputTimer--;
 }
 
+void EditorState::closeDelStageDial()
+{
+	if (!v_closeDelStageDial)
+		return;
+	v_closeDelStageDial = false;
+	if (Windows.size()) {
+		Windows.begin()->setToClose = true;
+		return;
+	}
+}
+
 void EditorState::createAddStageDial()
 {
 	if (!v_addStageDial)
@@ -774,6 +796,15 @@ void EditorState::createAddStageDial()
 	Windows.begin()->AddText("New_Stage_Name", sf::Vector2f(375, 90), sf::Color::Black, newStageName);
 	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 140), p_dM->Lang.yes, sf::Color(23, 23, 23));
 	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 140), p_dM->Lang.no, sf::Color(23, 23, 23));
+}
+void EditorState::createDelStageDial()
+{
+	if (!v_delStageDial)
+		return;
+	v_delStageDial = false;
+	PushWindow(202, sf::Vector2f(260, 40), sf::Vector2f(260, 100), "Delete this stage?", sf::Vector2f(128, 30), sf::Color::Black);
+	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 90), p_dM->Lang.yes, sf::Color(23, 23, 23));
+	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
 }
 void EditorState::changeStage(bool a_next)
 {
@@ -790,6 +821,33 @@ void EditorState::changeStage(bool a_next)
 	it = p_stageContainer->find(s);
 	currentStage = &it->second;
 	std::cout << it->first << endl;
+}
+
+void EditorState::deleteStage()
+{
+	if (p_stageContainer->size() <= 1) {
+		std::cout << "== EDITOR STATE == Can't delete last stage" << std::endl;
+		return;
+	}
+
+	auto& stgName = p_stageNames->at(0), currName = currentStage->Name;
+	stageOffset = 0;
+	if (p_stageNames->at(0) == currentStage->Name) {
+		stgName = p_stageNames->at(1);
+	}
+	int a = 0;
+	for (auto& i : *p_stageNames) {
+		if (i == currentStage->Name)
+			break;
+		a++;
+	}
+	std::multimap<std::string, Stage>::iterator it;
+	it = p_stageContainer->find(stgName);
+	currentStage = &it->second;
+	p_stageNames->erase(p_stageNames->begin() + a);
+	p_stageContainer->erase(currName);
+	v_closeClearDial = true;
+
 }
 
 void EditorState::addStage()
@@ -824,6 +882,9 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	currentStage->Update(a_mousePos);
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();
+
+	createDelStageDial();
+	closeDelStageDial();
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {

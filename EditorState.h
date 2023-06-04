@@ -24,6 +24,8 @@ private:
     bool v_closeClearDial;
     bool v_addStageDial;
     bool v_closeAddStageDial;
+    bool v_delStageDial;
+    bool v_closeDelStageDial;
     sf::Vector2f mousePosVec;
     sf::Vector2f mousePosPressed;
     sf::Vector2f tempObjPos;
@@ -62,8 +64,11 @@ private:
     void createAddStageDial();
     void closeAddStageDial();
     void addStageWindow();
+    void closeDelStageDial();
+    void createDelStageDial();
     void changeStage(bool a_next);
     void addStage();
+    void deleteStage();
     void inputTimer();
 
 protected:
@@ -94,6 +99,8 @@ public:
         v_closeClearDial = false;
         v_addStageDial = false;
         v_closeAddStageDial = false;
+        v_delStageDial = false;
+        v_closeDelStageDial = false;
         mousePosPressed = sf::Vector2f(0, 0);
         tempObjPos = sf::Vector2f(0, 0);
         objectIdOffset = 0;
@@ -109,10 +116,11 @@ public:
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Tile_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 340), &p_dM->emptyTxt);
-        OpenedWindow->AddText("Current_Stage_Name", sf::Vector2f(65, p_window->getSize().y - 175), sf::Color::Black, p_stageContainer->begin()->first);
-        OpenedWindow->AddButton("Add_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 155), "Add Stg", sf::Color::White);
-        OpenedWindow->AddButton("Next_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 105), "Next Stg", sf::Color::White);
-        OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Clear Stg", sf::Color::White);
+        OpenedWindow->AddText("Current_Stage_Name", sf::Vector2f(65, p_window->getSize().y - 225), sf::Color::Black, p_stageContainer->begin()->first);
+        OpenedWindow->AddButton("Add_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 205), "Add Stg", sf::Color::White);
+        OpenedWindow->AddButton("Next_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 155), "Next Stg", sf::Color::White);
+        OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 105), "Clear Stg", sf::Color::White);
+        OpenedWindow->AddButton("Delete_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Delete Stg", sf::Color::Red);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
         updateText();
     };
