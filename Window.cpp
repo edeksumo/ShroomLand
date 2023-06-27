@@ -40,6 +40,11 @@ void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_p
 	Buttons.emplace(a_name, Button(a_size, a_pos, a_text, a_textColor, p_dM));
 }
 
+void Window::AddButton(std::string a_name, Button::GraphicalButton a_visual, sf::Vector2f a_pos)
+{
+	Buttons.emplace(a_name, Button(a_visual, a_pos, p_dM));
+}
+
 void Window::AddSwitch(std::string a_name, sf::Vector2f a_pos)
 {
 	Switches.emplace(a_name, Switch(a_pos, p_dM));

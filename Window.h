@@ -74,6 +74,7 @@ public:
 
     unsigned int getID();
     void AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor);
+    void AddButton(std::string a_name, Button::GraphicalButton a_visual, sf::Vector2f a_pos);
     void AddSwitch(std::string a_name, sf::Vector2f a_pos);
     void AddSlider(std::string a_name, sf::Vector2f a_pos, float a_lenght, unsigned int a_maxValue);
     void AddText(std::string a_name, sf::Vector2f a_pos, sf::Color a_color, std::string a_text);

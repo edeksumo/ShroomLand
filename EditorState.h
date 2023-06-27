@@ -117,8 +117,9 @@ public:
         OpenedWindow->AddImage("Tile_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 340), &p_dM->emptyTxt);
         OpenedWindow->AddText("Current_Stage_Name", sf::Vector2f(65, p_window->getSize().y - 225), sf::Color::Black, p_stageContainer->begin()->first);
-        OpenedWindow->AddButton("Add_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 205), "Add Stg", sf::Color::White);
-        OpenedWindow->AddButton("Next_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 155), "Next Stg", sf::Color::White);
+        OpenedWindow->AddButton("Next_Stage", Button::GraphicalButton::right, sf::Vector2f(90, p_window->getSize().y - 205));
+        OpenedWindow->AddButton("Back_Stage", Button::GraphicalButton::left, sf::Vector2f(15, p_window->getSize().y - 205));
+        OpenedWindow->AddButton("Add_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 155), "Add Stg", sf::Color::White);
         OpenedWindow->AddButton("Clear_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 105), "Clear Stg", sf::Color::White);
         OpenedWindow->AddButton("Delete_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Delete Stg", sf::Color::Red);
         OpenedWindow->SetElementValue("Cursor_Size", 1);

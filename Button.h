@@ -14,9 +14,22 @@ public:
 		off,
 		on
 	};
+	enum class GraphicalButton {
+		tick,
+		cross,
+		left,
+		right,
+		up,
+		down,
+		plus,
+		minus,
+		none
+	};
 private:
 	ButtonState lastButtonState;
 	
+	bool hasBorders;
+
 	bool onEnter();
 	bool onQuit();
 protected:
@@ -45,6 +58,7 @@ public:
 		hasSelector = true;
 		hasBackground = true;
 		isSwitch = false;
+		hasBorders = true;
 		screenPositionRect = sf::FloatRect(backgroundSprite.getLocalBounds().left + m_pos.x, backgroundSprite.getLocalBounds().top + m_pos.y, backgroundSprite.getLocalBounds().left + m_size.x + m_pos.x,
 			backgroundSprite.getLocalBounds().top + m_size.y + m_pos.y);
 		relativePosition = m_pos;
@@ -100,6 +114,28 @@ public:
 		selector.setFillColor(sf::Color(0, 0, 0, 50));
 		onEnter();
 	};
+	Button(GraphicalButton m_visual ,sf::Vector2f m_pos, DataMenager* m_dM) : Button(sf::Vector2f(32, 32), m_pos, "",sf::Color::Black, m_dM) {
+		hasBorders = false;
+		if (m_visual == Button::GraphicalButton::tick)
+			backgroundSprite.setTexture(m_dM->buttonTickTxt);
+		if (m_visual == Button::GraphicalButton::cross)
+			backgroundSprite.setTexture(m_dM->buttonCrossTxt);
+		if (m_visual == Button::GraphicalButton::down)
+			backgroundSprite.setTexture(m_dM->buttonDownTxt);
+		if (m_visual == Button::GraphicalButton::up)
+			backgroundSprite.setTexture(m_dM->buttonUpTxt);
+		if (m_visual == Button::GraphicalButton::left)
+			backgroundSprite.setTexture(m_dM->buttonLeftTxt);
+		if (m_visual == Button::GraphicalButton::right)
+			backgroundSprite.setTexture(m_dM->buttonRightTxt);
+		if (m_visual == Button::GraphicalButton::plus)
+			backgroundSprite.setTexture(m_dM->buttonPlusTxt);
+		if (m_visual == Button::GraphicalButton::minus)
+			backgroundSprite.setTexture(m_dM->buttonMinusTxt);
+		if (m_visual == Button::GraphicalButton::none)
+			backgroundSprite.setTexture(m_dM->buttonNoneTxt);
+	};
+
 	~Button() {
 		onQuit();
 	};

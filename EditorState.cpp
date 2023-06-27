@@ -61,6 +61,9 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 		if (Window::CheckButton(a_it, "Next_Stage")) {
 			changeStage(true);
 		}
+		if (Window::CheckButton(a_it, "Back_Stage")) {
+			changeStage(false);
+		}
 		if (Window::CheckButton(a_it, "Clear_Stage")) {
 			v_createClearDial = true;
 		}

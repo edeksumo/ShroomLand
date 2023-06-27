@@ -136,14 +136,16 @@ void Button::Render(sf::RenderTarget* a_target) {
 	p_rTarget = a_target;
 	keepOnPosition();
 	a_target->draw(backgroundSprite);
-	a_target->draw(upperDecorLine);
-	a_target->draw(lowerDecorLine);
-	a_target->draw(leftDecorLine);
-	a_target->draw(rightDecorLine);
-	a_target->draw(upperDecorLeftCorn);
-	a_target->draw(lowerDecorLeftCorn);
-	a_target->draw(upperDecorRightCorn);
-	a_target->draw(lowerDecorRightCorn);
+	if (hasBorders) {
+		a_target->draw(upperDecorLine);
+		a_target->draw(lowerDecorLine);
+		a_target->draw(leftDecorLine);
+		a_target->draw(rightDecorLine);
+		a_target->draw(upperDecorLeftCorn);
+		a_target->draw(lowerDecorLeftCorn);
+		a_target->draw(upperDecorRightCorn);
+		a_target->draw(lowerDecorRightCorn);
+	}
 	a_target->draw(text);
 	setTransparency();
 	drawSelector(a_target);

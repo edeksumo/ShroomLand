@@ -124,6 +124,17 @@ public:
 	sf::Texture sliderLeftDecorTxt;
 	sf::Texture sliderRightDecorTxt;
 
+	//////Graphical buttons textures
+	sf::Texture buttonTickTxt;
+	sf::Texture buttonCrossTxt;
+	sf::Texture buttonLeftTxt;
+	sf::Texture buttonRightTxt;
+	sf::Texture buttonUpTxt;
+	sf::Texture buttonDownTxt;
+	sf::Texture buttonPlusTxt;
+	sf::Texture buttonMinusTxt;
+	sf::Texture buttonNoneTxt;
+
 	/****************************************************/
 	// Global Variables
 	/****************************************************/
@@ -269,6 +280,36 @@ public:
 		if (!sliderRightDecorTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(147, 50, 11, 12))) {
 			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
+
+		//////////////Graphical buttons textures
+		if (!buttonTickTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(64, 160, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonCrossTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(32, 160, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonLeftTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(288, 256, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonRightTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(160, 256, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonUpTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(32, 256, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonDownTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(544, 224, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonPlusTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(448, 128, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonMinusTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(383, 128, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!buttonNoneTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(0, 0, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+
 		//Settings
 		settings = new mINI::INIFile("settings.ini");
 		buttonFont.loadFromFile("assets/fonts/alagard.ttf");
