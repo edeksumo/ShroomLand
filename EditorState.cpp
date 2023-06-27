@@ -832,7 +832,7 @@ void EditorState::deleteStage()
 
 	auto& stgName = p_stageNames->at(0), currName = currentStage->Name;
 	stageOffset = 0;
-	if (p_stageNames->at(0) == currentStage->Name) {
+	if (p_stageNames->at(0) == currName) {
 		stgName = p_stageNames->at(1);
 	}
 	int a = 0;

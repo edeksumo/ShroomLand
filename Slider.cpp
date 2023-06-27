@@ -101,7 +101,7 @@ void Slider::Render(sf::RenderTarget* a_target)
 	keepOnPosition();
 	a_target->draw(backgroundSprite);
 	a_target->draw(sliderDecorLeft);
-	a_target->draw(SliderDecorRight);
+	a_target->draw(sliderDecorRight);
 	a_target->draw(sliderShapeSprite);
 	if ((isHold) || (drawSelector))
 		a_target->draw(shadow);

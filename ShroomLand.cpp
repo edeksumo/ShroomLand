@@ -10,6 +10,7 @@ Made by Lamoot, released under CC-BY 3.0, all images used in the process are sel
 --------------------------------------
 
 PIPOYA FREE RPG TILESET 32x32 Pixel
+Admurin GUI textures
 */
 
 

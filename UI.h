@@ -35,7 +35,7 @@ protected:
 
 	sf::Sprite sliderShapeSprite;
 	sf::Sprite sliderDecorLeft;
-	sf::Sprite SliderDecorRight;
+	sf::Sprite sliderDecorRight;
 
 	sf::Sprite imageSprite;
 

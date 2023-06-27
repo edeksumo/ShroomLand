@@ -42,24 +42,27 @@ public:
 
         backgroundSprite.setTexture(p_dM->windowsBackgroundTxt);
         backgroundSprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x), static_cast<int>(size.y)));
-        upperDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        upperDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorCornerTxt.getSize().x *2), p_dM->windowsDecorLineTxt.getSize().y));
-        lowerDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        lowerDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
-        lowerDecorLine.rotate(180);
-        leftDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        leftDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.y) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
-        leftDecorLine.rotate(270);
-        rightDecorLine.setTexture(p_dM->windowsDecorLineTxt);
-        rightDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.y) - (p_dM->windowsDecorCornerTxt.getSize().x * 2), p_dM->windowsDecorLineTxt.getSize().y));
-        rightDecorLine.rotate(90);
-        upperDecorLeftCorn.setTexture(p_dM->windowsDecorCornerTxt);
-        lowerDecorLeftCorn.setTexture(p_dM->windowsDecorCornerTxt);
-        lowerDecorLeftCorn.setRotation(270);
-        upperDecorRightCorn.setTexture(p_dM->windowsDecorCornerTxt);
-        upperDecorRightCorn.setRotation(90);
-        lowerDecorRightCorn.setTexture(p_dM->windowsDecorCornerTxt);
-        lowerDecorRightCorn.setRotation(180);
+       
+        upperDecorLine.setTexture(p_dM->windowsDecorUpLineTxt);
+        upperDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorDownLeftCornerTxt.getSize().x *2) + 4, p_dM->windowsDecorUpLineTxt.getSize().y));
+        
+        lowerDecorLine.setTexture(p_dM->windowsDecorDownLineTxt);
+        lowerDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->windowsDecorDownLeftCornerTxt.getSize().x * 2) + 4, p_dM->windowsDecorDownLineTxt.getSize().y));
+
+        leftDecorLine.setTexture(p_dM->windowsDecorLeftLineTxt);
+        leftDecorLine.setTextureRect(sf::IntRect(0, 0, p_dM->windowsDecorLeftLineTxt.getSize().x, static_cast<int>(size.y) - (p_dM->windowsDecorDownLeftCornerTxt.getSize().y * 2) + 4));
+
+        rightDecorLine.setTexture(p_dM->windowsDecorRightLineTxt);
+        rightDecorLine.setTextureRect(sf::IntRect(0, 0, p_dM->windowsDecorRightLineTxt.getSize().x, static_cast<int>(size.y) - (p_dM->windowsDecorDownLeftCornerTxt.getSize().y * 2) + 4));
+
+        
+        upperDecorLeftCorn.setTexture(p_dM->windowsDecorLeftUpCornerTxt);
+        lowerDecorLeftCorn.setTexture(p_dM->windowsDecorDownLeftCornerTxt);
+        //lowerDecorLeftCorn.setRotation(270);
+        upperDecorRightCorn.setTexture(p_dM->windowsDecorUpRightCornerTxt);
+        //upperDecorRightCorn.setRotation(90);
+        lowerDecorRightCorn.setTexture(p_dM->windowsDecorDownRightCornerTxt);
+        //lowerDecorRightCorn.setRotation(180);
         
         initBackground();
         initText(m_text);

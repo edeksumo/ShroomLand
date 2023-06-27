@@ -87,8 +87,6 @@ public:
 	sf::Texture water01TileSet;
 	sf::Texture clif01Tiles;
 
-	sf::Texture tilerDecorTxt;
-
 	//Objects
 	sf::Texture objectsTxt;
 	sf::Texture chestsTxt;
@@ -97,19 +95,34 @@ public:
 	//GUI textures
 	/****************************************************/
 	sf::Texture windowsBackgroundTxt;
-	sf::Texture windowsDecorLineTxt;
-	sf::Texture windowsDecorCornerTxt;
+
+	sf::Texture windowsDecorUpLineTxt;
+	sf::Texture windowsDecorLeftUpCornerTxt;
+	sf::Texture windowsDecorLeftLineTxt;
+	sf::Texture windowsDecorUpRightCornerTxt;
+	sf::Texture windowsDecorRightLineTxt;
+	sf::Texture windowsDecorDownRightCornerTxt;
+	sf::Texture windowsDecorDownLineTxt;
+	sf::Texture windowsDecorDownLeftCornerTxt;
+
 
 	sf::Texture buttonBackgroundTxt;
-	sf::Texture buttonDecorLineTxt;
-	sf::Texture buttonDecorCornerTxt;
+	sf::Texture buttonDecorUpLineTxt;
+	sf::Texture buttonDecorUpLeftCornerTxt;
+	sf::Texture buttonDecorDownLineTxt;
+	sf::Texture buttonDecorDownLeftCornerTxt;
+	sf::Texture buttonDecorLeftLineTxt;
+	sf::Texture buttonDecorUpRightCornerTxt;
+	sf::Texture buttonDecorRightLineTxt;
+	sf::Texture buttonDecorDownRightCornerTxt;
 
 	sf::Texture switchBackgroundTxt;
 	sf::Texture switchBackgroundTickTxt;
 
 	sf::Texture sliderTxt;
 	sf::Texture sliderBackgroundTxt;
-	sf::Texture sliderDecorTxt;
+	sf::Texture sliderLeftDecorTxt;
+	sf::Texture sliderRightDecorTxt;
 
 	/****************************************************/
 	// Global Variables
@@ -145,8 +158,6 @@ public:
 		water01TileSet.setRepeated(true);
 		if (!clif01Tiles.loadFromFile("data/textures/clif.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: clif.png" << std::endl;
-		if (!tilerDecorTxt.loadFromFile("data/textures/decor.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: decor.png" << std::endl;
 
 		//objects
 		if (!objectsTxt.loadFromFile("data/textures/Dec_props2.png"))
@@ -157,47 +168,106 @@ public:
 		/****************************************************/
 		//GUI textures
 		/****************************************************/
-		if(!windowsBackgroundTxt.loadFromFile("data/textures/paper background.png"))
-			cout << "== DATAMENAGER ERROR == Texture not loaded: paper background.png" << std::endl;
+		if(!windowsBackgroundTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(5, 237, 130, 130)))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		windowsBackgroundTxt.setRepeated(true);
-
-		if (!windowsDecorLineTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(893, 190, 73, 14))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		//////////////////////////////////////////////////////
+		if (!windowsDecorUpLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(14, 224, 133, 12))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
-		windowsDecorLineTxt.setRepeated(true);
+		windowsDecorUpLineTxt.setRepeated(true);
 
-		if (!windowsDecorCornerTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(857, 190, 22, 22))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
-		}
-
-		if (!buttonBackgroundTxt.loadFromFile("data/textures/wood background.png")) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: wood background.png" << std::endl;
-		}
-		if (!buttonDecorLineTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(900, 401, 74, 8))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
-		}
-		buttonDecorLineTxt.setRepeated(true);
-
-		if (!buttonDecorCornerTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(868, 401, 14, 14))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		if (!windowsDecorLeftUpCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(0, 224, 13, 13))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
 
-		if (!switchBackgroundTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(150, 85, 20, 20))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		if (!windowsDecorRightLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(150, 238, 11, 133))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
-		if (!switchBackgroundTickTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(175, 85, 20, 20))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		windowsDecorRightLineTxt.setRepeated(true);
+
+		if (!windowsDecorDownLeftCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(0, 371, 13, 13))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
 
-		if (!sliderTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(815, 20, 16, 28))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		if (!windowsDecorDownLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(14, 379, 133, 5))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
-		if (!sliderBackgroundTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(802, 63, 192, 28))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		windowsDecorDownLineTxt.setRepeated(true);
+
+		if (!windowsDecorUpRightCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(147, 224, 13, 13))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+
+		if (!windowsDecorLeftLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(0, 238, 5, 133))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		windowsDecorLeftLineTxt.setRepeated(true);
+
+		if (!windowsDecorDownRightCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(147, 371, 13, 13))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		//////////////////////////////////////////////////////
+		if (!buttonBackgroundTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(6, 8, 60, 3))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		buttonBackgroundTxt.setRepeated(true);
+
+		if (!buttonDecorUpLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(86, 2, 68, 6))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		buttonDecorUpLineTxt.setRepeated(true);
+
+		if (!buttonDecorUpLeftCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(82, 2, 4, 4))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+
+		if (!buttonDecorDownLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(86, 11, 68, 3))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		buttonDecorDownLineTxt.setRepeated(true);
+
+		if (!buttonDecorDownLeftCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(82, 10, 4, 4))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+
+		if (!buttonDecorLeftLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(82, 4, 4, 6))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		buttonDecorLeftLineTxt.setRepeated(true);
+
+		if (!buttonDecorUpRightCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(154, 2, 4, 4))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+
+		if (!buttonDecorRightLineTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(154, 4, 5, 7))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		buttonDecorRightLineTxt.setRepeated(true);
+
+		if (!buttonDecorDownRightCornerTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(154, 10, 4, 4))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		/////////////////////////////////////////////////////////
+		if (!switchBackgroundTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(0, 0, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+		if (!switchBackgroundTickTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(64, 160, 32, 32))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
+		}
+
+		if (!sliderTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(210, 227, 12, 26))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		if (!sliderBackgroundTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(93, 51, 53, 10))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
 		sliderBackgroundTxt.setRepeated(true);
-		if (!sliderDecorTxt.loadFromFile("data/textures/RPG_GUI_v1.png", sf::IntRect(561, 18, 25, 28))) {
-			cout << "== DATAMENAGER ERROR == Texture not loaded: RPG_GUI_v1.png" << std::endl;
+		if (!sliderLeftDecorTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(82, 50, 11, 12))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
+		}
+		if (!sliderRightDecorTxt.loadFromFile("data/textures/UI_Steel_Flat.png", sf::IntRect(147, 50, 11, 12))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
 		//Settings
 		settings = new mINI::INIFile("settings.ini");

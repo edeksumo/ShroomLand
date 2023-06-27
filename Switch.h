@@ -13,7 +13,7 @@ public:
         hasBackground = true;
         isSwitch = true;
         relativePosition = m_pos;
-        size = sf::Vector2f(20, 20);
+        size = sf::Vector2f(32, 32);
         screenPositionRect = sf::FloatRect(backgroundSprite.getLocalBounds().left + m_pos.x, backgroundSprite.getLocalBounds().top + m_pos.y, backgroundSprite.getLocalBounds().left + size.x + m_pos.x,
             backgroundSprite.getLocalBounds().top + size.y + m_pos.y);
 

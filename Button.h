@@ -55,25 +55,40 @@ public:
 		v_UIState = UI::UIState::active;
 
 		backgroundSprite.setTexture(p_dM->buttonBackgroundTxt);
-		backgroundSprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));
-		upperDecorLine.setTexture(p_dM->buttonDecorLineTxt);
-		upperDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
-		lowerDecorLine.setTexture(p_dM->buttonDecorLineTxt);
-		lowerDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
-		lowerDecorLine.rotate(180);
-		leftDecorLine.setTexture(p_dM->buttonDecorLineTxt);
-		leftDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
-		leftDecorLine.rotate(270);
-		rightDecorLine.setTexture(p_dM->buttonDecorLineTxt);
-		rightDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
-		rightDecorLine.rotate(90);
-		upperDecorLeftCorn.setTexture(p_dM->buttonDecorCornerTxt);
-		lowerDecorLeftCorn.setTexture(p_dM->buttonDecorCornerTxt);
-		lowerDecorLeftCorn.setRotation(270);
-		upperDecorRightCorn.setTexture(p_dM->buttonDecorCornerTxt);
-		upperDecorRightCorn.setRotation(90);
-		lowerDecorRightCorn.setTexture(p_dM->buttonDecorCornerTxt);
-		lowerDecorRightCorn.setRotation(180);
+		//backgroundSprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));
+		//upperDecorLine.setTexture(p_dM->buttonDecorLineTxt);
+		//upperDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
+		//lowerDecorLine.setTexture(p_dM->buttonDecorLineTxt);
+		//lowerDecorLine.setTextureRect(sf::IntRect(0, 0, size.x - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
+		//lowerDecorLine.rotate(180);
+		//leftDecorLine.setTexture(p_dM->buttonDecorLineTxt);
+		//leftDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
+		//leftDecorLine.rotate(270);
+		//rightDecorLine.setTexture(p_dM->buttonDecorLineTxt);
+		//rightDecorLine.setTextureRect(sf::IntRect(0, 0, size.y - (p_dM->buttonDecorCornerTxt.getSize().x * 2), p_dM->buttonDecorLineTxt.getSize().y));
+		//rightDecorLine.rotate(90);
+		upperDecorLeftCorn.setTexture(p_dM->buttonDecorUpLeftCornerTxt);
+		lowerDecorLeftCorn.setTexture(p_dM->buttonDecorDownLeftCornerTxt);
+		//lowerDecorLeftCorn.setRotation(270);
+		upperDecorRightCorn.setTexture(p_dM->buttonDecorUpRightCornerTxt);
+		//upperDecorRightCorn.setRotation(90);
+		lowerDecorRightCorn.setTexture(p_dM->buttonDecorDownRightCornerTxt);
+		//lowerDecorRightCorn.setRotation(180);
+
+		backgroundSprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x), static_cast<int>(size.y)));
+
+		upperDecorLine.setTexture(p_dM->buttonDecorUpLineTxt);
+		upperDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->buttonDecorDownLeftCornerTxt.getSize().x * 2) + 4, p_dM->buttonDecorUpLineTxt.getSize().y));
+
+		lowerDecorLine.setTexture(p_dM->buttonDecorDownLineTxt);
+		lowerDecorLine.setTextureRect(sf::IntRect(0, 0, static_cast<int>(size.x) - (p_dM->buttonDecorDownLeftCornerTxt.getSize().x * 2) + 4, p_dM->buttonDecorDownLineTxt.getSize().y));
+		//lowerDecorLine.rotate(180);
+		leftDecorLine.setTexture(p_dM->buttonDecorLeftLineTxt);
+		leftDecorLine.setTextureRect(sf::IntRect(0, 0, p_dM->buttonDecorLeftLineTxt.getSize().x, static_cast<int>(size.y) - (p_dM->buttonDecorDownLeftCornerTxt.getSize().y * 2) + 4));
+		//leftDecorLine.rotate(270);
+		rightDecorLine.setTexture(p_dM->buttonDecorRightLineTxt);
+		rightDecorLine.setTextureRect(sf::IntRect(0, 0, p_dM->buttonDecorRightLineTxt.getSize().x, static_cast<int>(size.y) - (p_dM->buttonDecorDownLeftCornerTxt.getSize().y * 2) + 4));
+		//rightDecorLine.rotate(90);
 
 		state = SwitchState::off;	
 

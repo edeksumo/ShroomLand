@@ -12,24 +12,27 @@ void UI::keepOnPosition()
 	shadow.setPosition(backgroundSprite.getPosition());
 	if (hasBackground) {
 		backgroundSprite.setPosition(position);
-		upperDecorLine.setPosition(position.x + upperDecorLeftCorn.getTextureRect().width /*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y);
-		lowerDecorLine.setPosition(position.x + lowerDecorLine.getTextureRect().width + upperDecorLeftCorn.getTextureRect().width/*p_dM->windowsDecorCornerTxt.getSize().x*/, position.y + backgroundSprite.getTextureRect().height);
-		leftDecorLine.setPosition(position.x, position.y + leftDecorLine.getTextureRect().width + upperDecorLeftCorn.getTextureRect().height);
-		rightDecorLine.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + upperDecorLeftCorn.getTextureRect().height);
-		upperDecorLeftCorn.setPosition(position);
-		lowerDecorLeftCorn.setPosition(position.x, position.y + backgroundSprite.getTextureRect().height);
-		upperDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y);
-		lowerDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width), position.y + backgroundSprite.getTextureRect().height);
+		upperDecorLine.setPosition(position.x - 2 + upperDecorLeftCorn.getTextureRect().width, position.y - 2);
+		lowerDecorLine.setPosition(position.x + upperDecorLeftCorn.getTextureRect().width - 2, position.y + backgroundSprite.getTextureRect().height - lowerDecorLine.getTextureRect().height + 2);
+		leftDecorLine.setPosition(position.x - 2, position.y + upperDecorLeftCorn.getTextureRect().height - 2);
+		rightDecorLine.setPosition(position.x + backgroundSprite.getTextureRect().width - rightDecorLine.getTextureRect().width + 3, position.y + upperDecorLeftCorn.getTextureRect().height - 2);
+		
+		upperDecorLeftCorn.setPosition(position.x - 2, position.y - 2);
+		lowerDecorLeftCorn.setPosition(position.x - 2, position.y + backgroundSprite.getTextureRect().height - lowerDecorLeftCorn.getTextureRect().height + 2);
+		upperDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width) - upperDecorRightCorn.getTextureRect().width + 2, position.y - 2);
+		lowerDecorRightCorn.setPosition(position.x + (backgroundSprite.getTextureRect().width) - lowerDecorRightCorn.getTextureRect().width + 2, position.y + backgroundSprite.getTextureRect().height - lowerDecorRightCorn.getTextureRect().height + 2);
 	}
 	if (hasText)
 		text.setPosition(textPosition + position);
 	if(hasSelector)
 		selector.setPosition(backgroundSprite.getPosition());
 	if (hasSlider) {
+
 		sliderShapeSprite.setPosition(sf::Vector2f(backgroundSprite.getPosition().x + sliderOffset, backgroundSprite.getPosition().y + 5));
-		sliderDecorLeft.setPosition(position.x - (sliderDecorLeft.getTextureRect().width), position.y + 5);
-		SliderDecorRight.setPosition(position.x + backgroundSprite.getTextureRect().width + SliderDecorRight.getTextureRect().width, position.y + SliderDecorRight.getTextureRect().width + 8);
+		sliderDecorLeft.setPosition(position.x - sliderDecorLeft.getTextureRect().width, position.y + ((sliderShapeSprite.getTextureRect().height - backgroundSprite.getTextureRect().height) / 1.3f) - 1);
+		sliderDecorRight.setPosition(position.x + backgroundSprite.getTextureRect().width, position.y + ((sliderShapeSprite.getTextureRect().height - backgroundSprite.getTextureRect().height) / 1.3f) - 1);
 		shadow.setPosition(sliderShapeSprite.getPosition());
+		backgroundSprite.setPosition(position.x, position.y + ((sliderShapeSprite.getTextureRect().height - backgroundSprite.getTextureRect().height) / 1.3f));
 	}
 	if (hasImage) {
 		imageSprite.setPosition(position);

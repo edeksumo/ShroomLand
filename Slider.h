@@ -34,15 +34,15 @@ public:
         sliderShapeSprite.setTexture(m_dM->sliderTxt);
         backgroundSprite.setTexture(m_dM->sliderBackgroundTxt);
         backgroundSprite.setTextureRect(sf::IntRect(0, 0, static_cast<int>(m_lenght), m_dM->sliderBackgroundTxt.getSize().y));
-        sliderDecorLeft.setTexture(m_dM->sliderDecorTxt);
-        SliderDecorRight.setTexture(m_dM->sliderDecorTxt);
-        SliderDecorRight.setRotation(-180);
+        sliderDecorLeft.setTexture(m_dM->sliderLeftDecorTxt);
+        sliderDecorRight.setTexture(m_dM->sliderRightDecorTxt);
+        //SliderDecorRight.setRotation(-180);
 
         screenPositionRect = sf::FloatRect(sliderShapeSprite.getLocalBounds().left + m_pos.x , sliderShapeSprite.getLocalBounds().top + m_pos.y + 5, sliderShapeSprite.getLocalBounds().left + 
             sliderShapeSprite.getLocalBounds().width + m_pos.x, sliderShapeSprite.getLocalBounds().top + sliderShapeSprite.getLocalBounds().height + m_pos.y + 5);
 
         relativePosition = m_pos;
-        size = sf::Vector2f(m_lenght, 40);
+        size = sf::Vector2f(m_lenght, 10);
         p_dM = m_dM;
         maxValue = m_maxValue;
         value = 0;
