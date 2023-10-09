@@ -10,7 +10,6 @@ private:
         placeObject
     };
 
-    Stage* currentStage;
     sf::RectangleShape cursorShape;
     sf::Sprite activeSprite;
     EditorFunction currentFunction;

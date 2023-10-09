@@ -11,6 +11,7 @@ private:
 	void defaultButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
 	int nbOfOpenedWindows;
 protected:
+	Stage* currentStage;
 	sf::Window* p_window;
 	DataMenager* p_dM;
 	ObjectMenager* p_oM;

@@ -53,7 +53,7 @@ public:
 		lastButtonState = buttonState;
 		selector.setFillColor(sf::Color(0, 0, 0, 50));
 	};
-	Button(sf::Vector2f m_size, sf::Vector2f m_pos, std::string m_text, sf::Color m_textColor, DataMenager* m_dM) {
+	Button(sf::Vector2f m_size, sf::Vector2f m_pos, std::string m_text, sf::Color m_textColor, DataMenager* m_dM, int m_textSize = 20) {
 		hasText = true;
 		hasSelector = true;
 		hasBackground = true;
@@ -110,11 +110,11 @@ public:
 		buttonState = ButtonState::Free;
 		lastButtonState = buttonState;
 		initBackground();
-		initText(m_text);
+		initText(m_text, m_textSize);
 		selector.setFillColor(sf::Color(0, 0, 0, 50));
 		onEnter();
 	};
-	Button(GraphicalButton m_visual ,sf::Vector2f m_pos, DataMenager* m_dM) : Button(sf::Vector2f(32, 32), m_pos, "",sf::Color::Black, m_dM) {
+	Button(GraphicalButton m_visual ,sf::Vector2f m_pos, DataMenager* m_dM) : Button(sf::Vector2f(32, 32), m_pos, "", sf::Color::Black, m_dM) {
 		hasBorders = false;
 		if (m_visual == Button::GraphicalButton::tick)
 			backgroundSprite.setTexture(m_dM->buttonTickTxt);

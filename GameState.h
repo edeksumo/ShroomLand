@@ -6,7 +6,9 @@ class GameState :
     public State
 {
 private:
-
+    void ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
+    void createQuitDial();
+    bool v_createQuitDial;
 protected:
 
 public:
@@ -16,7 +18,11 @@ public:
         p_dM = m_dM;
         p_oM = m_oM;
         p_stageContainer = m_stageContainer;
-        PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(10, 10), "", sf::Vector2f(0, 0), sf::Color::Black);
+        PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(p_window->getSize().x, 30), "", sf::Vector2f(0, 0), sf::Color::Black);
+        OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(50, 20), sf::Vector2f(p_window->getSize().x - 55, 5), m_dM->Lang.quit, sf::Color::Black, 12);
+
+        v_createQuitDial = false;
+        currentStage = &p_stageContainer->begin()->second;
     };
     
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);

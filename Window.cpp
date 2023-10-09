@@ -35,9 +35,9 @@ unsigned int Window::getID()
 	return ID;
 }
 
-void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor){
+void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor, int a_textSize){
 
-	Buttons.emplace(a_name, Button(a_size, a_pos, a_text, a_textColor, p_dM));
+	Buttons.emplace(a_name, Button(a_size, a_pos, a_text, a_textColor, p_dM, a_textSize));
 }
 
 void Window::AddButton(std::string a_name, Button::GraphicalButton a_visual, sf::Vector2f a_pos)

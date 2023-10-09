@@ -58,7 +58,7 @@ protected:
 	float sliderOffset;
 
 	void keepOnPosition();
-	void initText(std::string a_text);
+	void initText(std::string a_text,int a_size = 20);
 	void initBackground();
 	void renderShadow(sf::RenderTarget* a_target);
 public:

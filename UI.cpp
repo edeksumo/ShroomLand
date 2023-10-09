@@ -39,11 +39,11 @@ void UI::keepOnPosition()
 	}
 }
 
-void UI::initText(std::string a_text)
+void UI::initText(std::string a_text, int a_size)
 {
 	text.setFont(p_dM->buttonFont);
 	text.setString(a_text);
-	text.setCharacterSize(20);
+	text.setCharacterSize(a_size);
 	text.setFillColor(sf::Color::Black);
 	auto textRect = text.getLocalBounds();
 	text.setOrigin(textRect.width / 2, textRect.height);

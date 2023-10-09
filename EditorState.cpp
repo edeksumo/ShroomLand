@@ -44,6 +44,7 @@ void EditorState::saveStages()
 	}
 
 	saveFile.close();
+
 	std::cout  << "Stages saved" << std::endl;
 }
 void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
