@@ -49,6 +49,23 @@ void State::updateOpenedWindowIt()
 /****************************************************/
 //Public
 /****************************************************/
+void State::moveCamera()
+{
+	if (!cameraMovement)
+		return;
+	if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
+		p_mainCamera->move(sf::Vector2f(0.f, -2.f));
+	}
+	else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
+		p_mainCamera->move(sf::Vector2f(0.f, 2.f));
+	}
+	if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
+		p_mainCamera->move(sf::Vector2f(-2.f, 0.f));
+	}
+	else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
+		p_mainCamera->move(sf::Vector2f(2.f, 0.f));
+	}
+}
 void State::PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor)
 {
 	Windows.push_front(Window(a_id, a_pos, a_size, a_text, a_textColor, a_textPos, p_window, p_dM));

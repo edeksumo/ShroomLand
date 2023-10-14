@@ -9,11 +9,11 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 		v_createQuitDial = true;
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.newGame)) {
-		p_game = new GameState(p_stageContainer, p_window, p_dM, p_oM, p_state);
+		p_game = new GameState(p_stageContainer,p_renderWindow, p_window, p_mainCamera, p_dM, p_oM, p_state);
 		p_state->push(p_game);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.editor)) {
-		p_editor = new EditorState(p_stageContainer, p_stageNames, p_window, p_dM, p_oM, p_state, p_event);
+		p_editor = new EditorState(p_stageContainer, p_stageNames, p_window, p_mainCamera, p_dM, p_oM, p_state, p_event);
 		p_state->push(p_editor);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.settings)) {
@@ -22,7 +22,9 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 	if (Windows.begin()->getID() == 100) {
 		if (Window::CheckButton(a_it, p_dM->Lang.save)) {
 			p_dM->Settings.volume = OpenedWindow->GetSliderValue(p_dM->EngineNames.volumeSlider);
-			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.volume] = std::to_string(OpenedWindow->GetSliderValue(p_dM->EngineNames.volumeSlider));
+			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.volume] = std::to_string(OpenedWindow->GetSliderValue(p_dM->EngineNames.volumeSlider));	
+			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.freeCam] = std::to_string((int)OpenedWindow->GetSwitchValue(p_dM->EngineNames.freeCam));
+			p_dM->Settings.freeCam = (bool)OpenedWindow->GetSwitchValue(p_dM->EngineNames.freeCam);
 			p_dM->settings->write(p_dM->settingsINI);
 			v_closeSettings = true;
 		}
@@ -62,6 +64,9 @@ void MainMenuState::createSettingsWindow()
 	OpenedWindow->AddText(p_dM->Lang.hitboxes, sf::Vector2f(240, 111), sf::Color::Black, p_dM->Lang.hitboxes);
 	OpenedWindow->AddSwitch(p_dM->EngineNames.hitboxSwitch, sf::Vector2f(470, 100));
 	OpenedWindow->SetElementValue(p_dM->EngineNames.hitboxSwitch, p_dM->Settings.hitboxes);
+	OpenedWindow->AddText(p_dM->Lang.freeCam, sf::Vector2f(230, 251), sf::Color::Black, p_dM->Lang.freeCam);
+	OpenedWindow->AddSwitch(p_dM->EngineNames.freeCam, sf::Vector2f(470, 240));
+	OpenedWindow->SetElementValue(p_dM->EngineNames.freeCam, p_dM->Settings.freeCam);
 	OpenedWindow->AddSlider(p_dM->EngineNames.volumeSlider, sf::Vector2f(270, 200), 200, 100);
 	OpenedWindow->AddText(p_dM->Lang.volume, sf::Vector2f(210, 218), sf::Color::Black, p_dM->Lang.volume);
 	OpenedWindow->AddText(p_dM->EngineNames.volumeText, sf::Vector2f(535, 218), sf::Color::Black, to_string(p_dM->Settings.volume));

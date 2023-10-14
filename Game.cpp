@@ -18,18 +18,7 @@ void Game::Render() {
 
 void Game::Keyboard()
 {
-    if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
-        view.move(0.f, -2);
-    }
-    else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
-        view.move(0.f, 2);
-    }
-    if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
-        view.move(-2, 0.f);
-    }
-    else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
-        view.move(2, 0.f);
-    }
+
 }
 
 void Game::LoadStages()
@@ -123,9 +112,7 @@ void Game::Update(){
        
         if (States.size() == 0)
             Window->close();
-        Window->setView(view);
-        
-        
+        //Window->setView(view);
         //fps counter
         //currentTime = clock.getElapsedTime();
         //fps = 1.0f / (currentTime.asSeconds() - previousTime.asSeconds()); // the asSeconds returns a float

@@ -20,6 +20,7 @@ private:
 	DataMenager dataMenager;
 	ObjectMenager* objMenager;
 	MainMenuState *MainMenu;
+	Camera* MainCamera;
 
 	float fps;
 	sf::Clock clock = sf::Clock::Clock();
@@ -53,9 +54,11 @@ public:
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);
 		objMenager = new ObjectMenager(&dataMenager);
-		MainMenu = new MainMenuState(&StageContainer, &StageNames, Window, &dataMenager, objMenager, &States, &Event);
+		MainCamera = new Camera(Window, sf::Vector2f(800.f, 600.f));
+		MainMenu = new MainMenuState(&StageContainer, &StageNames, Window, Window, MainCamera, &dataMenager, objMenager, &States, &Event);
 		previousTime = clock.getElapsedTime();
-		
+
+		MainCamera->ActiveCamera();
 		Begin();
 		LoadStages();
 		Update();
@@ -64,6 +67,7 @@ public:
 		delete Window;
 		delete MainMenu;
 		delete objMenager;
+		delete MainCamera;
 	};
 };
 

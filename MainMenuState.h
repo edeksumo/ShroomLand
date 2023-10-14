@@ -21,14 +21,16 @@ public:
     GameState * p_game;
     EditorState* p_editor;
 
-    MainMenuState(std::multimap<std::string, Stage>* m_stageContainer, std::vector<std::string>* m_stageNames, sf::Window* m_window, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
+    MainMenuState(std::multimap<std::string, Stage>* m_stageContainer, std::vector<std::string>* m_stageNames, sf::RenderWindow* m_renderWindow, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
         p_state = m_state;
         p_window = m_window;
+        p_mainCamera = m_mainCamera;
         p_dM = m_dM;
         p_oM = m_oM;
         p_event = m_event;
         p_stageContainer = m_stageContainer;
         p_stageNames = m_stageNames;
+        p_renderWindow = m_renderWindow;
 
         PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(200, 400), p_dM->Lang.gameName, sf::Vector2f(100, 30), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.newGame, sf::Vector2f(100, 50), sf::Vector2f(30, 60), m_dM->Lang.newGame, sf::Color::Black);

@@ -37,7 +37,7 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 		ButtonFunctions(it);
 	}
-
+	moveCamera();
 	createQuitDial();
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }

@@ -75,10 +75,11 @@ protected:
 public:  
     GridCell MousePosOnGrid;
 
-    EditorState(std::multimap<std::string, Stage>* m_stageContainer, std::vector<std::string>* m_stageNames, sf::Window* m_window, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
+    EditorState(std::multimap<std::string, Stage>* m_stageContainer, std::vector<std::string>* m_stageNames, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
         MousePosOnGrid = GridCell(0, 0);
         p_state = m_state;
         p_window = m_window;
+        p_mainCamera = m_mainCamera;
         p_dM = m_dM;
         p_oM = m_oM;
         p_event = m_event;
@@ -104,6 +105,8 @@ public:
         tempObjPos = sf::Vector2f(0, 0);
         objectIdOffset = 0;
         stageOffset = 1;
+
+        cameraMovement = true;
 
         newStageName = "";
         v_inputTimer = 0;

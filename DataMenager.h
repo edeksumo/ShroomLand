@@ -27,6 +27,7 @@ public:
 		string load = "Load";
 		string volume = "Volume";
 		string hitboxes = "Show Hitboxes:";
+		string freeCam = "Free Camera:";
 	};
 
 	struct EngineNames {
@@ -35,11 +36,13 @@ public:
 		string volumeText = "volumeText";
 		string volumeSlider = "volumeSlider";
 		string hitboxSwitch = "hitboxSwitch";
+		string freeCam = "freeCam";
 	};
 
 	struct Settings {
 		int volume;
 		bool hitboxes;
+		bool freeCam;
 	};
 
 	struct SaveFormat {
@@ -317,7 +320,8 @@ public:
 		std::string& volumeStr = settingsINI[EngineNames.settings][EngineNames.volume];
 		Settings.volume = std::stoi(volumeStr);
 		Settings.hitboxes = true;
-
+		std::string& freeCamStr = settingsINI[EngineNames.settings][EngineNames.freeCam];
+		Settings.freeCam = std::stoi(freeCamStr);
 	/****************************************************/
 	// Global Variables
 	/****************************************************/
