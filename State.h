@@ -42,7 +42,7 @@ public:
 	bool stateQuit;
 	bool cameraMovement;
 
-	void moveCamera();
+	void moveCamera(Camera* a_cam, float a_speed = 2.f);
 	void PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor);
 	void RenderWindows(sf::RenderTarget* a_target);
 	void UpdateWindows(sf::Vector2i* a_mousePos);

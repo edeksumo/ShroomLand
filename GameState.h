@@ -9,7 +9,10 @@ private:
     void ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
     void createQuitDial();
     bool v_createQuitDial;
-    Camera* SecondCamera;
+    void switchCameraMode();
+    void cameraMovementSetup();
+    Camera* p_freeCam;
+    bool freeCamEnable;
 protected:
 
 public:
@@ -21,16 +24,16 @@ public:
         p_oM = m_oM;
         p_stageContainer = m_stageContainer;
         p_renderWindow = m_renderWindow;
+        freeCamEnable = false;
         cameraMovement = true;
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(p_window->getSize().x, 30), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(50, 20), sf::Vector2f(p_window->getSize().x - 55, 5), m_dM->Lang.quit, sf::Color::Black, 12);
-        SecondCamera = new Camera(m_renderWindow, sf::Vector2f(800, 600));
-        SecondCamera->GetView()->setCenter(20.f, 10.f);
+        p_freeCam = new Camera(m_renderWindow, sf::Vector2f(800, 600));
         v_createQuitDial = false;
         currentStage = &p_stageContainer->begin()->second;
     };
     ~GameState() {
-        delete SecondCamera;
+        delete p_freeCam;
     }
     
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);

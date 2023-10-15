@@ -108,6 +108,8 @@ void Keyboard::keyAndButtonStateSetter()
 	setKeyState(sf::Keyboard::Right);
 	setKeyState(sf::Keyboard::Space);
 	setKeyState(sf::Keyboard::BackSpace);
+	setKeyState(sf::Keyboard::Home);
+	setKeyState(sf::Keyboard::LShift);
 }
 
 void Keyboard::resetWheel()

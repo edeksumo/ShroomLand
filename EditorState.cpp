@@ -887,7 +887,7 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	mousePosUpdate(a_mousePosOnCoords);
 	mouseFunctions();
 
-	moveCamera();
+	moveCamera(p_mainCamera);
 
 	createDelStageDial();
 	closeDelStageDial();

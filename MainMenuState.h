@@ -15,6 +15,8 @@ private:
     void createQuitDial();
     void createSettingsWindow();
     void settingWindowUpdate();
+
+
 protected:
     
 public:

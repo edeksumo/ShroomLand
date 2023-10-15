@@ -49,21 +49,21 @@ void State::updateOpenedWindowIt()
 /****************************************************/
 //Public
 /****************************************************/
-void State::moveCamera()
+void State::moveCamera(Camera* a_cam, float a_speed)
 {
 	if (!cameraMovement)
 		return;
 	if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
-		p_mainCamera->move(sf::Vector2f(0.f, -2.f));
+		a_cam->move(sf::Vector2f(0.f, -a_speed));
 	}
 	else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
-		p_mainCamera->move(sf::Vector2f(0.f, 2.f));
+		a_cam->move(sf::Vector2f(0.f, a_speed));
 	}
 	if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
-		p_mainCamera->move(sf::Vector2f(-2.f, 0.f));
+		a_cam->move(sf::Vector2f(-a_speed, 0.f));
 	}
 	else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
-		p_mainCamera->move(sf::Vector2f(2.f, 0.f));
+		a_cam->move(sf::Vector2f(a_speed, 0.f));
 	}
 }
 void State::PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor)

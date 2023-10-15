@@ -20,6 +20,27 @@ void GameState::createQuitDial()
 	OpenedWindow->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(360, 90), p_dM->Lang.no, sf::Color(23, 23, 23));
 }
 
+void GameState::switchCameraMode()
+{
+	if (Keyboard::checkKeyState(sf::Keyboard::Home) == Keyboard::KeyState::pressed) {
+		freeCamEnable = !freeCamEnable;
+		if (!freeCamEnable)
+			p_mainCamera->ActiveCamera();
+		else if (freeCamEnable)
+			p_freeCam->ActiveCamera();
+	}
+}
+
+void GameState::cameraMovementSetup()
+{
+	if (!freeCamEnable)
+		return;
+	int speed = 2;
+	if (Keyboard::checkKeyState(sf::Keyboard::LShift) == Keyboard::KeyState::hold)
+		speed = 5;
+	moveCamera(p_freeCam, speed);
+}
+
 /****************************************************/
 //Protected
 /****************************************************/
@@ -37,7 +58,9 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 		ButtonFunctions(it);
 	}
-	moveCamera();
+	switchCameraMode();
+	cameraMovementSetup();
+	
 	createQuitDial();
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }
