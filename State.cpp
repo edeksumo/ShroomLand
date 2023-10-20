@@ -99,6 +99,7 @@ void State::RenderWindows(sf::RenderTarget* a_target)
 			it->Render(a_target);
 		}
 	}
+	RenderNotifications(a_target);
 }
 
 void State::UpdateWindows(sf::Vector2i* a_mousePos)
@@ -112,5 +113,30 @@ void State::UpdateWindows(sf::Vector2i* a_mousePos)
 		for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 			defaultButtonFunctions(it);
 		}
+	}
+	UpdateNotifications(a_mousePos);
+}
+
+void State::PushNotification(std::string a_text, sf::Color a_textColor)
+{
+	Notifications.push_front(Notification(a_text, a_textColor, p_window, p_dM));
+}
+
+void State::RenderNotifications(sf::RenderTarget* a_target)
+{
+	if (Notifications.size() > 0) {
+		std::list<Notification>::reverse_iterator it;
+		for (it = Notifications.rbegin(); it != Notifications.rend(); ++it) {
+			it->Render(a_target);
+		}
+	}
+}
+
+void State::UpdateNotifications(sf::Vector2i* a_mousePos)
+{
+	if (Notifications.size() > 0) {
+		Notifications.front().UpdateNotification();
+		if (Notifications.front().setToClose)
+			Notifications.pop_front();
 	}
 }

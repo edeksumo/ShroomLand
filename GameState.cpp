@@ -24,10 +24,13 @@ void GameState::switchCameraMode()
 {
 	if (Keyboard::checkKeyState(sf::Keyboard::Home) == Keyboard::KeyState::pressed) {
 		freeCamEnable = !freeCamEnable;
-		if (!freeCamEnable)
+		if (!freeCamEnable) {
 			p_mainCamera->ActiveCamera();
-		else if (freeCamEnable)
+		}
+		else if (freeCamEnable) {
 			p_freeCam->ActiveCamera();
+			PushNotification("Free Camera Mode", sf::Color::White);
+		}
 	}
 }
 

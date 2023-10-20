@@ -35,6 +35,22 @@ unsigned int Window::getID()
 	return ID;
 }
 
+void Window::setAlpha(sf::Uint8 a_alpha)
+{
+	backgroundSprite.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+
+	upperDecorLine.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	lowerDecorLine.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	leftDecorLine.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	rightDecorLine.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+
+	upperDecorLeftCorn.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	lowerDecorLeftCorn.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	upperDecorRightCorn.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	lowerDecorRightCorn.setColor(sf::Color(255u, 255u, 255u, a_alpha));
+	text.setFillColor(sf::Color(text.getFillColor().r, text.getFillColor().g, text.getFillColor().b, a_alpha));
+}
+
 void Window::AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor, int a_textSize){
 
 	Buttons.emplace(a_name, Button(a_size, a_pos, a_text, a_textColor, p_dM, a_textSize));

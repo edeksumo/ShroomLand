@@ -76,6 +76,11 @@ void UI::renderShadow(sf::RenderTarget* a_target)
 /****************************************************/
 //Public
 /****************************************************/
+void UI::moveUIElement(sf::Vector2f a_pos)
+{
+	relativePosition = sf::Vector2f(relativePosition.x + a_pos.x, relativePosition.y + a_pos.y);
+}
+
 void UI::setUIState(UI::UIState a_state)
 {
 	v_UIState = a_state;

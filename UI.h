@@ -18,6 +18,7 @@ protected:
 	UIState v_UIState;
 	DataMenager* p_dM;
 	sf::RenderTarget* p_rTarget;
+	sf::Window* p_Window;
 
 	sf::Sprite backgroundSprite;
 	sf::Sprite upperDecorLine;
@@ -65,6 +66,7 @@ public:
 	UI() {
 		p_dM = nullptr;
 		p_rTarget = nullptr;
+		p_Window = nullptr;
 		v_UIState = UI::UIState::active;
 		hasSelector = false;
 		hasText = false;
@@ -74,6 +76,7 @@ public:
 		sliderOffset = 0;
 	}
 	
+	void moveUIElement(sf::Vector2f a_pos);
 	void setUIState(UI::UIState a_state);
 	UI::UIState getUIState();
 	virtual void Render(sf::RenderTarget* a_target) = 0;

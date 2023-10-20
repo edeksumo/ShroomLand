@@ -29,6 +29,7 @@ public:
         hasText = true;
         hasBackground = true;
         isBlockingMouse = false;
+        p_Window = m_window;
         relativePosition = m_pos;
         textColor = m_textColor;
         size = m_size;
@@ -58,12 +59,8 @@ public:
         
         upperDecorLeftCorn.setTexture(p_dM->windowsDecorLeftUpCornerTxt);
         lowerDecorLeftCorn.setTexture(p_dM->windowsDecorDownLeftCornerTxt);
-        //lowerDecorLeftCorn.setRotation(270);
         upperDecorRightCorn.setTexture(p_dM->windowsDecorUpRightCornerTxt);
-        //upperDecorRightCorn.setRotation(90);
         lowerDecorRightCorn.setTexture(p_dM->windowsDecorDownRightCornerTxt);
-        //lowerDecorRightCorn.setRotation(180);
-        
         initBackground();
         initText(m_text);
         setToClose = false;
@@ -73,6 +70,7 @@ public:
     }
 
     unsigned int getID();
+    void setAlpha(sf::Uint8 a_alpha);
     void AddButton(std::string a_name, sf::Vector2f a_size, sf::Vector2f a_pos, std::string a_text, sf::Color a_textColor, int a_textSize = 20);
     void AddButton(std::string a_name, Button::GraphicalButton a_visual, sf::Vector2f a_pos);
     void AddSwitch(std::string a_name, sf::Vector2f a_pos);
