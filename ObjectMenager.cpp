@@ -61,6 +61,15 @@ void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, Interact
 	addPrefab(a_intractableObjPtr->ID, o->second);
 }
 
+void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+{
+	a_playerObjPtr = new Player(a_texture, m_area, true, m_hitbox, p_dM);
+	//std::cout << a_intractableObjPtr->ID << std::endl;
+	PlayerObjectPtrContainer.insert(std::pair<int, Player*>(a_playerObjPtr->ID, a_playerObjPtr));
+	auto o = PlayerObjectPtrContainer.find(a_playerObjPtr->ID);
+	addPrefab(a_playerObjPtr->ID, o->second);
+}
+
 Tile* ObjectMenager::getTilePtrById(int a_ID)
 {
 	std::cout << "2";

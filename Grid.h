@@ -2,6 +2,7 @@
 #include"Tile.h"
 #include"StaticObject.h"
 #include"InteractableObject.h"
+#include"Player.h"
 #include<deque>
 #include<map>
 class Grid
@@ -18,7 +19,8 @@ public:
 	/// Need to be added for all types of Objects with corresponding add<objType> func;
 	std::vector<StaticObject*> StaticObjStorageVec;					//stores all static objects
 	std::vector<InteractableObject*> InteractableObjStorageVec;		//stores all interactable objects;
-	
+	std::vector<Player*> PlayerObjStorageVec;		//stores all player objects;
+
 	Grid() {
 		size_x = 100;
 		size_y = 100;
@@ -53,6 +55,7 @@ public:
 
 	void AddObject(sf::Vector2f a_pos, StaticObject* a_obj);
 	void AddObject(sf::Vector2f a_pos, InteractableObject* a_obj);
+	void AddObject(sf::Vector2f a_pos, Player* a_obj);
 	void MoveOnPos(sf::Vector2f a_pos, Object* a_obj);	//used for already placed objects for seting position (updates render order)
 	void RemoveObject(Object* a_obj);
 	bool isTileObjOccupied(GridCell a_pos);

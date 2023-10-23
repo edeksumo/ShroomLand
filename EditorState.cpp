@@ -40,6 +40,17 @@ void EditorState::saveStages()
 			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.StaticObjectDefiner << " " << it_02->ID << " " << it_02->sprite.getPosition().x << " " << it_02->sprite.getPosition().y << std::endl;
 		}
 		
+		// saving interactable objects
+		
+		for (const auto& it_03 : it->second.TileGrid.InteractableObjStorageVec) {
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.InteractableObjectDefiner << " " << it_03->ID << " " << it_03->sprite.getPosition().x << " " << it_03->sprite.getPosition().y << std::endl;
+		}
+
+		// saving player objects
+
+		for (const auto& it_04 : it->second.TileGrid.PlayerObjStorageVec) {
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.PlayerObjectDefiner << " " << it_04->ID << " " << it_04->sprite.getPosition().x << " " << it_04->sprite.getPosition().y << std::endl;
+		}
 		//each obj type must be added here...
 	}
 

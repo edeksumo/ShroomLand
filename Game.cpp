@@ -74,6 +74,20 @@ void Game::LoadStages()
                 it->second.addObject(sf::Vector2f(x, y), j);
                 //.... adding static objects to deque
             }
+            if (v[i + 1] == dataMenager.SaveFormat.InteractableObjectDefiner) {
+                auto j = stoi(v[i + 2]);
+                auto x = stoi(v[i + 3]);
+                auto y = stoi(v[i + 4]);
+                it->second.addObject(sf::Vector2f(x, y), j);
+                //.... adding Interactable objects to deque
+            }
+            if (v[i + 1] == dataMenager.SaveFormat.PlayerObjectDefiner) {
+                auto j = stoi(v[i + 2]);
+                auto x = stoi(v[i + 3]);
+                auto y = stoi(v[i + 4]);
+                it->second.addObject(sf::Vector2f(x, y), j);
+                //.... adding player objects to deque
+            }
             ///.... each type of obj must be specified here 
         }
     }

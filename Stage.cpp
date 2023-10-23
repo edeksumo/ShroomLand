@@ -56,6 +56,11 @@ void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 		return;
 	}
 
+	std::multimap<int, Player*>::iterator it_02 = p_objMenager->PlayerObjectPtrContainer.find(a_ID);
+	if (it_02 != p_objMenager->PlayerObjectPtrContainer.end()) {
+		TileGrid.AddObject(a_pos, it_02->second);
+		return;
+	}
 	
 }
 

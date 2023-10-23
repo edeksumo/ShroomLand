@@ -99,6 +99,17 @@ void Grid::AddObject(sf::Vector2f a_pos, InteractableObject* a_obj)
 	AddObjectToRender(a_pos, InteractableObjStorageVec.back());
 }
 
+void Grid::AddObject(sf::Vector2f a_pos, Player* a_obj)
+{
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
+
+	auto p = new Player(*a_obj);
+	p->SetPosition(a_pos);
+	PlayerObjStorageVec.push_back(p);
+	AddObjectToRender(a_pos, PlayerObjStorageVec.back());
+}
+
 void Grid::MoveOnPos(sf::Vector2f a_pos, Object* a_obj)
 {
 	a_obj->SetPosition(a_pos);

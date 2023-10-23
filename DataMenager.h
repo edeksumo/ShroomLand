@@ -52,6 +52,8 @@ public:
 		string TileDefiner = "TILE";
 		string BackTileDefiner = "BACK_TILE";
 		string StaticObjectDefiner = "STATIC_OBJ";
+		string InteractableObjectDefiner = "INTERACTABLE_OBJ";
+		string PlayerObjectDefiner = "PLAYER_OBJ";
 	};
 
 	struct StagesNames {
@@ -93,6 +95,8 @@ public:
 	//Objects
 	sf::Texture objectsTxt;
 	sf::Texture chestsTxt;
+
+	sf::Texture playerTxt;
 
 	/****************************************************/
 	//GUI textures
@@ -177,6 +181,10 @@ public:
 		if (!objectsTxt.loadFromFile("data/textures/Dec_props2.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: Dec_props2.png" << std::endl;
 		if (!chestsTxt.loadFromFile("data/textures/chest.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: chest.png" << std::endl;
+
+		//player
+		if (!playerTxt.loadFromFile("data/textures/BODY_male.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: chest.png" << std::endl;
 
 		/****************************************************/
