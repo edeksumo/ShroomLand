@@ -16,7 +16,7 @@ public:
 
     }
     StaticObject(const Object& p1) : Object(p1) {
-
+        std::cout << "player copy constructor\n";
     }
     void Update(sf::Vector2i* a_mousePos);
 };

@@ -45,6 +45,11 @@ void Tile::setVariant(unsigned int a_variant)
 	sprite.setTextureRect(sf::IntRect(basicRect.left + (BASE_TEXTURE_SIZE_X * currentVariant), basicRect.top, basicRect.width, basicRect.height));
 }
 
+bool Tile::isTileWalkable()
+{
+	return isWalkable;
+}
+
 
 void Tile::Update(sf::Vector2i* a_mousePos)
 {

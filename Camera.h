@@ -20,6 +20,8 @@ public:
 	void ActiveCamera();
 	void rotate(int a_angle, bool a_setActive = true);
 	void move(sf::Vector2f a_dir, bool a_setActive = true);
+	void setCenter(sf::Vector2f a_pos, bool a_setActive = true);
+	sf::Vector2f getCenter();
 	void updateCamera();
 };
 

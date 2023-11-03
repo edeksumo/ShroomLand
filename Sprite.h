@@ -56,12 +56,15 @@ public:
 		hitboxPos = p1.hitboxPos;
 		//std::cout << "sprite copy constructor " << ID << endl;
 	};
-
-	void SetPosition(GridCell a_pos);	//sets position on grid and multiplias it by 32 for in game pos
-	void SetPosition(sf::Vector2f a_pos);	//sets position in pixels
+	sf::Vector2f GetPosition();
+	void SetPosition(GridCell a_pos);	//sets position on grid and multiplias it by 32 for in game pos DO NOT UPDATE RENDER ORDER
+	void SetPosition(sf::Vector2f a_pos);	//sets position in pixels DO NOT UPDATE RENDER ORDER
+	void MoveSprite(sf::Vector2f a_pos);	//moves position in pixels	DO NOT UPDATE RENDER ORDER
 	void flipSprite();
 	GridCell GetGridPosition();
+	GridCell GetObjectGridPosition();
 	sf::FloatRect getHitboxWorldRect();
+	sf::FloatRect getSpriteBoundariesPos(bool a_intoGrid = false);
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;
 	void Render(sf::RenderTarget* a_target);
 };

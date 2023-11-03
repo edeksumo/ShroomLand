@@ -5,6 +5,18 @@
 class GameState :
     public State
 {
+public:
+    enum class Directions {
+        up,
+        down,
+        left,
+        right,
+        upLeft,
+        upRight,
+        downLeft,
+        downRight,
+        none
+    };
 private:
     void ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
     void createQuitDial();
@@ -13,6 +25,9 @@ private:
     void cameraMovementSetup();
     Camera* p_freeCam;
     bool freeCamEnable;
+    void cameraFollowObject(Object* a_obj);
+    void cameraFollowObject(Object* a_obj, sf::FloatRect a_limits);
+    bool canEnterTile(Object* a_obj, Directions a_dir);
 protected:
 
 public:
@@ -26,16 +41,22 @@ public:
         p_renderWindow = m_renderWindow;
         freeCamEnable = false;
         cameraMovement = true;
+        ActivePlayer = nullptr;
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(p_window->getSize().x, 30), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(50, 20), sf::Vector2f(p_window->getSize().x - 55, 5), m_dM->Lang.quit, sf::Color::Black, 12);
         p_freeCam = new Camera(m_renderWindow, sf::Vector2f(800, 600));
         v_createQuitDial = false;
         currentStage = &p_stageContainer->begin()->second;
+        setActivePlayer(nullptr);
     };
     ~GameState() {
         delete p_freeCam;
     }
     
+    Player* ActivePlayer;
+    void setActivePlayer(Player* a_player);
+    void playerControl();
+
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);
     void Render(sf::RenderTarget* a_target);
 };

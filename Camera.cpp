@@ -36,6 +36,18 @@ void Camera::move(sf::Vector2f a_dir, bool a_setActive)
         ActiveCamera();
 }
 
+void Camera::setCenter(sf::Vector2f a_pos, bool a_setActive )
+{
+    view.setCenter(a_pos);
+    if (a_setActive)
+        ActiveCamera();
+}
+
+sf::Vector2f Camera::getCenter()
+{
+    return view.getCenter();
+}
+
 void Camera::updateCamera()
 {
 }

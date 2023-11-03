@@ -57,6 +57,7 @@ public:
 	void AddObject(sf::Vector2f a_pos, InteractableObject* a_obj);
 	void AddObject(sf::Vector2f a_pos, Player* a_obj);
 	void MoveOnPos(sf::Vector2f a_pos, Object* a_obj);	//used for already placed objects for seting position (updates render order)
+	void MoveObject(sf::Vector2f a_pos, Object* a_obj);  //used for moving object pixel by pixel (updates render order)
 	void RemoveObject(Object* a_obj);
 	bool isTileObjOccupied(GridCell a_pos);
 };

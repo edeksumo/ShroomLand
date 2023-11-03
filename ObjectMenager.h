@@ -10,8 +10,8 @@ class ObjectMenager
 private:
 	DataMenager* p_dM;
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5]);		//default isTilable = true, needBackgroundTile = true
-	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
-	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[5][7], bool a_isTilable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
+	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_isWalkable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
+	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[5][7], bool a_isTilable, bool a_isWalkable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
 	
 	void addPrefab(int a_ID, Object* a_obj);
 	void createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox);
@@ -67,8 +67,8 @@ public:
 		tilesetPrefabCreater(&p_dM->muddyGrassTileSet, muddyGrass);
 		tilesetPrefabCreater(&p_dM->moodTileSet, mood01);
 		tilesetPrefabCreater(&p_dM->mood02TileSet, mood02);
-		tilesetPrefabCreater(&p_dM->water01TileSet, water01, true, true, 4);
-		tilesetPrefabCreater(&p_dM->clif01Tiles, clif01, false, true, 0);
+		tilesetPrefabCreater(&p_dM->water01TileSet, water01, true, false, true, 4);
+		tilesetPrefabCreater(&p_dM->clif01Tiles, clif01, false, false, true, 0);
 
 		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120));
 		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(160, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120));

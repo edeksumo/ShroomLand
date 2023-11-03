@@ -116,6 +116,12 @@ void Grid::MoveOnPos(sf::Vector2f a_pos, Object* a_obj)
 	std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
 
+void Grid::MoveObject(sf::Vector2f a_pos, Object* a_obj)
+{
+	a_obj->MoveSprite(a_pos);
+	std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
+}
+
 void Grid::RemoveObject(Object* a_obj)
 {
 	int a = 0, b = 0, r = 0;

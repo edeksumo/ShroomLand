@@ -37,6 +37,7 @@ public:
     }
     bool isSolid();
     void setObjectCenterOrigin();
+    void setObjectCenterOrigin(sf::Vector2f a_offset);  // moving origin around object by ofsfet 
     virtual void Update(sf::Vector2i* a_mousePos) = 0;
 };
 

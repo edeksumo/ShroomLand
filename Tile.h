@@ -28,6 +28,7 @@ public:
 private:
     groundTileType tileType;
     sf::IntRect basicRect;
+    bool isWalkable;
 protected:
 
 public:
@@ -40,13 +41,14 @@ public:
     Tile() {
         tileType = groundTileType::none;
         isTilable = false;
+        isWalkable = false;
         needBackgroundTile = false;
         nbOfVariants = 0;
         currentVariant = 0;
         hasHitbox = false;
     };
 
-    Tile(sf::Texture* m_texture, sf::IntRect m_area, bool m_isTilable, bool m_needBackgroundTile, unsigned int m_nbOfVariants, DataMenager* m_dM) {
+    Tile(sf::Texture* m_texture, sf::IntRect m_area, bool m_isTilable, bool m_isWalkable, bool m_needBackgroundTile, unsigned int m_nbOfVariants, DataMenager* m_dM) {
         p_dM = m_dM;
         sprite.setTexture(*m_texture);
         sprite.setTextureRect(m_area);
@@ -56,6 +58,7 @@ public:
         isTilable = m_isTilable;
         needBackgroundTile = m_needBackgroundTile;
         hasHitbox = false; 
+        isWalkable = m_isWalkable;
         int i = ID / MAX_IDIES_FOR_TILES;
         if (i > static_cast<int>(Tile::groundTileType::other))
             i = static_cast<int>(Tile::groundTileType::other);
@@ -75,10 +78,12 @@ public:
         currentVariant = p1.currentVariant;
         tileType = p1.tileType;
         isTilable = p1.isTilable;
+        isWalkable = p1.isWalkable;
         needBackgroundTile = p1.needBackgroundTile;
         //std::cout << "copy constructor" << std::endl;
     };
 
+    bool isTileWalkable();
     Tile::groundTileType GetTileType();
     void changeVariant(bool a_up);
     void setVariant(unsigned int a_variant);
