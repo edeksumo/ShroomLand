@@ -28,6 +28,7 @@ private:
     void cameraFollowObject(Object* a_obj);
     void cameraFollowObject(Object* a_obj, sf::FloatRect a_limits);
     bool canEnterTile(Object* a_obj, Directions a_dir);
+    bool checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRight); // it takes two points and make line out of it and checks is it colides with solidObject vector;
 protected:
 
 public:

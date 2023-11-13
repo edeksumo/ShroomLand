@@ -20,7 +20,7 @@ public:
 	std::vector<StaticObject*> StaticObjStorageVec;					//stores all static objects
 	std::vector<InteractableObject*> InteractableObjStorageVec;		//stores all interactable objects;
 	std::vector<Player*> PlayerObjStorageVec;		//stores all player objects;
-
+	std::vector<Object*> SolidObjects;
 	Grid() {
 		size_x = 100;
 		size_y = 100;
@@ -52,6 +52,8 @@ public:
 	bool isTileOccupied(GridCell a_pos);
 
 	void AddObjectToRender(sf::Vector2f a_pos, Object* a_obj);
+
+	void AddSolidObjToVec(Object* a_obj);
 
 	void AddObject(sf::Vector2f a_pos, StaticObject* a_obj);
 	void AddObject(sf::Vector2f a_pos, InteractableObject* a_obj);

@@ -20,7 +20,12 @@ protected:
 	DataMenager* p_dM;
 	bool hasHitbox;
 public:
-	
+	struct Verticles {
+		sf::Vector2f topLeft;
+		sf::Vector2f topRight;
+		sf::Vector2f downLeft;
+		sf::Vector2f downRight;
+	};
 	unsigned int ID;
 	sf::Sprite sprite;
 	GridCell posOnGrid;
@@ -65,6 +70,7 @@ public:
 	GridCell GetObjectGridPosition();
 	sf::FloatRect getHitboxWorldRect();
 	sf::FloatRect getSpriteBoundariesPos(bool a_intoGrid = false);
+	Verticles getHitboxVerticles();
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;
 	void Render(sf::RenderTarget* a_target);
 };

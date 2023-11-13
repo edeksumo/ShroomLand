@@ -66,7 +66,6 @@ public:
         int a = ID - ((static_cast<int>(tileType) * MAX_IDIES_FOR_TILES));
         g_lastID = a;
         g_lastTileID++;
-        //std::cout << ID << " " << i << "constructor " << g_lastID << std::endl;
     };
 
     Tile(const Tile& p1) : Sprite(p1) {         //it make sure that the copy constructor of parent class is run
@@ -80,7 +79,6 @@ public:
         isTilable = p1.isTilable;
         isWalkable = p1.isWalkable;
         needBackgroundTile = p1.needBackgroundTile;
-        //std::cout << "copy constructor" << std::endl;
     };
 
     bool isTileWalkable();

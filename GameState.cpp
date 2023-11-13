@@ -97,7 +97,7 @@ bool GameState::canEnterTile(Object* a_obj, Directions a_dir)
 		tile = currentStage->TileGrid.GetTilePtr(GridCell(gridPos.x - 1, gridPos.y));
 		break;
 	case Directions::right:
-		objPos = sf::Vector2f(objPos.x - 15, objPos.y);
+		objPos = sf::Vector2f(objPos.x, objPos.y);		//x - 15 for edge walking
 		gridPos = GridCell(objPos.x / TILE_SIZE, objPos.y / TILE_SIZE);
 		tile = currentStage->TileGrid.GetTilePtr(GridCell(gridPos.x + 1, gridPos.y));
 		break;
@@ -107,6 +107,45 @@ bool GameState::canEnterTile(Object* a_obj, Directions a_dir)
 	if (!tile->isTileWalkable())
 		return false;
 	return true;
+}
+
+bool GameState::checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRight)
+{
+
+	bool horizontal = false;
+	bool vertical = false;
+	if (a_pointLeft.x == a_pointRight.x)
+		vertical = true;
+	else if (a_pointLeft.y == a_pointRight.y)
+		horizontal = true;
+	auto l = 0.f;
+	if (vertical)
+		l = a_pointRight.y - a_pointLeft.y;
+	if (horizontal)
+		l = a_pointRight.x - a_pointLeft.x;
+	
+	auto p = l / 4;
+	sf::Vector2f points[5];
+	for (int i = 0; i < 5; i++) {
+		auto x = (vertical) ? a_pointLeft.x : i * p + (a_pointLeft.x + 1);
+		auto y = (horizontal) ? a_pointLeft.y : i * p + (a_pointLeft.y + 1);
+		if (i == 4) {
+			if (horizontal)
+				x = x - 2;
+			else
+				y = y - 2;
+		}
+		points[i] = sf::Vector2f (x ,y);
+	}
+	for (int i = 0; i < 5; i++) {
+		for (Object* o : currentStage->TileGrid.SolidObjects) {
+			if (o->getHitboxWorldRect().contains(points[i])) {
+				return true;
+			}
+		}
+
+	}
+	return false;
 }
 
 /****************************************************/
@@ -134,19 +173,23 @@ void GameState::playerControl()
 		return;
 	if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::hold) {
 		if(canEnterTile(ActivePlayer, Directions::up))
-			currentStage->TileGrid.MoveObject(sf::Vector2f(0, -1), ActivePlayer);
+			if(!checkCollision(ActivePlayer->getHitboxVerticles().topLeft, ActivePlayer->getHitboxVerticles().topRight))
+				currentStage->TileGrid.MoveObject(sf::Vector2f(0, -1), ActivePlayer);
 	}
 	else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::hold) {
 		if (canEnterTile(ActivePlayer, Directions::down))
-			currentStage->TileGrid.MoveObject(sf::Vector2f(0, 1), ActivePlayer);
+			if (!checkCollision(ActivePlayer->getHitboxVerticles().downLeft, ActivePlayer->getHitboxVerticles().downRight))
+				currentStage->TileGrid.MoveObject(sf::Vector2f(0, 1), ActivePlayer);
 	}
 	if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::hold) {
 		if (canEnterTile(ActivePlayer, Directions::left))
-			currentStage->TileGrid.MoveObject(sf::Vector2f(-1, 0), ActivePlayer);
+			if (!checkCollision(ActivePlayer->getHitboxVerticles().topLeft, ActivePlayer->getHitboxVerticles().downLeft))
+				currentStage->TileGrid.MoveObject(sf::Vector2f(-1, 0), ActivePlayer);
 	}
 	else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::hold) {
 		if (canEnterTile(ActivePlayer, Directions::right))
-			currentStage->TileGrid.MoveObject(sf::Vector2f(1, 0), ActivePlayer);
+			if (!checkCollision(ActivePlayer->getHitboxVerticles().topRight, ActivePlayer->getHitboxVerticles().downRight))
+				currentStage->TileGrid.MoveObject(sf::Vector2f(1, 0), ActivePlayer);
 	}
 	cameraFollowObject(ActivePlayer, sf::FloatRect(400, 350, 700, 700));
 }

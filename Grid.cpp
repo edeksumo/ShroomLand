@@ -77,6 +77,13 @@ void Grid::AddObjectToRender(sf::Vector2f a_pos, Object* a_obj)
 	//std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
 
+void Grid::AddSolidObjToVec(Object* a_obj)
+{
+	if (!a_obj->isSolid())
+		return;
+	SolidObjects.push_back(a_obj);
+}
+
 void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
@@ -85,6 +92,7 @@ void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
 	auto* p = new StaticObject(*a_obj);
 	p->SetPosition(a_pos);
 	StaticObjStorageVec.push_back(p);
+	AddSolidObjToVec(StaticObjStorageVec.back());
 	AddObjectToRender(a_pos, StaticObjStorageVec.back());
 }
 
@@ -96,6 +104,7 @@ void Grid::AddObject(sf::Vector2f a_pos, InteractableObject* a_obj)
 	auto p = new InteractableObject(*a_obj);
 	p->SetPosition(a_pos);
 	InteractableObjStorageVec.push_back(p);
+	AddSolidObjToVec(StaticObjStorageVec.back());
 	AddObjectToRender(a_pos, InteractableObjStorageVec.back());
 }
 
@@ -107,6 +116,7 @@ void Grid::AddObject(sf::Vector2f a_pos, Player* a_obj)
 	auto p = new Player(*a_obj);
 	p->SetPosition(a_pos);
 	PlayerObjStorageVec.push_back(p);
+	AddSolidObjToVec(StaticObjStorageVec.back());
 	AddObjectToRender(a_pos, PlayerObjStorageVec.back());
 }
 

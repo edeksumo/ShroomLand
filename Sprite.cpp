@@ -69,11 +69,24 @@ sf::FloatRect Sprite::getSpriteBoundariesPos(bool a_intoGrid)
 	sf::Vector2f pos = sprite.getPosition();
 	sf::IntRect box = sprite.getTextureRect();
 	sf::FloatRect boxPos = sf::FloatRect(pos.x - box.width / 2, pos.y - box.height / 2, pos.x + box.width / 2, pos.y + box.height / 2);
-
 	if (!a_intoGrid)
 		return boxPos;
 	else
 		return sf::FloatRect(boxPos.left / TILE_SIZE, boxPos.top / TILE_SIZE, boxPos.width / TILE_SIZE, boxPos.height / TILE_SIZE);
+}
+
+Sprite::Verticles Sprite::getHitboxVerticles()
+{
+	Verticles vert;
+	vert.topLeft = sf::Vector2f(getHitboxWorldRect().left, getHitboxWorldRect().top);
+	//std::cout << vert.topLeft.y << " " << vert.topLeft.y << endl;
+	vert.topRight = sf::Vector2f(getHitboxWorldRect().left + getHitboxWorldRect().width, getHitboxWorldRect().top);
+	//std::cout << vert.topRight.y << " " << vert.topRight.y << endl;
+	vert.downLeft = sf::Vector2f(getHitboxWorldRect().left, getHitboxWorldRect().top + getHitboxWorldRect().height);
+	//std::cout << vert.downLeft.y << " " << vert.downLeft.y << endl;
+	vert.downRight = sf::Vector2f(getHitboxWorldRect().left + getHitboxWorldRect().width, getHitboxWorldRect().top + getHitboxWorldRect().height);
+	//std::cout << vert.downRight.y << " " << vert.downRight.y << endl;
+	return vert;
 }
 
 void Sprite::Render(sf::RenderTarget* a_target)
