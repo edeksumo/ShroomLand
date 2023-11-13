@@ -111,21 +111,23 @@ bool GameState::canEnterTile(Object* a_obj, Directions a_dir)
 
 bool GameState::checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRight)
 {
-
+	/// <summary>
+	///	checks collision in 5 point of one edge on sprite with all solid objects on map; 
+	/// </summary>
+	/// <returns>Returs true if collision accures</returns>
 	bool horizontal = false;
 	bool vertical = false;
 	if (a_pointLeft.x == a_pointRight.x)
 		vertical = true;
 	else if (a_pointLeft.y == a_pointRight.y)
 		horizontal = true;
-	auto l = 0.f;
-	if (vertical)
-		l = a_pointRight.y - a_pointLeft.y;
-	if (horizontal)
-		l = a_pointRight.x - a_pointLeft.x;
 	
-	auto p = l / 4;
-	sf::Vector2f points[5];
+	if (!vertical && !horizontal)	//if none are true return, in future add throw
+		return false;
+	
+	auto l = (vertical) ? a_pointRight.y - a_pointLeft.y : a_pointRight.x - a_pointLeft.x;	//mesuring lenght of edge
+	
+	auto p = l / 4;					//cut lenght of edge into 5 parts 
 	for (int i = 0; i < 5; i++) {
 		auto x = (vertical) ? a_pointLeft.x : i * p + (a_pointLeft.x + 1);
 		auto y = (horizontal) ? a_pointLeft.y : i * p + (a_pointLeft.y + 1);
@@ -135,15 +137,11 @@ bool GameState::checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRig
 			else
 				y = y - 2;
 		}
-		points[i] = sf::Vector2f (x ,y);
-	}
-	for (int i = 0; i < 5; i++) {
 		for (Object* o : currentStage->TileGrid.SolidObjects) {
-			if (o->getHitboxWorldRect().contains(points[i])) {
+			if (o->getHitboxWorldRect().contains(sf::Vector2f(x, y))) {
 				return true;
 			}
 		}
-
 	}
 	return false;
 }
