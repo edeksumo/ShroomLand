@@ -12,8 +12,8 @@ public:
     Object() {
         solid = true;
     }
-    Object(sf::Texture* m_texture, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, DataMenager* m_dM) : Sprite (m_hitbox) {
-        p_dM = m_dM;
+    Object(sf::Texture* m_texture, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, DataMenager* m_dM) : Sprite (m_hitbox, m_dM) {
+        //p_dM = m_dM;
         sprite.setTexture(*m_texture);
         sprite.setTextureRect(m_area);
         solid = m_solid;
@@ -25,7 +25,7 @@ public:
         setObjectCenterOrigin();
     }
     Object(const Object& p1) : Sprite(p1) {
-        p_dM = p1.p_dM;
+       // p_dM = p1.p_dM;
         sprite = p1.sprite;
         solid = p1.solid;
         hasHitbox = p1.hasHitbox;

@@ -4,7 +4,15 @@ unsigned int Sprite::LAST_ID = 0;
 /****************************************************/
 //Private
 /****************************************************/
+void Sprite::setSpriteForAnimations()
+{
+	map<string, Animation>::iterator it;
 
+	for (it = AnimMenager->AnimationMap.begin(); it != AnimMenager->AnimationMap.end(); it++)
+	{
+		it->second.setSpritePointer(&sprite);
+	}
+}
 /****************************************************/
 //Protected
 /****************************************************/
@@ -59,6 +67,11 @@ GridCell Sprite::GetObjectGridPosition()
 	return GridCell(sprite.getPosition().x / TILE_SIZE, sprite.getPosition().y / TILE_SIZE);
 }
 
+AnimationMenager* Sprite::GetAnimationMenager()
+{
+	return AnimMenager;
+}
+
 sf::FloatRect Sprite::getHitboxWorldRect()
 {
 	return hitbox.getGlobalBounds();
@@ -91,6 +104,9 @@ Sprite::Verticles Sprite::getHitboxVerticles()
 
 void Sprite::Render(sf::RenderTarget* a_target)
 {
+	if (isAnimated) {
+		AnimMenager->UpdateAnimation();
+	}
 	a_target->draw(sprite);
 	if (hasHitbox)
 		if (p_dM->Settings.hitboxes)

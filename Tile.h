@@ -58,6 +58,7 @@ public:
         isTilable = m_isTilable;
         needBackgroundTile = m_needBackgroundTile;
         hasHitbox = false; 
+        AnimMenager = new AnimationMenager(p_dM);
         isWalkable = m_isWalkable;
         int i = ID / MAX_IDIES_FOR_TILES;
         if (i > static_cast<int>(Tile::groundTileType::other))

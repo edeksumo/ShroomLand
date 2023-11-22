@@ -43,31 +43,58 @@ void ObjectMenager::addPrefab(int a_ID, Object* a_obj)
 	ObjectsPrefabs.insert(std::pair<int, Object*>(a_ID, a_obj));
 }
 
-void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_staticObjPtr = new StaticObject(a_texture, m_area, true, m_hitbox, p_dM);
+	a_staticObjPtr = new StaticObject(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_staticObjPtr->ID << std::endl;
 	StaticObjectPtrContainer.insert(std::pair<int, StaticObject*>(a_staticObjPtr->ID, a_staticObjPtr));
 	auto o = StaticObjectPtrContainer.find(a_staticObjPtr->ID);
 	addPrefab(a_staticObjPtr->ID, o->second);
 }
 
-void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_intractableObjPtr = new InteractableObject(a_texture, m_area, true, m_hitbox, p_dM);
+	a_intractableObjPtr = new InteractableObject(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_intractableObjPtr->ID << std::endl;
 	InteractableObjectPtrContainer.insert(std::pair<int, InteractableObject*>(a_intractableObjPtr->ID, a_intractableObjPtr));
 	auto o = InteractableObjectPtrContainer.find(a_intractableObjPtr->ID);
 	addPrefab(a_intractableObjPtr->ID, o->second);
 }
 
-void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox)
+void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_playerObjPtr = new Player(a_texture, m_area, true, m_hitbox, p_dM);
+	a_playerObjPtr = new Player(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_intractableObjPtr->ID << std::endl;
 	PlayerObjectPtrContainer.insert(std::pair<int, Player*>(a_playerObjPtr->ID, a_playerObjPtr));
 	auto o = PlayerObjectPtrContainer.find(a_playerObjPtr->ID);
 	addPrefab(a_playerObjPtr->ID, o->second);
+}
+
+void ObjectMenager::addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame, sf::Vector2i a_spriteSheetSize, Animation::repeatMode a_mode, sf::Sprite* a_sprite, sf::Texture a_defTexture, bool a_fliped, bool a_upsideDown)
+{
+	Sprite* sprite = nullptr;
+	/// //////////////////////////////////////
+	/// all subobject classes should be added here when they want to be animated
+	/// //////////////////////////////////////
+
+	if (StaticObjectPtrContainer.find(Sprite::LAST_ID) != StaticObjectPtrContainer.end()) {
+		sprite = StaticObjectPtrContainer.find(Sprite::LAST_ID)->second;
+		std::cout << "Animation Created for static Object" << endl;
+	}
+	else if (InteractableObjectPtrContainer.find(Sprite::LAST_ID) != InteractableObjectPtrContainer.end()) {
+		sprite = InteractableObjectPtrContainer.find(Sprite::LAST_ID)->second;
+		std::cout << "Animation Created for interactable Object" << endl;
+	}
+	else if (PlayerObjectPtrContainer.find(Sprite::LAST_ID) != PlayerObjectPtrContainer.end()) {
+		sprite = PlayerObjectPtrContainer.find(Sprite::LAST_ID)->second;
+		std::cout << "Animation Created for player Object" << endl;
+	}
+	else {
+		//add some throw later
+		std::cout << "Some random Error with object LASTID\n";
+		return;
+	}
+	sprite->GetAnimationMenager()->CreateAnimation(a_name, a_texture, a_nbOfFrames, a_speed, a_sizeOfFrame, a_spriteSheetSize, a_mode, a_sprite, a_defTexture, a_fliped, a_upsideDown);
 }
 
 Tile* ObjectMenager::getTilePtrById(int a_ID)

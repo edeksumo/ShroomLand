@@ -96,6 +96,9 @@ public:
 	sf::Texture objectsTxt;
 	sf::Texture chestsTxt;
 
+	sf::Texture pinkTree01Anim;
+	sf::Texture greenTree01Anim;
+
 	sf::Texture playerTxt;
 
 	/****************************************************/
@@ -182,6 +185,12 @@ public:
 			cout << "== DATAMENAGER ERROR == Texture not loaded: Dec_props2.png" << std::endl;
 		if (!chestsTxt.loadFromFile("data/textures/chest.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: chest.png" << std::endl;
+
+		//animations
+		if (!pinkTree01Anim.loadFromFile("data/textures/tree1A.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: tree1A.png" << std::endl;
+		if (!greenTree01Anim.loadFromFile("data/textures/tree2A.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: tree2A.png" << std::endl;
 
 		//player
 		if (!playerTxt.loadFromFile("data/textures/BODY_male.png"))

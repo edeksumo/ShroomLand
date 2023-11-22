@@ -1,7 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "DataMenager.h"
 #include "GridCell.h"
+#include "AnimationMenager.h"
 
 const int MAX_IDIES_FOR_TILES = 55; //taken from ObjectMenager.h size of arr
 const int TILE_SIZE = 32;			//in pixels
@@ -14,11 +13,16 @@ const bool DEFAULT_MASK_FOR_BACKGROUND[MAX_IDIES_FOR_TILES] = { 1, 1, 1, 1, 1, 0
 class Sprite
 {
 private:
+
 	sf::Vector2f hitboxPos;
+
+	void setSpriteForAnimations();
 protected:
 	sf::RectangleShape hitbox;
 	DataMenager* p_dM;
+	AnimationMenager* AnimMenager;
 	bool hasHitbox;
+	bool isAnimated;
 public:
 	struct Verticles {
 		sf::Vector2f topLeft;
@@ -34,16 +38,21 @@ public:
 		
 	Sprite() {
 		p_dM = nullptr;
+		AnimMenager = nullptr;
 		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
 		LAST_ID = ID;
 		posOnGrid = GridCell(0, 0);
 		hasHitbox = false;
+		isAnimated = false;
 		//std::cout << "sprite constructor " << ID << endl;
 	};
 
-	Sprite(sf::IntRect m_hitboxPos) {
-		p_dM = nullptr;
+	Sprite(sf::IntRect m_hitboxPos, DataMenager* m_dM) {
+		p_dM = m_dM;
+		AnimMenager = new AnimationMenager(p_dM);
+		setSpriteForAnimations();
+		isAnimated = false;
 		//static unsigned int ID_COUNTER;
 		ID = ID_COUNTER++;
 		LAST_ID = ID;
@@ -56,10 +65,16 @@ public:
 	Sprite(const Sprite& p1) {
 		ID = p1.ID;
 		p_dM = p1.p_dM;
+		AnimMenager = p1.AnimMenager;
+		setSpriteForAnimations();
 		posOnGrid = p1.posOnGrid;
 		hasHitbox = p1.hasHitbox;
 		hitboxPos = p1.hitboxPos;
+		isAnimated = p1.isAnimated;
 		//std::cout << "sprite copy constructor " << ID << endl;
+	};
+	~Sprite() {
+		delete AnimMenager;
 	};
 	sf::Vector2f GetPosition();
 	void SetPosition(GridCell a_pos);	//sets position on grid and multiplias it by 32 for in game pos DO NOT UPDATE RENDER ORDER
@@ -68,6 +83,7 @@ public:
 	void flipSprite();
 	GridCell GetGridPosition();
 	GridCell GetObjectGridPosition();
+	AnimationMenager* GetAnimationMenager();
 	sf::FloatRect getHitboxWorldRect();
 	sf::FloatRect getSpriteBoundariesPos(bool a_intoGrid = false);
 	Verticles getHitboxVerticles();
