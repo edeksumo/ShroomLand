@@ -9,6 +9,9 @@ class ObjectMenager
 {
 private:
 	DataMenager* p_dM;
+
+	Sprite* GetLastIDSpritePtr();
+
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5]);		//default isTilable = true, needBackgroundTile = true
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5], bool a_isTilable, bool a_isWalkable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
 	void tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[5][7], bool a_isTilable, bool a_isWalkable, bool a_needBackgroundTile, unsigned int a_nbOfVariants);		//customazible isTilable and needBackground, zero is first variant
@@ -18,8 +21,9 @@ private:
 	void createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
 	void createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
 
-	void addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame/*size in pixels*/, sf::Vector2i a_spriteSheetSize /*size in frames*/,
+	void addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, sf::Vector2f a_textureOffset, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame/*size in pixels*/, sf::Vector2i a_spriteSheetSize /*size in frames*/,
 		Animation::repeatMode a_mode, sf::Sprite* a_sprite, sf::Texture a_defTexture /*texture of original sprite*/, bool m_fliped, bool m_upsideDown);
+	void createAnimation4DToLastPrefab(string a_name, string a_upFacingAnim, string a_downFacingAni, string a_leftFacingAnim, string a_rightFacingAnim);
 protected:
 
 public:
@@ -47,6 +51,7 @@ public:
 	StaticObject* bush_01;
 	StaticObject* bush_02;
 	StaticObject* stemp_01;
+	StaticObject* waterEff01;
 
 	InteractableObject* chest_01;
 
@@ -73,9 +78,9 @@ public:
 		tilesetPrefabCreater(&p_dM->clif01Tiles, clif01, false, false, true, 0);
 
 		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120), true);
-		addAnimationToLastPrefab("Idle", &m_dM->greenTree01Anim, 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
+		addAnimationToLastPrefab("Idle", &m_dM->greenTree01Anim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
 		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(160, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120), true);
-		addAnimationToLastPrefab("Idle", &m_dM->pinkTree01Anim, 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
+		addAnimationToLastPrefab("Idle", &m_dM->pinkTree01Anim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
 		createStaticObjPrefab(&p_dM->objectsTxt, bush_01, sf::IntRect(0, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, bush_02, sf::IntRect(64, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, stemp_01, sf::IntRect(128, 224, 96, 128), true, sf::IntRect(0, -20, 40, 55), false);
@@ -83,7 +88,23 @@ public:
 		createInteractableObjPrefab(&p_dM->chestsTxt, chest_01, sf::IntRect(0, 0, 64, 64), true, sf::IntRect(0, 0, 64, 64), false);
 
 		createPlayerObjPrefab(&p_dM->playerTxt, character, sf::IntRect(0, 128, 64, 64), true, sf::IntRect(0, 0, 30, 46), true);
-		addAnimationToLastPrefab("Idle", &m_dM->playerTxt, 9, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 9), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("IdleUp", &m_dM->playerTxt, sf::Vector2f(0.f, 0.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("IdleLeft", &m_dM->playerTxt, sf::Vector2f(0.f, 64.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("IdleDown", &m_dM->playerTxt, sf::Vector2f(0.f, 128.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("IdleRight", &m_dM->playerTxt, sf::Vector2f(0.f, 192.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		createAnimation4DToLastPrefab("Idle", "IdleUp", "IdleDown", "IdleLeft", "IdleRight");
+
+
+		addAnimationToLastPrefab("WalkDownStart", &m_dM->playerTxt, sf::Vector2f(0.f, 128.f), 2, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 2), Animation::repeatMode::once, nullptr, m_dM->playerTxt, false, false);
+		
+		addAnimationToLastPrefab("WalkUp", &m_dM->playerTxt, sf::Vector2f(128.f, 0.f), 7, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 7), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("WalkLeft", &m_dM->playerTxt, sf::Vector2f(128.f, 64.f), 7, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 7), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("WalkDown", &m_dM->playerTxt, sf::Vector2f(128.f, 128.f), 7, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 7), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		addAnimationToLastPrefab("WalkRight", &m_dM->playerTxt, sf::Vector2f(128.f, 192.f), 7, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 7), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
+		createAnimation4DToLastPrefab("Walk", "WalkUp", "WalkDown", "WalkLeft", "WalkRight");
+
+		createStaticObjPrefab(&p_dM->waterAnim, waterEff01, sf::IntRect(0, 0, 32, 32), false, sf::IntRect(0, 0, 20, 20), true);
+		addAnimationToLastPrefab("Idle", &m_dM->waterAnim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(32, 32), sf::Vector2i(1, 10), Animation::repeatMode::circle, nullptr, m_dM->waterAnim, false, false);
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

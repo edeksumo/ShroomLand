@@ -2,6 +2,31 @@
 /****************************************************/
 //Private
 /****************************************************/
+Sprite* ObjectMenager::GetLastIDSpritePtr()
+{
+	/// //////////////////////////////////////
+	/// all subobject classes should be added here when they want to be animated
+	/// //////////////////////////////////////
+
+	if (StaticObjectPtrContainer.find(Sprite::LAST_ID) != StaticObjectPtrContainer.end()) {
+		std::cout << "Animation Created for static Object" << endl;
+		return StaticObjectPtrContainer.find(Sprite::LAST_ID)->second;
+	}
+	else if (InteractableObjectPtrContainer.find(Sprite::LAST_ID) != InteractableObjectPtrContainer.end()) {
+		std::cout << "Animation Created for interactable Object" << endl;
+		return InteractableObjectPtrContainer.find(Sprite::LAST_ID)->second;
+
+	}
+	else if (PlayerObjectPtrContainer.find(Sprite::LAST_ID) != PlayerObjectPtrContainer.end()) {
+		std::cout << "Animation Created for player Object" << endl;
+		return PlayerObjectPtrContainer.find(Sprite::LAST_ID)->second;
+	}
+	else {
+		//add some throw later
+		std::cout << "Some random Error with object LASTID\n";
+		return nullptr;
+	}
+}
 void ObjectMenager::tilesetPrefabCreater(sf::Texture* a_texture, Tile* a_objArrPtr[11][5])
 {
 	for (int i = 0; i < 5; i++) {
@@ -70,31 +95,30 @@ void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_play
 	addPrefab(a_playerObjPtr->ID, o->second);
 }
 
-void ObjectMenager::addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame, sf::Vector2i a_spriteSheetSize, Animation::repeatMode a_mode, sf::Sprite* a_sprite, sf::Texture a_defTexture, bool a_fliped, bool a_upsideDown)
+void ObjectMenager::addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, sf::Vector2f a_textureOffset, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame, sf::Vector2i a_spriteSheetSize, Animation::repeatMode a_mode, sf::Sprite* a_sprite, sf::Texture a_defTexture, bool a_fliped, bool a_upsideDown)
 {
-	Sprite* sprite = nullptr;
-	/// //////////////////////////////////////
-	/// all subobject classes should be added here when they want to be animated
-	/// //////////////////////////////////////
-
-	if (StaticObjectPtrContainer.find(Sprite::LAST_ID) != StaticObjectPtrContainer.end()) {
-		sprite = StaticObjectPtrContainer.find(Sprite::LAST_ID)->second;
-		std::cout << "Animation Created for static Object" << endl;
-	}
-	else if (InteractableObjectPtrContainer.find(Sprite::LAST_ID) != InteractableObjectPtrContainer.end()) {
-		sprite = InteractableObjectPtrContainer.find(Sprite::LAST_ID)->second;
-		std::cout << "Animation Created for interactable Object" << endl;
-	}
-	else if (PlayerObjectPtrContainer.find(Sprite::LAST_ID) != PlayerObjectPtrContainer.end()) {
-		sprite = PlayerObjectPtrContainer.find(Sprite::LAST_ID)->second;
-		std::cout << "Animation Created for player Object" << endl;
-	}
-	else {
-		//add some throw later
-		std::cout << "Some random Error with object LASTID\n";
+	Sprite* sprite = GetLastIDSpritePtr();
+	if (sprite == nullptr) {
+		std::cout << "Sometging went wrong";
 		return;
 	}
-	sprite->GetAnimationMenager()->CreateAnimation(a_name, a_texture, a_nbOfFrames, a_speed, a_sizeOfFrame, a_spriteSheetSize, a_mode, a_sprite, a_defTexture, a_fliped, a_upsideDown);
+
+	sprite->GetAnimationMenager()->CreateAnimation(a_name, a_texture, a_textureOffset, a_nbOfFrames, a_speed, a_sizeOfFrame, a_spriteSheetSize, a_mode, a_sprite, a_defTexture, a_fliped, a_upsideDown);
+}
+
+void ObjectMenager::createAnimation4DToLastPrefab(string a_name, string a_upFacingAnim, string a_downFacingAni, string a_leftFacingAnim, string a_rightFacingAnim)
+{
+	Sprite* sprite = GetLastIDSpritePtr();
+	if (sprite == nullptr) {
+		std::cout << "Sometging went wrong";
+		return;
+	}
+	AnimationMenager* aMg = sprite->GetAnimationMenager();
+	aMg->GetAnimationPtr(a_upFacingAnim)->setAnimationFamilyName(a_name);
+	aMg->GetAnimationPtr(a_downFacingAni)->setAnimationFamilyName(a_name);
+	aMg->GetAnimationPtr(a_leftFacingAnim)->setAnimationFamilyName(a_name);
+	aMg->GetAnimationPtr(a_rightFacingAnim)->setAnimationFamilyName(a_name);
+	sprite->GetAnimationMenager()->CreateAnimation4D(a_name, aMg->GetAnimationPtr(a_upFacingAnim), aMg->GetAnimationPtr(a_downFacingAni), aMg->GetAnimationPtr(a_leftFacingAnim), aMg->GetAnimationPtr(a_rightFacingAnim));
 }
 
 Tile* ObjectMenager::getTilePtrById(int a_ID)

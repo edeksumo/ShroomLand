@@ -3,7 +3,7 @@
 /****************************************************/
 //Private
 /****************************************************/
-void Animation::cutTextureIntoFrames(size_t a_nbOfFr, sf::Vector2i a_sizeOfFrame, sf::Vector2i a_spriteSheetSize, bool a_fliped, bool a_upsideDown)
+void Animation::cutTextureIntoFrames(sf::Vector2f a_textuteOffset, size_t a_nbOfFr, sf::Vector2i a_sizeOfFrame, sf::Vector2i a_spriteSheetSize, bool a_fliped, bool a_upsideDown)
 {
 	int flip_01 = (a_fliped) ? 1 : 0;
 	int flip_02 = (a_fliped) ? -1 : 1;
@@ -13,7 +13,7 @@ void Animation::cutTextureIntoFrames(size_t a_nbOfFr, sf::Vector2i a_sizeOfFrame
 	unsigned int currentFrame = 0;
 	for (int i = 0; i < a_spriteSheetSize.x; i++) {
 		for (int j = 0; j < a_spriteSheetSize.y; j++) {
-			frames[currentFrame] = sf::IntRect((j + flip_01) * a_sizeOfFrame.x, (i + down_01) * a_sizeOfFrame.y, flip_02 * a_sizeOfFrame.x, down_02 *a_sizeOfFrame.y);
+			frames[currentFrame] = sf::IntRect((j + flip_01) * a_sizeOfFrame.x + a_textuteOffset.x, (i + down_01) * a_sizeOfFrame.y + a_textuteOffset.y, flip_02 * a_sizeOfFrame.x, down_02 *a_sizeOfFrame.y);
 			currentFrame++;
 			if (currentFrame > a_nbOfFr)
 				break;
@@ -36,6 +36,26 @@ void Animation::setSpritePointer(sf::Sprite* a_sprPtr)
 	spritePtr = a_sprPtr;
 }
 
+void Animation::setAnimationFamilyName(string a_name)
+{
+	animationFamilyName = a_name;
+}
+
+string Animation::getAnimationFamilyname()
+{
+	return animationFamilyName;
+}
+
+string Animation::GetName()
+{
+	return name;
+}
+
+bool Animation::isEnded()
+{
+	return ended;
+}
+
 void Animation::Play()
 {
 	if (restartAnimation) {
@@ -47,12 +67,15 @@ void Animation::Play()
 
 	timer++;
 	if (timer >= frameInterval) {
+		//std::cout << "tick\n";
 		timer = 0;
 		currentFrame++;
 		if (currentFrame > frames.size() - 1) {
 			if (animMode == Animation::repeatMode::once) {
-				spritePtr->setTexture(defTexture);
+				//spritePtr->setTexture(defTexture);
+				std::cout << "ended\n";
 				currentFrame = frames.size();
+				ended = true;
 				return;
 			}
 			else {

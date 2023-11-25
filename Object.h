@@ -4,6 +4,7 @@ class Object :
     public Sprite
 {
 private:
+    Animation::Direction facing;
 
 protected:
     bool solid;
@@ -11,6 +12,7 @@ protected:
 public:
     Object() {
         solid = true;
+        facing = Animation::Direction::up;
     }
     Object(sf::Texture* m_texture, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, DataMenager* m_dM) : Sprite (m_hitbox, m_dM) {
         //p_dM = m_dM;
@@ -18,6 +20,7 @@ public:
         sprite.setTextureRect(m_area);
         solid = m_solid;
         hasHitbox = true;
+        facing = Animation::Direction::up;
         hitbox.setSize(sf::Vector2f(m_hitbox.width, m_hitbox.height));
         hitbox.setFillColor(sf::Color(0, 0, 0, 0));
         hitbox.setOutlineThickness(1.f);
@@ -26,6 +29,7 @@ public:
     }
     Object(const Object& p1) : Sprite(p1) {
        // p_dM = p1.p_dM;
+        facing = p1.facing;
         sprite = p1.sprite;
         solid = p1.solid;
         hasHitbox = p1.hasHitbox;
@@ -36,6 +40,8 @@ public:
         return (sprite.getPosition().y < p1.sprite.getPosition().y);
     }
     bool isSolid();
+    void SetFacing(Animation::Direction a_facing);
+    Animation::Direction GetFacing();
     void setObjectCenterOrigin();
     void setObjectCenterOrigin(sf::Vector2f a_offset);  // moving origin around object by ofsfet 
     virtual void Update(sf::Vector2i* a_mousePos) = 0;

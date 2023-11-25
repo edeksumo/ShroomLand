@@ -18,6 +18,7 @@ public:
         none
     };
 private:
+    void SetUpPlayerOrientation();
     void ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
     void createQuitDial();
     bool v_createQuitDial;

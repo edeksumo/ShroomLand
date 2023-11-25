@@ -16,6 +16,16 @@ bool Object::isSolid()
 	return solid;
 }
 
+void Object::SetFacing(Animation::Direction a_facing)
+{
+	facing = a_facing;
+}
+
+Animation::Direction Object::GetFacing()
+{
+	return facing;
+}
+
 void Object::setObjectCenterOrigin()
 {
 	setObjectCenterOrigin(sf::Vector2f(0.f, 0.f));

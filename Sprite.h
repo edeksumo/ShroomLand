@@ -65,7 +65,8 @@ public:
 	Sprite(const Sprite& p1) {
 		ID = p1.ID;
 		p_dM = p1.p_dM;
-		AnimMenager = p1.AnimMenager;
+		AnimMenager = new AnimationMenager(p_dM);
+		*AnimMenager = *p1.AnimMenager;
 		setSpriteForAnimations();
 		posOnGrid = p1.posOnGrid;
 		hasHitbox = p1.hasHitbox;

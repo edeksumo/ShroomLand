@@ -98,6 +98,7 @@ public:
 
 	sf::Texture pinkTree01Anim;
 	sf::Texture greenTree01Anim;
+	sf::Texture waterAnim;
 
 	sf::Texture playerTxt;
 
@@ -191,6 +192,8 @@ public:
 			cout << "== DATAMENAGER ERROR == Texture not loaded: tree1A.png" << std::endl;
 		if (!greenTree01Anim.loadFromFile("data/textures/tree2A.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: tree2A.png" << std::endl;
+		if (!waterAnim.loadFromFile("data/textures/water_effB.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: water_effB.png" << std::endl;
 
 		//player
 		if (!playerTxt.loadFromFile("data/textures/BODY_male.png"))
