@@ -13,4 +13,8 @@
 
 void Player::Update(sf::Vector2i* a_mousePos)
 {
+	stateDetector();
+	detectFacing();
+	resetLastPosition();
+	animationControler();
 }

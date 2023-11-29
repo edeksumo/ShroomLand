@@ -3,25 +3,6 @@
 /****************************************************/
 //Private
 /****************************************************/
-void GameState::SetUpPlayerOrientation()
-{
-	if (Keyboard::checkKeyState(sf::Keyboard::Up) == Keyboard::KeyState::pressed) {
-		ActivePlayer->SetFacing(Animation::Direction::up);
-		std::cout << "up\n";
-	}
-	else if (Keyboard::checkKeyState(sf::Keyboard::Down) == Keyboard::KeyState::pressed) {
-		ActivePlayer->SetFacing(Animation::Direction::down);
-		std::cout << "down\n";
-	}
-	else if (Keyboard::checkKeyState(sf::Keyboard::Left) == Keyboard::KeyState::pressed) {
-		ActivePlayer->SetFacing(Animation::Direction::left);
-		std::cout << "left\n";
-	}
-	else if (Keyboard::checkKeyState(sf::Keyboard::Right) == Keyboard::KeyState::pressed) {
-		ActivePlayer->SetFacing(Animation::Direction::right);
-		std::cout << "right\n";
-	}
-}
 
 void GameState::ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
 {
@@ -199,8 +180,6 @@ void GameState::playerControl()
 		if (canEnterTile(ActivePlayer, Directions::down))
 			if (!checkCollision(ActivePlayer->getHitboxVerticles().downLeft, ActivePlayer->getHitboxVerticles().downRight)) {
 				currentStage->TileGrid.MoveObject(sf::Vector2f(0, 1), ActivePlayer);
-				//ActivePlayer->GetAnimationMenager()->PlayAnimation("Walk", Animation::Direction::down);
-				//ActivePlayer->GetAnimationMenager()->PlayAnimation("WalkDownStart");
 			}
 	}
 
@@ -214,19 +193,11 @@ void GameState::playerControl()
 			if (!checkCollision(ActivePlayer->getHitboxVerticles().topRight, ActivePlayer->getHitboxVerticles().downRight))
 				currentStage->TileGrid.MoveObject(sf::Vector2f(1, 0), ActivePlayer);
 	}
-	if (ActivePlayer->lastPos != ActivePlayer->GetPosition()) {
-		ActivePlayer->GetAnimationMenager()->PlayAnimation("Walk", ActivePlayer->GetFacing());
-	}
-	else {
-		ActivePlayer->GetAnimationMenager()->PlayAnimation("Idle", ActivePlayer->GetFacing());
-	}
-	ActivePlayer->lastPos = ActivePlayer->GetPosition();
 	cameraFollowObject(ActivePlayer, sf::FloatRect(400, 350, 700, 700));
 }
 
 void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
 {
-	SetUpPlayerOrientation();
 	updateOpenedWindowIt();
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();
@@ -239,6 +210,7 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	playerControl();
 
 	createQuitDial();
+	currentStage->Update(a_mousePos);
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }
 

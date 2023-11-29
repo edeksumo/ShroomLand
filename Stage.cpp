@@ -102,6 +102,9 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 			}
 		}
 	}
+	for (const auto& i : TileGrid.RenderObjPtrVec) {
+		i->Update(a_mousePos);
+	}
 }
 
 void Stage::Render(sf::RenderTarget* a_target)
