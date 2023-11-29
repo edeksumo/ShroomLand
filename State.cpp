@@ -39,6 +39,12 @@ void State::defaultButtonFunctions(const std::multimap<std::string, Button>::ite
 /****************************************************/
 //Protected
 /****************************************************/
+void State::setStateForStages()
+{
+	for (auto it = p_stageContainer->begin(); it != p_stageContainer->end(); ++it) {
+		it->second.setCurrentState(StateType);
+	}
+}
 void State::updateOpenedWindowIt()
 {
 	if (nbOfOpenedWindows != Windows.size()) {
@@ -49,6 +55,18 @@ void State::updateOpenedWindowIt()
 /****************************************************/
 //Public
 /****************************************************/
+void State::setActiveStage(string a_name)
+{
+	if (p_stageContainer == nullptr) {
+		return;	//future throw
+	}
+	if (p_stageContainer->find(a_name) == p_stageContainer->end()) {
+		std::cout << "There is not stage with name: " << a_name;
+	}
+	auto stg = p_stageContainer->find(a_name);
+	currentStage = &stg->second;
+}
+
 void State::moveCamera(Camera* a_cam, float a_speed)
 {
 	if (!cameraMovement)

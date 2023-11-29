@@ -3,10 +3,19 @@
 #include "ObjectMenager.h"
 class Stage
 {
+public:
+	enum class EState {
+		none = -1,
+		mainMenuState,
+		gameState,
+		editorState
+	};
 private:
 	ObjectMenager* p_objMenager;
 	sf::RenderTarget* p_renderTarget;
 	DataMenager* p_dM;
+
+	EState currentState;
 protected:
 
 public:
@@ -20,6 +29,7 @@ public:
 		p_objMenager = nullptr;
 		p_renderTarget = nullptr;
 		p_dM = nullptr;
+		currentState = Stage::EState::none;
 	}
 
 	Stage(ObjectMenager* m_objMenager, std::string m_name, DataMenager* m_dM) {
@@ -27,6 +37,7 @@ public:
 		p_dM = m_dM;
 		p_renderTarget = nullptr;
 		Name = m_name;
+		currentState = Stage::EState::none;
 	}
 
 	bool isVisible(const Sprite& a_sprite, sf::RenderTarget* a_target);
@@ -36,6 +47,9 @@ public:
 	void addBackgroundTile(GridCell a_pos, unsigned int a_ID);
 	Tile* getPrefTilePtr(int a_ID);
 	Object* getPrefObjPtr(int a_ID);
+
+	void setCurrentState(Stage::EState a_state);
+	Stage::EState GetStateType();
 
 	void Update(sf::Vector2i* a_mousePos);
 	void Render(sf::RenderTarget* a_target);

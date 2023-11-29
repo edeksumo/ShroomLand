@@ -45,6 +45,11 @@ public:
         v_createQuitDial = false;
         v_closeSettings = false;
         openSettings = false;
+
+        setActiveStage("MainMenu");
+
+        StateType = Stage::EState::mainMenuState;
+        setStateForStages();
     };
     ~MainMenuState() {
         delete p_game;

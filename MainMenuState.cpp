@@ -94,7 +94,7 @@ void MainMenuState::Update(sf::Vector2i* mousePos, sf::Vector2f* a_mousePosOnCoo
 	for (it = Windows.begin()->Buttons.begin(); it != Windows.begin()->Buttons.end(); ++it) {
 		ButtonFunctions(it);
 	}
-	
+	p_mainCamera->setCenter(sf::Vector2f(500, 500));
 	settingWindowUpdate();
 	createQuitDial();
 	createSettingsWindow();
@@ -103,5 +103,6 @@ void MainMenuState::Update(sf::Vector2i* mousePos, sf::Vector2f* a_mousePosOnCoo
 }
 
 void MainMenuState::Render(sf::RenderTarget *target) {
+	currentStage->Render(target);
 	//std::cout << "== MAINMENU == Render Func" << std::endl;
 }

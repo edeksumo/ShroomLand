@@ -91,6 +91,16 @@ Object* Stage::getPrefObjPtr(int a_ID)
 	return it->second;
 }
 
+void Stage::setCurrentState(Stage::EState a_state)
+{
+	currentState = a_state;
+}
+
+Stage::EState Stage::GetStateType()
+{
+	return currentState;
+}
+
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 
@@ -124,7 +134,13 @@ void Stage::Render(sf::RenderTarget* a_target)
 	}
 	
 	for (const auto& i : TileGrid.RenderObjPtrVec) {
+		if (currentState != Stage::EState::editorState) {
+			i->RenderAnimation(a_target);
+		}
 		i->Render(a_target);
+		if (currentState != Stage::EState::mainMenuState) {
+			i->RenderHitboxes(a_target);
+		}
 	}
 	//for (int y = 0; y < TileGrid.GetSize().y; y++) {
 	//	for (int x = 0; x < TileGrid.GetSize().x; x++) {

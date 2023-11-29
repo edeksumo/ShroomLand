@@ -55,12 +55,13 @@ public:
 		Window->setKeyRepeatEnabled(false);
 		objMenager = new ObjectMenager(&dataMenager);
 		MainCamera = new Camera(Window, sf::Vector2f(800.f, 600.f));
+		LoadStages();
 		MainMenu = new MainMenuState(&StageContainer, &StageNames, Window, Window, MainCamera, &dataMenager, objMenager, &States, &Event);
 		previousTime = clock.getElapsedTime();
 
 		MainCamera->ActiveCamera();
 		Begin();
-		LoadStages();
+		//LoadStages();
 		Update();
 	};
 	~Game() {

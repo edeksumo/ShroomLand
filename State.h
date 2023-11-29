@@ -4,12 +4,14 @@
 #include "Notification.h"
 #include "Stage.h"
 #include <list>
+
 class State
 {
 private:
 	void Keyboard();
 	void defaultButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
 	int nbOfOpenedWindows;
+
 protected:
 	sf::RenderWindow* p_renderWindow;
 	Stage* currentStage;
@@ -41,9 +43,15 @@ public:
 		stateQuit = false;
 		nbOfOpenedWindows = 0;
 		cameraMovement = false;
+		StateType = Stage::EState::none;
 	}
 	bool stateQuit;
 	bool cameraMovement;
+
+	Stage::EState StateType;
+	void setStateForStages();
+
+	void setActiveStage(string a_name);
 
 	void moveCamera(Camera* a_cam, float a_speed = 2.f);
 	void PushWindow(unsigned int a_id, sf::Vector2f a_pos, sf::Vector2f a_size, std::string a_text, sf::Vector2f a_textPos, sf::Color a_textColor);

@@ -104,10 +104,18 @@ Sprite::Verticles Sprite::getHitboxVerticles()
 
 void Sprite::Render(sf::RenderTarget* a_target)
 {
+	a_target->draw(sprite);
+}
+
+void Sprite::RenderAnimation(sf::RenderTarget* a_target)
+{
 	if (isAnimated) {
 		AnimMenager->UpdateAnimation();
 	}
-	a_target->draw(sprite);
+}
+
+void Sprite::RenderHitboxes(sf::RenderTarget* a_target)
+{
 	if (hasHitbox)
 		if (p_dM->Settings.hitboxes)
 			a_target->draw(hitbox);

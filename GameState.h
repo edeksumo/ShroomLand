@@ -18,7 +18,6 @@ public:
         none
     };
 private:
-    void SetUpPlayerOrientation();
     void ButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
     void createQuitDial();
     bool v_createQuitDial;
@@ -48,8 +47,12 @@ public:
         OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(50, 20), sf::Vector2f(p_window->getSize().x - 55, 5), m_dM->Lang.quit, sf::Color::Black, 12);
         p_freeCam = new Camera(m_renderWindow, sf::Vector2f(800, 600));
         v_createQuitDial = false;
-        currentStage = &p_stageContainer->begin()->second;
+        //currentStage = &p_stageContainer->begin()->second;
+        setActiveStage("cave");
         setActivePlayer(nullptr);
+
+        StateType == Stage::EState::gameState;
+        setStateForStages();
     };
     ~GameState() {
         delete p_freeCam;

@@ -90,5 +90,7 @@ public:
 	Verticles getHitboxVerticles();
 	virtual void Update(sf::Vector2i* a_mousePos) = 0;
 	void Render(sf::RenderTarget* a_target);
+	void RenderAnimation(sf::RenderTarget* a_target);
+	void RenderHitboxes(sf::RenderTarget* a_target);
 };
 

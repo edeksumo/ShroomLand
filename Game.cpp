@@ -124,8 +124,13 @@ void Game::Update(){
         if (States.top()->stateQuit)
             States.pop();
        
-        if (States.size() == 0)
+        if (States.size() == 0) {
             Window->close();
+        }
+        else if (States.top()->StateType != StageContainer.begin()->second.GetStateType()) {
+            States.top()->setStateForStages();
+        }
+
         //Window->setView(view);
         //fps counter
         //currentTime = clock.getElapsedTime();

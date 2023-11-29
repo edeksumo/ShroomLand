@@ -126,6 +126,9 @@ public:
         OpenedWindow->AddButton("Delete_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 55), "Delete Stg", sf::Color::Red);
         OpenedWindow->SetElementValue("Cursor_Size", 1);
         updateText();
+
+        StateType = Stage::EState::editorState;
+        setStateForStages();
     };
 
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);
