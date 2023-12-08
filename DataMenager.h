@@ -135,6 +135,8 @@ public:
 	sf::Texture sliderLeftDecorTxt;
 	sf::Texture sliderRightDecorTxt;
 
+	sf::Texture LogoTxt;
+
 	//////Graphical buttons textures
 	sf::Texture buttonTickTxt;
 	sf::Texture buttonCrossTxt;
@@ -304,6 +306,10 @@ public:
 			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_Flat.png" << std::endl;
 		}
 
+		if (!LogoTxt.loadFromFile("data/textures/Logo.png", sf::IntRect(0, 0, 521, 120))) {
+			cout << "== DATAMENAGER ERROR == Texture not loaded: Logo.png" << std::endl;
+		}
+
 		//////////////Graphical buttons textures
 		if (!buttonTickTxt.loadFromFile("data/textures/UI_Steel_A_NoBorder.png", sf::IntRect(64, 160, 32, 32))) {
 			cout << "== DATAMENAGER ERROR == Texture not loaded: UI_Steel_A_NoBorder.png" << std::endl;
@@ -339,7 +345,8 @@ public:
 		settings->read(settingsINI);
 		std::string& volumeStr = settingsINI[EngineNames.settings][EngineNames.volume];
 		Settings.volume = std::stoi(volumeStr);
-		Settings.hitboxes = true;
+		std::string& hitboxStr = settingsINI[EngineNames.settings][EngineNames.hitboxSwitch];
+		Settings.hitboxes = std::stoi(hitboxStr);
 		std::string& freeCamStr = settingsINI[EngineNames.settings][EngineNames.freeCam];
 		Settings.freeCam = std::stoi(freeCamStr);
 	/****************************************************/

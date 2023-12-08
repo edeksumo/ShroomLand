@@ -9,7 +9,8 @@
 void UI::keepOnPosition()
 {
 	position = p_rTarget->mapPixelToCoords(sf::Vector2i(relativePosition));
-	shadow.setPosition(backgroundSprite.getPosition());
+	//shadow.setPosition(backgroundSprite.getPosition());
+	shadow.setPosition(p_rTarget->mapPixelToCoords(sf::Vector2i(0, 0)));
 	if (hasBackground) {
 		backgroundSprite.setPosition(position);
 		upperDecorLine.setPosition(position.x - 2 + upperDecorLeftCorn.getTextureRect().width, position.y - 2);
@@ -70,8 +71,10 @@ void UI::initBackground()
 
 void UI::renderShadow(sf::RenderTarget* a_target)
 {
-	if (v_UIState == UI::UIState::inActive)
+	if (v_UIState == UI::UIState::inActive) {
+		shadow.setSize(sf::Vector2f(a_target->getSize().x, a_target->getSize().y));
 		a_target->draw(shadow);
+	}
 }
 /****************************************************/
 //Public

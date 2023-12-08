@@ -70,7 +70,7 @@ void ObjectMenager::addPrefab(int a_ID, Object* a_obj)
 
 void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_staticObjPtr = new StaticObject(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
+	a_staticObjPtr = new StaticObject(a_texture, m_area, m_solid, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_staticObjPtr->ID << std::endl;
 	StaticObjectPtrContainer.insert(std::pair<int, StaticObject*>(a_staticObjPtr->ID, a_staticObjPtr));
 	auto o = StaticObjectPtrContainer.find(a_staticObjPtr->ID);
@@ -79,7 +79,7 @@ void ObjectMenager::createStaticObjPrefab(sf::Texture* a_texture, StaticObject* 
 
 void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_intractableObjPtr = new InteractableObject(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
+	a_intractableObjPtr = new InteractableObject(a_texture, m_area, m_solid, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_intractableObjPtr->ID << std::endl;
 	InteractableObjectPtrContainer.insert(std::pair<int, InteractableObject*>(a_intractableObjPtr->ID, a_intractableObjPtr));
 	auto o = InteractableObjectPtrContainer.find(a_intractableObjPtr->ID);
@@ -88,7 +88,7 @@ void ObjectMenager::createInteractableObjPrefab(sf::Texture* a_texture, Interact
 
 void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
 {
-	a_playerObjPtr = new Player(a_texture, m_area, true, m_hitbox, a_isAnimated, p_dM);
+	a_playerObjPtr = new Player(a_texture, m_area, m_solid, m_hitbox, a_isAnimated, p_dM);
 	//std::cout << a_intractableObjPtr->ID << std::endl;
 	PlayerObjectPtrContainer.insert(std::pair<int, Player*>(a_playerObjPtr->ID, a_playerObjPtr));
 	auto o = PlayerObjectPtrContainer.find(a_playerObjPtr->ID);

@@ -24,6 +24,7 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 			p_dM->Settings.volume = OpenedWindow->GetSliderValue(p_dM->EngineNames.volumeSlider);
 			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.volume] = std::to_string(OpenedWindow->GetSliderValue(p_dM->EngineNames.volumeSlider));	
 			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.freeCam] = std::to_string((int)OpenedWindow->GetSwitchValue(p_dM->EngineNames.freeCam));
+			p_dM->settingsINI[p_dM->EngineNames.settings][p_dM->EngineNames.hitboxSwitch] = std::to_string((int)OpenedWindow->GetSwitchValue(p_dM->EngineNames.hitboxSwitch));
 			p_dM->Settings.freeCam = (bool)OpenedWindow->GetSwitchValue(p_dM->EngineNames.freeCam);
 			p_dM->settings->write(p_dM->settingsINI);
 			v_closeSettings = true;

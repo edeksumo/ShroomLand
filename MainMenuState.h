@@ -34,11 +34,12 @@ public:
         p_stageNames = m_stageNames;
         p_renderWindow = m_renderWindow;
 
-        PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(200, 400), p_dM->Lang.gameName, sf::Vector2f(100, 30), sf::Color::Black);
+        PushWindow(1, sf::Vector2f(10, 10), sf::Vector2f(200, 400), "Menu:", sf::Vector2f(100, 30), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.newGame, sf::Vector2f(100, 50), sf::Vector2f(30, 60), m_dM->Lang.newGame, sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.settings, sf::Vector2f(100, 50), sf::Vector2f(30, 130), m_dM->Lang.settings, sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.editor, sf::Vector2f(100, 50), sf::Vector2f(30, 200), m_dM->Lang.editor, sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.quit, sf::Vector2f(100, 50), sf::Vector2f(30, 340), m_dM->Lang.quit, sf::Color::Black);
+        OpenedWindow->AddImage("Logo", sf::Vector2f(250, 15), &p_dM->LogoTxt);
 
         p_game = nullptr;
         p_editor = nullptr;

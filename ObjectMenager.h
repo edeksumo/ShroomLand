@@ -52,6 +52,13 @@ public:
 	StaticObject* bush_02;
 	StaticObject* stemp_01;
 	StaticObject* waterEff01;
+	StaticObject* grass_01;
+	StaticObject* grass_02;
+	StaticObject* grass_03;
+	StaticObject* grass_04;
+	StaticObject* waterBamboo_01;
+	StaticObject* waterBamboo_02;
+	StaticObject* waterBamboo_03;
 
 	InteractableObject* chest_01;
 
@@ -105,6 +112,14 @@ public:
 
 		createStaticObjPrefab(&p_dM->waterAnim, waterEff01, sf::IntRect(0, 0, 32, 32), false, sf::IntRect(0, 0, 20, 20), true);
 		addAnimationToLastPrefab("Idle", &m_dM->waterAnim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(32, 32), sf::Vector2i(1, 10), Animation::repeatMode::circle, nullptr, m_dM->waterAnim, false, false);
+
+		createStaticObjPrefab(&p_dM->objectsTxt, grass_01, sf::IntRect(1152, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, grass_02, sf::IntRect(1184, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, grass_03, sf::IntRect(1216, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, grass_04, sf::IntRect(1248, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_01, sf::IntRect(0, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_02, sf::IntRect(32, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_03, sf::IntRect(64, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];
