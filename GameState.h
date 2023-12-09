@@ -53,6 +53,10 @@ public:
 
         StateType == Stage::EState::gameState;
         setStateForStages();
+
+        MainDimmer = new Dimmer(p_window, p_dM);
+        MainDimmer->setTransparency(MAX_TRANSPARENCY);
+        MainDimmer->setMode(Dimmer::EMode::brighten);
     };
     ~GameState() {
         delete p_freeCam;

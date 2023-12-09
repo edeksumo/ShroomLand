@@ -198,6 +198,10 @@ void GameState::playerControl()
 
 void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
 {
+	//if (MainDimmer != nullptr) {
+	//	if (MainDimmer->getMode() != Dimmer::EMode::none)
+	//		return;
+	//}
 	updateOpenedWindowIt();
 
 	std::multimap<std::string, Button>::iterator it = Windows.begin()->Buttons.begin();

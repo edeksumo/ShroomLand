@@ -129,6 +129,8 @@ public:
 
         StateType = Stage::EState::editorState;
         setStateForStages();
+
+        MainDimmer = new Dimmer(p_window, p_dM);
     };
 
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);

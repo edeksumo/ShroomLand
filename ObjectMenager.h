@@ -84,17 +84,17 @@ public:
 		tilesetPrefabCreater(&p_dM->water01TileSet, water01, true, false, true, 4);
 		tilesetPrefabCreater(&p_dM->clif01Tiles, clif01, false, false, true, 0);
 
-		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120), true);
+		createStaticObjPrefab(&p_dM->objectsTxt, tree, sf::IntRect(0, 0, 160, 224), true, sf::IntRect(20, -30, 35, 50), true);
 		addAnimationToLastPrefab("Idle", &m_dM->greenTree01Anim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
-		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(160, 0, 160, 224), true, sf::IntRect(20, -30, 50, 120), true);
+		createStaticObjPrefab(&p_dM->objectsTxt, tree2, sf::IntRect(160, 0, 160, 224), true, sf::IntRect(20, -30, 35, 50), true);
 		addAnimationToLastPrefab("Idle", &m_dM->pinkTree01Anim, sf::Vector2f(0.f, 0.f), 10, 0.05f, sf::Vector2i(160, 224), sf::Vector2i(2, 5), Animation::repeatMode::circle, nullptr, m_dM->objectsTxt, true, false);
-		createStaticObjPrefab(&p_dM->objectsTxt, bush_01, sf::IntRect(0, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55), false);
-		createStaticObjPrefab(&p_dM->objectsTxt, bush_02, sf::IntRect(64, 224, 64, 96), true, sf::IntRect(0, -20, 40, 55), false);
-		createStaticObjPrefab(&p_dM->objectsTxt, stemp_01, sf::IntRect(128, 224, 96, 128), true, sf::IntRect(0, -20, 40, 55), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, bush_01, sf::IntRect(0, 224, 64, 96), true, sf::IntRect(0, -20, 20, 30), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, bush_02, sf::IntRect(64, 224, 64, 96), true, sf::IntRect(0, -20, 20, 30), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, stemp_01, sf::IntRect(128, 224, 96, 128), true, sf::IntRect(0, -20, 30, 30), false);
 
 		createInteractableObjPrefab(&p_dM->chestsTxt, chest_01, sf::IntRect(0, 0, 64, 64), true, sf::IntRect(0, 0, 64, 64), false);
 
-		createPlayerObjPrefab(&p_dM->playerTxt, character, sf::IntRect(0, 128, 64, 64), true, sf::IntRect(0, 0, 30, 46), true);
+		createPlayerObjPrefab(&p_dM->playerTxt, character, sf::IntRect(0, 128, 64, 64), true, sf::IntRect(1, 0, 20, 22), true);
 		addAnimationToLastPrefab("IdleUp", &m_dM->playerTxt, sf::Vector2f(0.f, 0.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
 		addAnimationToLastPrefab("IdleLeft", &m_dM->playerTxt, sf::Vector2f(0.f, 64.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
 		addAnimationToLastPrefab("IdleDown", &m_dM->playerTxt, sf::Vector2f(0.f, 128.f), 1, 0.05f, sf::Vector2i(64, 64), sf::Vector2i(1, 1), Animation::repeatMode::circle, nullptr, m_dM->playerTxt, false, false);
@@ -117,9 +117,9 @@ public:
 		createStaticObjPrefab(&p_dM->objectsTxt, grass_02, sf::IntRect(1184, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, grass_03, sf::IntRect(1216, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, grass_04, sf::IntRect(1248, 640, 32, 32), false, sf::IntRect(0, 0, 20, 20), false);
-		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_01, sf::IntRect(0, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
-		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_02, sf::IntRect(32, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
-		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_03, sf::IntRect(64, 928, 32, 64), false, sf::IntRect(0, 0, 10, 50), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_01, sf::IntRect(0, 928, 32, 64), false, sf::IntRect(0, -20, 10, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_02, sf::IntRect(32, 928, 32, 64), false, sf::IntRect(0, -32, 10, 20), false);
+		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_03, sf::IntRect(64, 928, 32, 64), false, sf::IntRect(0, -20, 10, 20), false);
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

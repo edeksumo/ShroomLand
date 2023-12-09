@@ -51,6 +51,10 @@ public:
 
         StateType = Stage::EState::mainMenuState;
         setStateForStages();
+
+        MainDimmer = new Dimmer(p_window, p_dM);
+        MainDimmer->setTransparency(MAX_TRANSPARENCY);
+        MainDimmer->setMode(Dimmer::EMode::brighten);
     };
     ~MainMenuState() {
         delete p_game;

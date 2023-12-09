@@ -36,6 +36,21 @@ void State::defaultButtonFunctions(const std::multimap<std::string, Button>::ite
 		}
 	}
 }
+
+void State::DimmerUpdate(sf::Vector2i* a_mousePos)
+{
+	if (MainDimmer == nullptr)
+		return;
+	MainDimmer->Update(a_mousePos);
+}
+
+void State::DimmerRender(sf::RenderTarget* a_target)
+{
+	if (MainDimmer == nullptr)
+		return;
+	MainDimmer->Render(a_target);
+}
+
 /****************************************************/
 //Protected
 /****************************************************/
@@ -117,11 +132,16 @@ void State::RenderWindows(sf::RenderTarget* a_target)
 			it->Render(a_target);
 		}
 	}
+	DimmerRender(a_target);
 	RenderNotifications(a_target);
 }
 
 void State::UpdateWindows(sf::Vector2i* a_mousePos)
 {
+	DimmerUpdate(a_mousePos);
+	UpdateNotifications(a_mousePos);
+	if (MainDimmer->getMode() != Dimmer::EMode::none)
+		return;
 	Keyboard();
 	if (Windows.front().setToClose)
 		Windows.pop_front();
@@ -132,7 +152,6 @@ void State::UpdateWindows(sf::Vector2i* a_mousePos)
 			defaultButtonFunctions(it);
 		}
 	}
-	UpdateNotifications(a_mousePos);
 }
 
 void State::PushNotification(std::string a_text, sf::Color a_textColor)

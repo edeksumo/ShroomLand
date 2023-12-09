@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include<SFML/Graphics.hpp>
 #include "Notification.h"
+#include "Dimmer.h"
 #include "Stage.h"
 #include <list>
 
@@ -11,6 +12,9 @@ private:
 	void Keyboard();
 	void defaultButtonFunctions(const std::multimap<std::string, Button>::iterator& a_it);
 	int nbOfOpenedWindows;
+
+	void DimmerUpdate(sf::Vector2i* a_mousePos);
+	void DimmerRender(sf::RenderTarget* a_target);
 
 protected:
 	sf::RenderWindow* p_renderWindow;
@@ -29,6 +33,9 @@ protected:
 
 	std::list<Notification> Notifications;
 	void updateOpenedWindowIt();
+
+	Dimmer* MainDimmer;
+
 public:
 	State() {
 		p_dM = nullptr;
@@ -44,6 +51,11 @@ public:
 		nbOfOpenedWindows = 0;
 		cameraMovement = false;
 		StateType = Stage::EState::none;
+		MainDimmer = nullptr;
+	}
+
+	~State() {
+		delete MainDimmer;
 	}
 	bool stateQuit;
 	bool cameraMovement;
