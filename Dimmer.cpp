@@ -1,5 +1,4 @@
 #include "Dimmer.h"
-#include "Image.h"
 /****************************************************/
 //Private
 /****************************************************/
@@ -24,7 +23,6 @@ void Dimmer::FadeIn(unsigned int a_speed)
 void Dimmer::FadeOut(unsigned int a_speed)
 {
 	currentTransparency -= a_speed;
-	std::cout << "Fadeout\n";
 	if (currentTransparency <= MIN_TRANSPARENCY) {
 		currentTransparency = MIN_TRANSPARENCY;
 		Mode = EMode::none;

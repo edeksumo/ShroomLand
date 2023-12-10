@@ -193,7 +193,7 @@ void GameState::playerControl()
 			if (!checkCollision(ActivePlayer->getHitboxVerticles().topRight, ActivePlayer->getHitboxVerticles().downRight))
 				currentStage->TileGrid.MoveObject(sf::Vector2f(1, 0), ActivePlayer);
 	}
-	cameraFollowObject(ActivePlayer, sf::FloatRect(400, 350, 700, 700));
+	cameraFollowObject(ActivePlayer, sf::FloatRect(440, 350, 900, 1100));
 }
 
 void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
