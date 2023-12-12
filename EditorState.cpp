@@ -51,6 +51,10 @@ void EditorState::saveStages()
 		for (const auto& it_04 : it->second.TileGrid.PlayerObjStorageVec) {
 			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.PlayerObjectDefiner << " " << it_04->ID << " " << it_04->sprite.getPosition().x << " " << it_04->sprite.getPosition().y << std::endl;
 		}
+
+		for (const auto& it_05 : it->second.TileGrid.SpecialObjStorageVec) {
+			saveFile << p_dM->SaveFormat.ObjectDefiner << " " << p_dM->SaveFormat.SpecialObjectDefiner << " " << it_05->ID << " " << it_05->sprite.getPosition().x << " " << it_05->sprite.getPosition().y << std::endl;
+		}
 		//each obj type must be added here...
 	}
 
@@ -185,6 +189,17 @@ void EditorState::placeObjects()
 			}
 			else {
 				selectedObject = nullptr;
+			}
+		}
+		if (selectedObject == nullptr) {
+			for (auto i : currentStage->TileGrid.RenderEditorObjPtrVec) {
+				if (i->getHitboxWorldRect().contains(mousePosVec)) {
+					selectedObject = i;
+					break;
+				}
+				else {
+					selectedObject = nullptr;
+				}
 			}
 		}
 	}

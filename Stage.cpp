@@ -61,6 +61,11 @@ void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 		TileGrid.AddObject(a_pos, it_02->second);
 		return;
 	}
+	std::multimap<int, SpecialObject*>::iterator it_03 = p_objMenager->SpecialObjectPtrContainer.find(a_ID);
+	if (it_03 != p_objMenager->SpecialObjectPtrContainer.end()) {
+		TileGrid.AddObject(a_pos, it_03->second);
+		return;
+	}
 	
 }
 
@@ -139,6 +144,13 @@ void Stage::Render(sf::RenderTarget* a_target)
 		}
 		i->Render(a_target);
 		if (currentState != Stage::EState::mainMenuState) {
+			i->RenderHitboxes(a_target);
+		}
+	}
+
+	for (const auto& i : TileGrid.RenderEditorObjPtrVec) {
+		if (currentState == Stage::EState::editorState) {
+			i->Render(a_target);
 			i->RenderHitboxes(a_target);
 		}
 	}

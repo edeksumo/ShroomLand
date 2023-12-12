@@ -3,6 +3,7 @@
 #include"StaticObject.h"
 #include"InteractableObject.h"
 #include"Player.h"
+#include"SpecialObject.h";
 #include<deque>
 #include<map>
 class Grid
@@ -16,10 +17,12 @@ public:
 	std::vector<std::vector<Tile*>> TileGridPtr;
 
 	std::vector<Object*> RenderObjPtrVec;							//stores all pointers to object for rendering in good order
+	std::vector<Object*> RenderEditorObjPtrVec;							//stores pointers to special object for rendering in editor
 	/// Need to be added for all types of Objects with corresponding add<objType> func;
 	std::vector<StaticObject*> StaticObjStorageVec;					//stores all static objects
 	std::vector<InteractableObject*> InteractableObjStorageVec;		//stores all interactable objects;
 	std::vector<Player*> PlayerObjStorageVec;		//stores all player objects;
+	std::vector<SpecialObject*> SpecialObjStorageVec;					//stores all special objects
 	std::vector<Object*> SolidObjects;
 	Grid() {
 		size_x = 100;
@@ -52,11 +55,13 @@ public:
 	bool isTileOccupied(GridCell a_pos);
 
 	void AddObjectToRender(sf::Vector2f a_pos, Object* a_obj);
+	void AddSpecialObjectToRender(sf::Vector2f a_pos, Object* a_obj);
 
 	void AddSolidObjToVec(Object* a_obj);
 
 	void AddObject(sf::Vector2f a_pos, StaticObject* a_obj);
 	void AddObject(sf::Vector2f a_pos, InteractableObject* a_obj);
+	void AddObject(sf::Vector2f a_pos, SpecialObject* a_obj);
 	void AddObject(sf::Vector2f a_pos, Player* a_obj);
 	void MoveOnPos(sf::Vector2f a_pos, Object* a_obj);	//used for already placed objects for seting position (updates render order)
 	void MoveObject(sf::Vector2f a_pos, Object* a_obj);  //used for moving object pixel by pixel (updates render order)

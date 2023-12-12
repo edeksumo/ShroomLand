@@ -77,6 +77,16 @@ void Grid::AddObjectToRender(sf::Vector2f a_pos, Object* a_obj)
 	//std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
 
+void Grid::AddSpecialObjectToRender(sf::Vector2f a_pos, Object* a_obj)
+{
+	int a = 0;
+	for (auto i : RenderEditorObjPtrVec) {
+		if (a_pos.y > i->sprite.getPosition().y)
+			a++;
+	}
+	RenderEditorObjPtrVec.insert(RenderEditorObjPtrVec.begin(), a_obj);
+}
+
 void Grid::AddSolidObjToVec(Object* a_obj)
 {
 	if (!a_obj->isSolid())
@@ -104,8 +114,21 @@ void Grid::AddObject(sf::Vector2f a_pos, InteractableObject* a_obj)
 	auto p = new InteractableObject(*a_obj);
 	p->SetPosition(a_pos);
 	InteractableObjStorageVec.push_back(p);
-	AddSolidObjToVec(StaticObjStorageVec.back());
+	AddSolidObjToVec(InteractableObjStorageVec.back());
 	AddObjectToRender(a_pos, InteractableObjStorageVec.back());
+}
+
+void Grid::AddObject(sf::Vector2f a_pos, SpecialObject* a_obj)
+{
+	if (a_pos.x < 0 || a_pos.y < 0)
+		return;
+
+	auto p = new SpecialObject(*a_obj);
+	p->SetPosition(a_pos);
+	SpecialObjStorageVec.push_back(p);
+	AddSolidObjToVec(SpecialObjStorageVec.back());
+	//AddObjectToRender(a_pos, SpecialObjStorageVec.back());
+	AddSpecialObjectToRender(a_pos, SpecialObjStorageVec.back());
 }
 
 void Grid::AddObject(sf::Vector2f a_pos, Player* a_obj)
@@ -116,7 +139,7 @@ void Grid::AddObject(sf::Vector2f a_pos, Player* a_obj)
 	auto p = new Player(*a_obj);
 	p->SetPosition(a_pos);
 	PlayerObjStorageVec.push_back(p);
-	AddSolidObjToVec(StaticObjStorageVec.back());
+	//AddSolidObjToVec(PlayerObjStorageVec.back());
 	AddObjectToRender(a_pos, PlayerObjStorageVec.back());
 }
 
@@ -131,11 +154,13 @@ void Grid::MoveObject(sf::Vector2f a_pos, Object* a_obj)
 	a_obj->MoveSprite(a_pos);
 	std::sort(RenderObjPtrVec.begin(), RenderObjPtrVec.end(), sortingFunc);
 }
-
+/// //////////////////////////////////////
+/// each object class must be added here
+/// /////////////////////////////////////
 void Grid::RemoveObject(Object* a_obj)
 {
-	int a = 0, b = 0, r = 0;
-	bool _static = false, _interactable = false;
+	int a = 0, b = 0, c = 0, d = 0, r = 0, s = 0;
+	bool _static = false, _interactable = false, _player = false, _special = false;
 	for (int i = 0; i < StaticObjStorageVec.size(); i++) {
 		if (StaticObjStorageVec[i] == a_obj) {
 			_static = true;
@@ -151,7 +176,22 @@ void Grid::RemoveObject(Object* a_obj)
 		}
 		b++;
 	}
+	for (int i = 0; i < PlayerObjStorageVec.size(); i++) {
 
+		if (PlayerObjStorageVec[i] == a_obj) {
+			_player = true;
+			break;
+		}
+		c++;
+	}
+	for (int i = 0; i < SpecialObjStorageVec.size(); i++) {
+
+		if (SpecialObjStorageVec[i] == a_obj) {
+			_special = true;
+			break;
+		}
+		d++;
+	}
 	/// 
 	/// removing adress from rendering vector 
 	/// 
@@ -165,7 +205,22 @@ void Grid::RemoveObject(Object* a_obj)
 		StaticObjStorageVec.erase(StaticObjStorageVec.begin() + a);
 	if (_interactable)
 		InteractableObjStorageVec.erase(InteractableObjStorageVec.begin() + b);
-	RenderObjPtrVec.erase(RenderObjPtrVec.begin() + r);
+	if (_player)
+		PlayerObjStorageVec.erase(PlayerObjStorageVec.begin() + c);
+	if (!_special) {
+		RenderObjPtrVec.erase(RenderObjPtrVec.begin() + r);
+		return;
+	}
+	for (int i = 0; i < RenderEditorObjPtrVec.size(); i++) {
+		if (RenderEditorObjPtrVec[i] == a_obj) {
+			break;
+		}
+		s++;
+	}
+	if (_special) {
+		SpecialObjStorageVec.erase(SpecialObjStorageVec.begin() + d);
+		RenderEditorObjPtrVec.erase(RenderEditorObjPtrVec.begin() + s);
+	}
 }
 
 bool Grid::isTileObjOccupied(GridCell a_pos)

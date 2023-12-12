@@ -2,6 +2,7 @@
 #include"Tile.h"
 #include"StaticObject.h"
 #include"InteractableObject.h"
+#include"SpecialObject.h"
 #include"Player.h";
 #include <map>
 
@@ -20,6 +21,7 @@ private:
 	void createStaticObjPrefab(sf::Texture* a_texture, StaticObject* a_staticObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
 	void createInteractableObjPrefab(sf::Texture* a_texture, InteractableObject* a_intractableObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
 	void createPlayerObjPrefab(sf::Texture* a_texture, Player* a_playerObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
+	void createSpecialObjPrefab(sf::Texture* a_texture, SpecialObject* a_specialObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated);
 
 	void addAnimationToLastPrefab(string a_name, sf::Texture* a_texture, sf::Vector2f a_textureOffset, size_t a_nbOfFrames, float a_speed, sf::Vector2i a_sizeOfFrame/*size in pixels*/, sf::Vector2i a_spriteSheetSize /*size in frames*/,
 		Animation::repeatMode a_mode, sf::Sprite* a_sprite, sf::Texture a_defTexture /*texture of original sprite*/, bool m_fliped, bool m_upsideDown);
@@ -64,9 +66,12 @@ public:
 
 	Player* character;
 
+	SpecialObject* changeZone;
+
 	std::multimap<int, StaticObject*> StaticObjectPtrContainer;					//stores all StaticObject pointer in the game
 	std::multimap<int, InteractableObject*> InteractableObjectPtrContainer;		//stores all InteractableObject pointer in the game
-	std::multimap<int, Player*> PlayerObjectPtrContainer;		//stores all InteractableObject pointer in the game
+	std::multimap<int, Player*> PlayerObjectPtrContainer;		//stores all PlayerObject pointer in the game
+	std::multimap<int, SpecialObject*> SpecialObjectPtrContainer;		//stores all SpecialObject pointer in the game
 	std::multimap<int, Object*> ObjectsPrefabs;									//Stores all object pointers to prefabs
 	
 	Object* getObjectPtrById(int a_ID);
@@ -120,6 +125,8 @@ public:
 		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_01, sf::IntRect(0, 928, 32, 64), false, sf::IntRect(0, -20, 10, 20), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_02, sf::IntRect(32, 928, 32, 64), false, sf::IntRect(0, -32, 10, 20), false);
 		createStaticObjPrefab(&p_dM->objectsTxt, waterBamboo_03, sf::IntRect(64, 928, 32, 64), false, sf::IntRect(0, -20, 10, 20), false);
+
+		createSpecialObjPrefab(&p_dM->specialObjectsTxt, changeZone, sf::IntRect(0, 0, 16, 16), false, sf::IntRect(0, -0, 32, 32), false);
 	};
 	~ObjectMenager() {
 		//delete grass[1][1];

@@ -54,6 +54,7 @@ public:
 		string StaticObjectDefiner = "STATIC_OBJ";
 		string InteractableObjectDefiner = "INTERACTABLE_OBJ";
 		string PlayerObjectDefiner = "PLAYER_OBJ";
+		string SpecialObjectDefiner = "SPECIAL_OBJ";
 	};
 
 	struct StagesNames {
@@ -101,6 +102,8 @@ public:
 	sf::Texture waterAnim;
 
 	sf::Texture playerTxt;
+
+	sf::Texture specialObjectsTxt;
 
 	/****************************************************/
 	//GUI textures
@@ -200,6 +203,10 @@ public:
 		//player
 		if (!playerTxt.loadFromFile("data/textures/BODY_male.png"))
 			cout << "== DATAMENAGER ERROR == Texture not loaded: chest.png" << std::endl;
+
+		//specialObjects
+		if (!specialObjectsTxt.loadFromFile("data/textures/SpecialObjects.png"))
+			cout << "== DATAMENAGER ERROR == Texture not loaded: specialObjectsTxt.png" << std::endl;
 
 		/****************************************************/
 		//GUI textures
