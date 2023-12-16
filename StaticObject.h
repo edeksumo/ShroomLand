@@ -20,6 +20,9 @@ public:
            AnimMenager->PlayAnimation("Idle");
     
     }
+    void OnCollisionEnter();
+    void OnCollision();
+    void OnCollisionExit();
     void Update(sf::Vector2i* a_mousePos);
 };
 

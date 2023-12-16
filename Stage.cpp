@@ -37,7 +37,7 @@ void Stage::addTile(GridCell a_pos, unsigned int a_ID)
 	TileGrid.AddTile(a_pos, it->second);
 }
 
-void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
+void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID, string a_properties)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
@@ -63,7 +63,7 @@ void Stage::addObject(sf::Vector2f a_pos, unsigned int a_ID)
 	}
 	std::multimap<int, SpecialObject*>::iterator it_03 = p_objMenager->SpecialObjectPtrContainer.find(a_ID);
 	if (it_03 != p_objMenager->SpecialObjectPtrContainer.end()) {
-		TileGrid.AddObject(a_pos, it_03->second);
+		TileGrid.AddObject(a_pos, it_03->second, a_properties);
 		return;
 	}
 	
@@ -117,6 +117,7 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 			}
 		}
 	}
+
 	for (const auto& i : TileGrid.RenderObjPtrVec) {
 		i->Update(a_mousePos);
 	}

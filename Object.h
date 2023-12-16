@@ -17,8 +17,10 @@ protected:
     bool solid;
 
 public:
+    bool isColliding;
     Object() {
         solid = true;
+        isColliding = false;
         facing = Animation::Direction::up;
         state = Object::ObjectState::idle;
     }
@@ -27,6 +29,7 @@ public:
         sprite.setTexture(*m_texture);
         sprite.setTextureRect(m_area);
         solid = m_solid;
+        isColliding = false;
         hasHitbox = true;
         facing = Animation::Direction::up;
         hitbox.setSize(sf::Vector2f(m_hitbox.width, m_hitbox.height));
@@ -39,6 +42,7 @@ public:
     }
     Object(const Object& p1) : Sprite(p1) {
        // p_dM = p1.p_dM;
+        isColliding = p1.isColliding;
         facing = p1.facing;
         sprite = p1.sprite;
         solid = p1.solid;
@@ -62,6 +66,9 @@ public:
     void stateDetector();
     void animationControler();
     void resetLastPosition();       //used for detecting state and facing
+    virtual void OnCollisionEnter() = 0;
+    virtual void OnCollision() = 0;
+    virtual void OnCollisionExit() = 0;
     virtual void Update(sf::Vector2i* a_mousePos) = 0;
 };
 

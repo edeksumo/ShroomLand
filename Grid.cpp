@@ -102,6 +102,7 @@ void Grid::AddObject(sf::Vector2f a_pos, StaticObject* a_obj)
 	auto* p = new StaticObject(*a_obj);
 	p->SetPosition(a_pos);
 	StaticObjStorageVec.push_back(p);
+	CollisionObjects.push_back(StaticObjStorageVec.back());
 	AddSolidObjToVec(StaticObjStorageVec.back());
 	AddObjectToRender(a_pos, StaticObjStorageVec.back());
 }
@@ -114,18 +115,21 @@ void Grid::AddObject(sf::Vector2f a_pos, InteractableObject* a_obj)
 	auto p = new InteractableObject(*a_obj);
 	p->SetPosition(a_pos);
 	InteractableObjStorageVec.push_back(p);
+	CollisionObjects.push_back(InteractableObjStorageVec.back());
 	AddSolidObjToVec(InteractableObjStorageVec.back());
 	AddObjectToRender(a_pos, InteractableObjStorageVec.back());
 }
 
-void Grid::AddObject(sf::Vector2f a_pos, SpecialObject* a_obj)
+void Grid::AddObject(sf::Vector2f a_pos, SpecialObject* a_obj, string a_properties)
 {
 	if (a_pos.x < 0 || a_pos.y < 0)
 		return;
 
 	auto p = new SpecialObject(*a_obj);
 	p->SetPosition(a_pos);
+	p->setProperties(a_properties);
 	SpecialObjStorageVec.push_back(p);
+	CollisionObjects.push_back(SpecialObjStorageVec.back());
 	AddSolidObjToVec(SpecialObjStorageVec.back());
 	//AddObjectToRender(a_pos, SpecialObjStorageVec.back());
 	AddSpecialObjectToRender(a_pos, SpecialObjStorageVec.back());
@@ -139,6 +143,7 @@ void Grid::AddObject(sf::Vector2f a_pos, Player* a_obj)
 	auto p = new Player(*a_obj);
 	p->SetPosition(a_pos);
 	PlayerObjStorageVec.push_back(p);
+	//CollisionObjects.push_back(PlayerObjStorageVec.back());
 	//AddSolidObjToVec(PlayerObjStorageVec.back());
 	AddObjectToRender(a_pos, PlayerObjStorageVec.back());
 }

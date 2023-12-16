@@ -196,6 +196,36 @@ void GameState::playerControl()
 	cameraFollowObject(ActivePlayer, sf::FloatRect(440, 350, 900, 1100));
 }
 
+void GameState::playerCollisionDetector()
+{
+	for (auto const& o : currentStage->TileGrid.CollisionObjects) {
+		if (o == ActivePlayer)
+			continue;
+		if (o->getHitboxWorldRect().intersects(ActivePlayer->getHitboxWorldRect())) {
+			if (o->isColliding) {
+				ActivePlayer->OnCollision();
+				o->OnCollision();
+				break;
+			}
+			if (!o->isColliding) {
+				o->isColliding = true;
+				ActivePlayer->OnCollisionEnter();
+				o->OnCollisionEnter();
+				break;
+			}
+			break;
+		}
+		else {
+			if (o->isColliding) {
+				ActivePlayer->OnCollisionExit();
+				o->OnCollisionExit();
+				o->isColliding = false;
+				break;
+			}
+		}
+	}
+}
+
 void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords)
 {
 	//if (MainDimmer != nullptr) {
@@ -210,9 +240,9 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	}
 	switchCameraMode();
 	cameraMovementSetup();
-	
-	playerControl();
 
+	playerControl();
+	playerCollisionDetector();
 	createQuitDial();
 	currentStage->Update(a_mousePos);
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;

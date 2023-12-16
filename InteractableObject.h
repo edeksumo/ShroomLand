@@ -16,7 +16,11 @@ public:
         isAnimated = m_isAnimated;
     }
     InteractableObject(const Object& p1) : Object(p1) {
+
     }
+    void OnCollisionEnter();
+    void OnCollision();
+    void OnCollisionExit();
     void Update(sf::Vector2i* a_mousePos);
 };
 

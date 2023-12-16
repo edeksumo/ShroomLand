@@ -65,7 +65,7 @@ public:
     Player* ActivePlayer;
     void setActivePlayer(Player* a_player);
     void playerControl();
-
+    void playerCollisionDetector();
     void Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoords);
     void Render(sf::RenderTarget* a_target);
 };

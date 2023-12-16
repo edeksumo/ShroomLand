@@ -7,7 +7,8 @@ private:
     enum class EditorFunction {
         placeTile,
         changeVariant,
-        placeObject
+        placeObject,
+        specialObjects
     };
 
     sf::RectangleShape cursorShape;
@@ -25,21 +26,27 @@ private:
     bool v_closeAddStageDial;
     bool v_delStageDial;
     bool v_closeDelStageDial;
+    bool v_addSpecialObjectDial;
+    bool v_closeSpecialObjectDial;
     sf::Vector2f mousePosVec;
     sf::Vector2f mousePosPressed;
+    sf::Vector2f mousePosPressed_SpcObj;
     sf::Vector2f tempObjPos;
     unsigned int objectIdOffset;
     sf::Sprite emptySprite;
     unsigned int stageOffset;
     //for adding new stage
-    std::string newStageName;
+    std::string inputString;
     sf::String input;
     unsigned int v_inputTimer;
 
-    std::string editorFuncNames[3]{
+    unsigned int spcObjWheelOffset;
+
+    std::string editorFuncNames[4]{
         "Tiles",
         "Variants",
-        "Objects"
+        "Objects",
+        "Spc Objects"
     };
 
 
@@ -62,9 +69,11 @@ private:
     void createClearDial();
     void createAddStageDial();
     void closeAddStageDial();
-    void addStageWindow();
+    void inputWindowMenager();
     void closeDelStageDial();
     void createDelStageDial();
+    void createAddSpecialObjDial();
+    void closeAddSpecialObjDial();
     void changeStage(bool a_next);
     void addStage();
     void deleteStage();
@@ -101,15 +110,20 @@ public:
         v_closeAddStageDial = false;
         v_delStageDial = false;
         v_closeDelStageDial = false;
+        v_addSpecialObjectDial = false;
+        v_closeSpecialObjectDial = false;
         mousePosPressed = sf::Vector2f(0, 0);
+        mousePosPressed_SpcObj = sf::Vector2f(0, 0);
         tempObjPos = sf::Vector2f(0, 0);
         objectIdOffset = 0;
         stageOffset = 1;
 
         cameraMovement = true;
 
-        newStageName = "";
+        inputString = "";
         v_inputTimer = 0;
+
+        spcObjWheelOffset = 0;
 
         PushWindow(1, sf::Vector2f(0, 0), sf::Vector2f(135, p_window->getSize().y), "", sf::Vector2f(0, 0), sf::Color::Black);
         OpenedWindow->AddButton(m_dM->Lang.save, sf::Vector2f(105, 40), sf::Vector2f(15, 15), m_dM->Lang.save, sf::Color::White);

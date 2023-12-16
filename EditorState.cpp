@@ -112,6 +112,16 @@ void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iter
 			v_closeDelStageDial = true;
 		}
 	}
+	else if (Windows.begin()->getID() == 203) {
+		if (Window::CheckButton(a_it, p_dM->Lang.yes)) {
+			auto a = Tile::g_lastTileID;
+			currentStage->addObject(mousePosPressed_SpcObj, a + objectIdOffset, inputString);
+			v_closeSpecialObjectDial = true;
+		}
+		if (Window::CheckButton(a_it, p_dM->Lang.no)) {
+			v_closeSpecialObjectDial = true;
+		}
+	}
 }
 
 void EditorState::placeTiles()
@@ -207,6 +217,11 @@ void EditorState::placeObjects()
 		//currentStage->addTile(MousePosOnGrid, 14);
 		//std::cout << Tile::g_lastTileID;
 		mousePosPressed = mousePosVec;
+		if (currentFunction == EditorState::EditorFunction::specialObjects && !v_addSpecialObjectDial) {
+			mousePosPressed_SpcObj = mousePosVec;
+			v_addSpecialObjectDial = true;
+			return;
+		}
 		if (selectedObject != nullptr) {
 			tempObjPos = selectedObject->sprite.getPosition();
 			return;
@@ -234,13 +249,13 @@ void EditorState::wheelFunctions()
 {
 	if (currentFunction == EditorState::EditorFunction::placeTile) {
 		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
-			if(!singleTileMode)
+			if (!singleTileMode)
 				currentTyleType--;
-			
+
 			if (currentTyleType < 0) {
 				currentTyleType = MAX_TILE_TYPES;
 			}
-			
+
 			if (currentTyleType == static_cast<int>(Tile::groundTileType::other)) {
 				if (!singleTileMode)
 					currentTileID = Tile::g_lastID + 1;
@@ -261,7 +276,7 @@ void EditorState::wheelFunctions()
 		else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
 			if (!singleTileMode)
 				currentTyleType++;
-			
+
 			if (currentTyleType == static_cast<int>(Tile::groundTileType::other)) {
 				if (!singleTileMode)
 					currentTileID = -1;
@@ -285,6 +300,10 @@ void EditorState::wheelFunctions()
 		auto a = Tile::g_lastTileID;
 		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
 			objectIdOffset++;
+			for (int i = 0; i < p_oM->SpecialObjectsIDs.size(); i++) {
+				if (p_oM->IsIDSpecial(objectIdOffset + a))
+					objectIdOffset++;
+			}
 			if (a + objectIdOffset > Sprite::LAST_ID) {
 				objectIdOffset = 0;
 			}
@@ -293,6 +312,25 @@ void EditorState::wheelFunctions()
 			objectIdOffset--;
 			if (objectIdOffset == UINT_MAX)
 				objectIdOffset = Sprite::LAST_ID - a;
+			for (int i = 0; i < p_oM->SpecialObjectsIDs.size(); i++) {
+				if (p_oM->IsIDSpecial(objectIdOffset + a))
+					objectIdOffset--;
+			}
+		}
+	}
+	else if (currentFunction == EditorState::EditorFunction::specialObjects) {
+		auto a = Tile::g_lastTileID;
+		if (Keyboard::mouseWheel() == Keyboard::MouseWheel::up) {
+			spcObjWheelOffset++;
+			if (spcObjWheelOffset == p_oM->SpecialObjectsIDs.size())
+				spcObjWheelOffset = 0;
+			objectIdOffset = p_oM->SpecialObjectsIDs.front() + spcObjWheelOffset - a;
+		}
+		else if (Keyboard::mouseWheel() == Keyboard::MouseWheel::down) {
+			spcObjWheelOffset--;
+			if (spcObjWheelOffset == UINT_MAX)
+				spcObjWheelOffset = p_oM->SpecialObjectsIDs.size() - 1;
+			objectIdOffset = p_oM->SpecialObjectsIDs.front() + spcObjWheelOffset - a;
 		}
 	}
 	updateText();
@@ -339,7 +377,7 @@ void EditorState::cursorUpdateAndRender(sf::RenderTarget* a_target)
 		OpenedWindow->SetElementValue("Tile_Image", &activeSprite);
 		a_target->draw(cursorShape);
 	}
-	if (currentFunction == EditorState::EditorFunction::placeObject)
+	if (currentFunction == EditorState::EditorFunction::placeObject || currentFunction == EditorState::EditorFunction::specialObjects)
 	{
 		if (selectedObject != nullptr) {
 			activeSprite = selectedObject->sprite;
@@ -369,7 +407,7 @@ void EditorState::mouseFunctions()
 	else if (currentFunction == EditorState::EditorFunction::changeVariant) {
 		changeVariants();
 	}
-	else if (currentFunction == EditorState::EditorFunction::placeObject) {
+	else if (currentFunction == EditorState::EditorFunction::placeObject || currentFunction == EditorState::EditorFunction::specialObjects) {
 		placeObjects();
 	}
 
@@ -709,6 +747,7 @@ void EditorState::setBackgroundTiles()
 
 void EditorState::editorFunction(const std::multimap<std::string, Button>::iterator& a_it)
 {
+	auto a = Tile::g_lastTileID;
 	if (currentFunction == EditorState::EditorFunction::placeTile) {
 		currentFunction = EditorState::EditorFunction::changeVariant;
 		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
@@ -717,9 +756,16 @@ void EditorState::editorFunction(const std::multimap<std::string, Button>::itera
 	if (currentFunction == EditorState::EditorFunction::changeVariant) {
 		currentFunction = EditorState::EditorFunction::placeObject;
 		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
+		objectIdOffset = 0;
 		return;
 	}
 	if (currentFunction == EditorState::EditorFunction::placeObject) {
+		currentFunction = EditorState::EditorFunction::specialObjects;
+		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
+		objectIdOffset = p_oM->SpecialObjectsIDs.front() - a;
+		return;
+	}
+	if (currentFunction == EditorState::EditorFunction::specialObjects) {
 		currentFunction = EditorState::EditorFunction::placeTile;
 		a_it->second.setText(editorFuncNames[static_cast<int>(currentFunction)]);
 		return;
@@ -780,10 +826,10 @@ void EditorState::closeAddStageDial()
 	}
 }
 
-void EditorState::addStageWindow()
+void EditorState::inputWindowMenager()
 {
 
-	if (Windows.begin()->getID() == 201) {
+	if (Windows.begin()->getID() == 201 || Windows.begin()->getID() == 203) {
 		inputTimer();
 		if (p_event->type == sf::Event::TextEntered) {
 			if (p_event->text.unicode < 128) {
@@ -791,8 +837,8 @@ void EditorState::addStageWindow()
 					return;
 				v_inputTimer = 8;
 				input += p_event->text.unicode;
-				newStageName = input;
-				OpenedWindow->SetElementValue("New_Stage_Name", newStageName);
+				inputString = input;
+				OpenedWindow->SetElementValue("Input", inputString);
 			}
 		}
 	}
@@ -820,13 +866,38 @@ void EditorState::createAddStageDial()
 	if (!v_addStageDial)
 		return;
 	v_addStageDial = false;
-	newStageName = "";
-	input = newStageName;
+	inputString = "";
+	input = inputString;
 	PushWindow(201, sf::Vector2f(260, 40), sf::Vector2f(260, 150), "Enter Stage name?", sf::Vector2f(128, 30), sf::Color::Black);
-	Windows.begin()->AddText("New_Stage_Name", sf::Vector2f(375, 90), sf::Color::Black, newStageName);
+	Windows.begin()->AddText("Input", sf::Vector2f(375, 90), sf::Color::Black, inputString);
 	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 140), p_dM->Lang.yes, sf::Color(23, 23, 23));
 	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 140), p_dM->Lang.no, sf::Color(23, 23, 23));
 }
+
+void EditorState::closeAddSpecialObjDial()
+{
+	if (!v_closeSpecialObjectDial)
+		return;
+	v_closeSpecialObjectDial = false;
+	if (Windows.size()) {
+		Windows.begin()->setToClose = true;
+		return;
+	}
+}
+
+void EditorState::createAddSpecialObjDial()
+{
+	if (!v_addSpecialObjectDial)
+		return;
+	v_addSpecialObjectDial = false;
+	inputString = "";
+	input = inputString;
+	PushWindow(203, sf::Vector2f(260, 40), sf::Vector2f(260, 150), "Enter Special Propeties?", sf::Vector2f(128, 30), sf::Color::Black);
+	Windows.begin()->AddText("Input", sf::Vector2f(375, 90), sf::Color::Black, inputString);
+	Windows.begin()->AddButton(p_dM->Lang.yes, sf::Vector2f(50, 30), sf::Vector2f(330, 140), p_dM->Lang.yes, sf::Color(23, 23, 23));
+	Windows.begin()->AddButton(p_dM->Lang.no, sf::Vector2f(50, 30), sf::Vector2f(400, 140), p_dM->Lang.no, sf::Color(23, 23, 23));
+}
+
 void EditorState::createDelStageDial()
 {
 	if (!v_delStageDial)
@@ -882,11 +953,11 @@ void EditorState::deleteStage()
 
 void EditorState::addStage()
 {
-	cout << newStageName << endl;
-	p_stageContainer->insert(std::pair<std::string, Stage>(newStageName, Stage(p_oM, newStageName, p_dM)));
-	p_stageNames->push_back(newStageName);
+	cout << inputString << endl;
+	p_stageContainer->insert(std::pair<std::string, Stage>(inputString, Stage(p_oM, inputString, p_dM)));
+	p_stageNames->push_back(inputString);
 	std::multimap<std::string, Stage>::iterator it;
-	it = p_stageContainer->find(newStageName);
+	it = p_stageContainer->find(inputString);
 	currentStage = &it->second;
 	v_closeAddStageDial = true;
 	std::cout << "== EDITOR STATE == Stage Created" << std::endl;
@@ -907,7 +978,10 @@ void EditorState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoo
 	closeDialWindow();
 	createAddStageDial();
 	closeAddStageDial();
-	addStageWindow();
+	closeAddSpecialObjDial();
+	createAddSpecialObjDial();
+	inputWindowMenager();
+
 
 	currentStage->Update(a_mousePos);
 	mousePosUpdate(a_mousePosOnCoords);

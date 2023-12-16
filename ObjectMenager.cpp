@@ -95,12 +95,13 @@ void ObjectMenager::createPlayerObjPrefab(sf::Texture* a_texture, Player* a_play
 	addPrefab(a_playerObjPtr->ID, o->second);
 }
 
-void ObjectMenager::createSpecialObjPrefab(sf::Texture* a_texture, SpecialObject* a_specialObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated)
+void ObjectMenager::createSpecialObjPrefab(sf::Texture* a_texture, SpecialObject* a_specialObjPtr, sf::IntRect m_area, bool m_solid, sf::IntRect m_hitbox, bool a_isAnimated, SpecialObject::SpecialType a_subType)
 {
-	a_specialObjPtr = new SpecialObject(a_texture, m_area, m_solid, m_hitbox, a_isAnimated, p_dM);
+	a_specialObjPtr = new SpecialObject(a_texture, m_area, m_solid, m_hitbox, a_isAnimated, a_subType, p_dM);
 	//std::cout << a_intractableObjPtr->ID << std::endl;
 	SpecialObjectPtrContainer.insert(std::pair<int, SpecialObject*>(a_specialObjPtr->ID, a_specialObjPtr));
 	auto o = SpecialObjectPtrContainer.find(a_specialObjPtr->ID);
+	addSpecialObjectID(a_specialObjPtr->ID);
 	addPrefab(a_specialObjPtr->ID, o->second);
 }
 
@@ -130,6 +131,11 @@ void ObjectMenager::createAnimation4DToLastPrefab(string a_name, string a_upFaci
 	sprite->GetAnimationMenager()->CreateAnimation4D(a_name, aMg->GetAnimationPtr(a_upFacingAnim), aMg->GetAnimationPtr(a_downFacingAni), aMg->GetAnimationPtr(a_leftFacingAnim), aMg->GetAnimationPtr(a_rightFacingAnim));
 }
 
+void ObjectMenager::addSpecialObjectID(unsigned int a_ID)
+{
+	SpecialObjectsIDs.push_back(a_ID);
+}
+
 Tile* ObjectMenager::getTilePtrById(int a_ID)
 {
 	std::cout << "2";
@@ -143,6 +149,7 @@ Object* ObjectMenager::getObjectPtrById(int a_ID)
 	return StaticObjectPtrContainer.find(a_ID)->second;
 }
 
+
 /****************************************************/
 //Protected
 /****************************************************/
@@ -150,3 +157,11 @@ Object* ObjectMenager::getObjectPtrById(int a_ID)
 /****************************************************/
 //Public
 /****************************************************/
+bool ObjectMenager::IsIDSpecial(unsigned int a_ID)
+{
+	for (const auto& i : SpecialObjectsIDs) {
+		if (i == a_ID)
+			return true;
+	}
+	return false;
+}

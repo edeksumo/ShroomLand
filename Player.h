@@ -20,6 +20,9 @@ public:
         setObjectCenterOrigin(sf::Vector2f(0.f, 16.f));
         AnimMenager->PlayAnimation("IdleUp");
     }
+    void OnCollisionEnter();
+    void OnCollision();
+    void OnCollisionExit();
     void Update(sf::Vector2i* a_mousePos);
 };
 
