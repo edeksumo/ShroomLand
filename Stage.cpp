@@ -106,6 +106,27 @@ Stage::EState Stage::GetStateType()
 	return currentState;
 }
 
+bool Stage::ChangeStage()
+{
+	return changeStage;
+}
+//Delete?
+void Stage::SetChangeStage(bool a)
+{
+	changeStage = a;
+	for (const auto& i : TileGrid.RenderEditorObjPtrVec) {
+		auto SpcObj = dynamic_cast<SpecialObject*>(i);
+		if (SpcObj) {
+			SpcObj->changeState = a;
+		}
+	}
+}
+//
+string Stage::GetNextStageName()
+{
+	return nextStageName;
+}
+
 void Stage::Update(sf::Vector2i* a_mousePos)
 {
 
@@ -117,7 +138,16 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 			}
 		}
 	}
-
+	for (const auto& i : TileGrid.RenderEditorObjPtrVec) {
+		i->Update(a_mousePos);
+		auto SpcObj = dynamic_cast<SpecialObject*>(i);
+		if (SpcObj) {
+			if (SpcObj->changeState) {
+				changeStage = true;
+				nextStageName = SpcObj->getProperties();
+			}
+		}
+	}
 	for (const auto& i : TileGrid.RenderObjPtrVec) {
 		i->Update(a_mousePos);
 	}

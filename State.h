@@ -3,7 +3,7 @@
 #include<SFML/Graphics.hpp>
 #include "Notification.h"
 #include "Dimmer.h"
-#include "Stage.h"
+#include "StageMenager.h"
 #include <list>
 
 class State

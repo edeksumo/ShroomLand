@@ -77,8 +77,10 @@ void State::setActiveStage(string a_name)
 	}
 	if (p_stageContainer->find(a_name) == p_stageContainer->end()) {
 		std::cout << "There is not stage with name: " << a_name;
+		return;
 	}
 	auto stg = p_stageContainer->find(a_name);
+	std::cout << "Current stage name: " << a_name;
 	currentStage = &stg->second;
 }
 

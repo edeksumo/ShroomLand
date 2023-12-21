@@ -16,6 +16,8 @@ private:
 	DataMenager* p_dM;
 
 	EState currentState;
+	bool changeStage;
+	string nextStageName;
 protected:
 
 public:
@@ -29,6 +31,8 @@ public:
 		p_objMenager = nullptr;
 		p_renderTarget = nullptr;
 		p_dM = nullptr;
+		changeStage = false;
+		nextStageName = "";
 		currentState = Stage::EState::none;
 	}
 
@@ -37,6 +41,8 @@ public:
 		p_dM = m_dM;
 		p_renderTarget = nullptr;
 		Name = m_name;
+		changeStage = false;
+		nextStageName = "";
 		currentState = Stage::EState::none;
 	}
 
@@ -50,6 +56,10 @@ public:
 
 	void setCurrentState(Stage::EState a_state);
 	Stage::EState GetStateType();
+
+	bool ChangeStage();
+	void SetChangeStage(bool a);
+	string GetNextStageName();
 
 	void Update(sf::Vector2i* a_mousePos);
 	void Render(sf::RenderTarget* a_target);

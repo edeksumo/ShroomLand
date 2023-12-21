@@ -13,6 +13,7 @@ public:
         brighten
     };
 private:
+    bool isBlacked;
     EMode Mode;
     int currentTransparency;
 protected:
@@ -29,12 +30,14 @@ public:
         shadow.setSize(sf::Vector2f(p_Window->getSize().x, p_Window->getSize().y));
         currentTransparency = 0;
         setTransparency(currentTransparency);
+        isBlacked = false;
     }
     void FadeIn(unsigned int a_speed);
     void FadeOut(unsigned int a_speed);
     void setTransparency(unsigned int a_transparency);
     void setMode(Dimmer::EMode a_mode);
     Dimmer::EMode getMode();
+    bool IsBlacked();
     void Update(sf::Vector2i* a_mousePos);
     void Render(sf::RenderTarget* a_target);
 };

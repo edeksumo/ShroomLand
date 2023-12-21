@@ -14,7 +14,8 @@
 void Dimmer::FadeIn(unsigned int a_speed)
 {
 	currentTransparency+= a_speed;
-	if (currentTransparency == MAX_TRANSPARENCY) {
+	if (currentTransparency >= MAX_TRANSPARENCY) {
+		currentTransparency = MAX_TRANSPARENCY;
 		Mode = EMode::none;
 	}
 
@@ -60,6 +61,10 @@ void Dimmer::Update(sf::Vector2i* a_mousePos)
 		break;
 	}
 	shadow.setFillColor(sf::Color(0, 0, 0, currentTransparency));
+	if (currentTransparency == MAX_TRANSPARENCY)
+		isBlacked = true;
+	else
+		isBlacked = false;
 }
 
 void Dimmer::Render(sf::RenderTarget* a_target)
@@ -69,4 +74,9 @@ void Dimmer::Render(sf::RenderTarget* a_target)
 	keepOnPosition();
 	a_target->draw(shadow);
 	//std::cout << "== IMAGE == Render Func" << std::endl;
+}
+
+bool Dimmer::IsBlacked()
+{
+	return isBlacked;
 }

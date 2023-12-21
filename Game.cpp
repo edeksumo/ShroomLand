@@ -93,7 +93,8 @@ void Game::LoadStages()
                 auto j = stoi(v[i + 2]);
                 auto x = stoi(v[i + 3]);
                 auto y = stoi(v[i + 4]);
-                it->second.addObject(sf::Vector2f(x, y), j);
+                auto z = v[i + 5];
+                it->second.addObject(sf::Vector2f(x, y), j, z);
                 //.... adding special objects to deque
             }
             ///.... each type of obj must be specified here 

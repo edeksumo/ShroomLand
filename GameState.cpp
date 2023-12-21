@@ -245,6 +245,16 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	playerCollisionDetector();
 	createQuitDial();
 	currentStage->Update(a_mousePos);
+	if (currentStage->ChangeStage()) {
+		MainDimmer->setMode(Dimmer::EMode::dim);
+		if (MainDimmer->IsBlacked()) {
+			setActiveStage(currentStage->GetNextStageName());
+			MainDimmer->setMode(Dimmer::EMode::brighten);
+			setActivePlayer(nullptr);
+			std::cout << currentStage->ChangeStage();
+		}
+	}
+	
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }
 
