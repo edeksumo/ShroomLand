@@ -15,7 +15,7 @@ void EditorState::saveStages()
 	/// 
 	/// Making save format to match with load function in Game.cpp
 	/// 
-	for (auto it = p_stageContainer->rbegin(); it != p_stageContainer->rend();++it) {
+	for (auto it = p_stgM->StageContainer.rbegin(); it != p_stgM->StageContainer.rend();++it) {
 		saveFile << p_dM->SaveFormat.StageDefiner << " " << it->first << endl;
 		
 		// saving tiles
@@ -61,7 +61,7 @@ void EditorState::saveStages()
 	}
 
 	saveFile.close();
-
+	Keyboard::resetButtons();
 	std::cout  << "Stages saved" << std::endl;
 }
 void EditorState::buttonFunctions(const std::multimap<std::string, Button>::iterator& a_it)
@@ -416,7 +416,6 @@ void EditorState::mouseFunctions()
 }
 void EditorState::updateTiles()
 {
-	currentStage->DecorTiles.clear();
 	auto RNG = p_dM->seed + 10000;
 	auto TileRNG = RNG;
 	for(const auto& it_01 : tileUpdateMap){
@@ -687,10 +686,11 @@ void EditorState::updateTiles()
 }
 void EditorState::setBackgroundTiles()
 {
-	while (!currentStage->BackGroundTiles.empty())
-	{
-		currentStage->BackGroundTiles.pop_front();
-	}
+	//while (!currentStage->BackGroundTiles.empty())
+	//{
+	//	currentStage->BackGroundTiles.pop_front();
+	//}
+	currentStage->BackGroundTiles.clear();
 	for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
 		for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
 			if (currentStage->TileGrid.TileGridPtr[i][j] != nullptr) {
@@ -776,10 +776,11 @@ void EditorState::editorFunction(const std::multimap<std::string, Button>::itera
 }
 void EditorState::clearStage()
 {
-	while (!currentStage->BackGroundTiles.empty())
-	{
-		currentStage->BackGroundTiles.pop_front();
-	}
+	//while (!currentStage->BackGroundTiles.empty())
+	//{
+	//	currentStage->BackGroundTiles.pop_front();
+	//}
+	currentStage->BackGroundTiles.clear();
 	std::map<int, std::map<int, GridCell>> _temp;
 	for (int i = 0; i < currentStage->TileGrid.GetSize().x; i++) {
 		for (int j = 0; j < currentStage->TileGrid.GetSize().y; j++) {
@@ -916,39 +917,39 @@ void EditorState::changeStage(bool a_next)
 	else
 		stageOffset--;
 	if (stageOffset == UINT_MAX)
-		stageOffset = p_stageNames->size() - 1;
-	if (stageOffset > p_stageNames->size() - 1)
+		stageOffset = p_stgM->StageNames.size() - 1;
+	if (stageOffset > p_stgM->StageNames.size() - 1)
 		stageOffset = 0;
-	auto s = p_stageNames->at(stageOffset);
+	auto s = p_stgM->StageNames.at(stageOffset);
 	std::multimap<std::string, Stage>::iterator it; 
-	it = p_stageContainer->find(s);
+	it = p_stgM->StageContainer.find(s);
 	currentStage = &it->second;
 	std::cout << it->first << endl;
 }
 
 void EditorState::deleteStage()
 {
-	if (p_stageContainer->size() <= 1) {
+	if (p_stgM->StageContainer.size() <= 1) {
 		std::cout << "== EDITOR STATE == Can't delete last stage" << std::endl;
 		return;
 	}
 
-	auto& stgName = p_stageNames->at(0), currName = currentStage->Name;
+	auto& stgName = p_stgM->StageNames.at(0), currName = currentStage->Name;
 	stageOffset = 0;
-	if (p_stageNames->at(0) == currName) {
-		stgName = p_stageNames->at(1);
+	if (p_stgM->StageNames.at(0) == currName) {
+		stgName = p_stgM->StageNames.at(1);
 	}
 	int a = 0;
-	for (auto& i : *p_stageNames) {
+	for (auto& i : p_stgM->StageNames) {
 		if (i == currentStage->Name)
 			break;
 		a++;
 	}
 	std::multimap<std::string, Stage>::iterator it;
-	it = p_stageContainer->find(stgName);
+	it = p_stgM->StageContainer.find(stgName);
 	currentStage = &it->second;
-	p_stageNames->erase(p_stageNames->begin() + a);
-	p_stageContainer->erase(currName);
+	p_stgM->StageNames.erase(p_stgM->StageNames.begin() + a);
+	p_stgM->StageContainer.erase(currName);
 	v_closeClearDial = true;
 
 }
@@ -956,10 +957,10 @@ void EditorState::deleteStage()
 void EditorState::addStage()
 {
 	cout << inputString << endl;
-	p_stageContainer->insert(std::pair<std::string, Stage>(inputString, Stage(p_oM, inputString, p_dM)));
-	p_stageNames->push_back(inputString);
+	p_stgM->StageContainer.insert(std::pair<std::string, Stage>(inputString, Stage(p_oM, inputString, p_dM)));
+	p_stgM->StageNames.push_back(inputString);
 	std::multimap<std::string, Stage>::iterator it;
-	it = p_stageContainer->find(inputString);
+	it = p_stgM->StageContainer.find(inputString);
 	currentStage = &it->second;
 	v_closeAddStageDial = true;
 	std::cout << "== EDITOR STATE == Stage Created" << std::endl;

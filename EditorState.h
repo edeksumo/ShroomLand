@@ -84,7 +84,7 @@ protected:
 public:  
     GridCell MousePosOnGrid;
 
-    EditorState(std::multimap<std::string, Stage>* m_stageContainer, std::vector<std::string>* m_stageNames, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
+    EditorState(StageMenager* m_stgM, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state, sf::Event* m_event) {
         MousePosOnGrid = GridCell(0, 0);
         p_state = m_state;
         p_window = m_window;
@@ -93,12 +93,11 @@ public:
         p_oM = m_oM;
         p_event = m_event;
         currentTyleType = 0;
-        p_stageContainer = m_stageContainer;
-        p_stageNames = m_stageNames;
+        p_stgM = m_stgM;
         cursorShape.setOutlineColor(sf::Color::White);
         cursorShape.setOutlineThickness(1.f);
         cursorShape.setFillColor(sf::Color(0, 0, 0, 0));
-        currentStage = &p_stageContainer->begin()->second;
+        currentStage = &p_stgM->StageContainer.begin()->second;
         selectedTile = nullptr;
         selectedObject = nullptr;
         currentFunction = EditorState::EditorFunction::placeTile;
@@ -132,7 +131,7 @@ public:
         OpenedWindow->AddText("Current_Obj_Name", sf::Vector2f(60, 165), sf::Color::Black, "Grass");
         OpenedWindow->AddImage("Tile_Image", sf::Vector2f(50, 175), &p_dM->emptyTxt);
         OpenedWindow->AddImage("Obj_Image", sf::Vector2f(50, 340), &p_dM->emptyTxt);
-        OpenedWindow->AddText("Current_Stage_Name", sf::Vector2f(65, p_window->getSize().y - 225), sf::Color::Black, p_stageContainer->begin()->first);
+        OpenedWindow->AddText("Current_Stage_Name", sf::Vector2f(65, p_window->getSize().y - 225), sf::Color::Black, p_stgM->StageContainer.begin()->first);
         OpenedWindow->AddButton("Next_Stage", Button::GraphicalButton::right, sf::Vector2f(90, p_window->getSize().y - 205));
         OpenedWindow->AddButton("Back_Stage", Button::GraphicalButton::left, sf::Vector2f(15, p_window->getSize().y - 205));
         OpenedWindow->AddButton("Add_Stage", sf::Vector2f(105, 40), sf::Vector2f(15, p_window->getSize().y - 155), "Add Stg", sf::Color::White);
@@ -144,6 +143,7 @@ public:
         StateType = Stage::EState::editorState;
         setStateForStages();
 
+        Keyboard::resetButtons();
         MainDimmer = new Dimmer(p_window, p_dM);
     };
 

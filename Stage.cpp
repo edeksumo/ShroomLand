@@ -155,10 +155,13 @@ void Stage::Update(sf::Vector2i* a_mousePos)
 
 void Stage::Render(sf::RenderTarget* a_target)
 {
+	//std::cout << BackGroundTiles.size() << endl;
 	p_renderTarget = a_target;
-	for (Tile& i : BackGroundTiles) {
-		if(isVisible(i, a_target))
-			i.Render(a_target);	
+	for (auto& i : BackGroundTiles) {
+		//std::cout << i.GetPosition().x << " " << i.GetPosition().y << endl;
+		if (isVisible(i, a_target)) {
+			i.Render(a_target);
+		}
 	}
 	for (int i = 0; i < TileGrid.GetSize().x; i++) {
 		for (int j = 0; j < TileGrid.GetSize().y; j++) {
@@ -185,6 +188,7 @@ void Stage::Render(sf::RenderTarget* a_target)
 			i->RenderHitboxes(a_target);
 		}
 	}
+	//std::cout << (int)currentState<< endl;
 	//for (int y = 0; y < TileGrid.GetSize().y; y++) {
 	//	for (int x = 0; x < TileGrid.GetSize().x; x++) {
 	//		if (TileGrid.ObjGridPtr[x][y] != nullptr) {

@@ -37,6 +37,7 @@ public:
 			std::fill(i.begin(), i.end(), nullptr);
 		}
 	}
+
 	Grid(unsigned int m_sizex, unsigned int m_sizey) {
 		size_x = m_sizex;
 		size_y = m_sizey;
@@ -49,6 +50,7 @@ public:
 			std::fill(i.begin(), i.end(), nullptr);
 		}
 	}
+
 	void AddTile(GridCell a_pos, Tile* a_tile, unsigned int a_variant = 0);
 	void RemoveTile(GridCell a_pos);
 	Tile* GetTilePtr(GridCell a_pos);

@@ -26,10 +26,15 @@ void Keyboard::print(int a_text, bool a_nextLine)
 	print(std::to_string(a_text), a_nextLine);
 }
 
-void Keyboard::setKeyState(sf::Keyboard::Key a_key)
+void Keyboard::setKeyState(sf::Keyboard::Key a_key, KeyState a_state)
 {
 	if (a_key > sf::Keyboard::KeyCount)
 		return;
+
+	if (a_state != KeyState::none) {
+		keyState[a_key] = a_state;
+		return;
+	}
 
 	if (sf::Keyboard::isKeyPressed(a_key)) {
 		if (keyState[a_key] == Keyboard::KeyState::free) {
@@ -56,10 +61,15 @@ void Keyboard::setKeyState(sf::Keyboard::Key a_key)
 	}
 }
 
-void Keyboard::setMouseButtonState(sf::Mouse::Button a_button)
+void Keyboard::setMouseButtonState(sf::Mouse::Button a_button, KeyState a_state)
 {
 	if (a_button > sf::Mouse::ButtonCount)
 		return;
+
+	if (a_state != KeyState::none) {
+		mouseButtonState[a_button] = a_state;
+		return;
+	}
 
 	if (sf::Mouse::isButtonPressed(a_button)) {
 		if (mouseButtonState[a_button] == Keyboard::KeyState::free) {
@@ -115,6 +125,22 @@ void Keyboard::keyAndButtonStateSetter()
 void Keyboard::resetWheel()
 {
 	wheelDelta = Keyboard::MouseWheel::free;
+}
+
+void Keyboard::resetButtons()
+{
+	setMouseButtonState(sf::Mouse::Left, KeyState::free);
+	setMouseButtonState(sf::Mouse::Right, KeyState::free);
+	setKeyState(sf::Keyboard::A, KeyState::free);
+	setKeyState(sf::Keyboard::Escape, KeyState::free);
+	setKeyState(sf::Keyboard::Up, KeyState::free);
+	setKeyState(sf::Keyboard::Down, KeyState::free);
+	setKeyState(sf::Keyboard::Left, KeyState::free);
+	setKeyState(sf::Keyboard::Right, KeyState::free);
+	setKeyState(sf::Keyboard::Space, KeyState::free);
+	setKeyState(sf::Keyboard::BackSpace, KeyState::free);
+	setKeyState(sf::Keyboard::Home, KeyState::free);
+	setKeyState(sf::Keyboard::LShift, KeyState::free);
 }
 
 void Keyboard::setWheelState(sf::Event *a_event)

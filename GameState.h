@@ -29,16 +29,17 @@ private:
     void cameraFollowObject(Object* a_obj, sf::FloatRect a_limits);
     bool canEnterTile(Object* a_obj, Directions a_dir);
     bool checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRight); // it takes two points and make line out of it and checks is it colides with solidObject vector;
+    void updateCurrentStage();
 protected:
 
 public:
-    GameState(std::multimap<std::string, Stage>* m_stageContainer, sf::RenderWindow* m_renderWindow, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state) {
+    GameState(StageMenager* m_stgM, sf::RenderWindow* m_renderWindow, sf::Window* m_window, Camera* m_mainCamera, DataMenager* m_dM, ObjectMenager* m_oM, std::stack<State*>* m_state) {
         p_state = m_state;
         p_window = m_window;
         p_mainCamera = m_mainCamera;
         p_dM = m_dM;
         p_oM = m_oM;
-        p_stageContainer = m_stageContainer;
+        p_stgM = m_stgM;
         p_renderWindow = m_renderWindow;
         freeCamEnable = false;
         cameraMovement = true;
@@ -48,12 +49,13 @@ public:
         p_freeCam = new Camera(m_renderWindow, sf::Vector2f(800, 600));
         v_createQuitDial = false;
         //currentStage = &p_stageContainer->begin()->second;
+        p_stgM->restoreStages();
         setActiveStage("cave");
         setActivePlayer(nullptr);
-
-        StateType == Stage::EState::gameState;
+        StateType = Stage::EState::gameState;
         setStateForStages();
 
+        Keyboard::resetButtons();
         MainDimmer = new Dimmer(p_window, p_dM);
         MainDimmer->setTransparency(MAX_TRANSPARENCY);
         MainDimmer->setMode(Dimmer::EMode::brighten);

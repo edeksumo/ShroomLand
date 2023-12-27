@@ -9,11 +9,11 @@ void MainMenuState::ButtonFunctions(const std::multimap<std::string, Button>::it
 		v_createQuitDial = true;
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.newGame)) {
-		p_game = new GameState(p_stageContainer,p_renderWindow, p_window, p_mainCamera, p_dM, p_oM, p_state);
+		p_game = new GameState(p_stgM ,p_renderWindow, p_window, p_mainCamera, p_dM, p_oM, p_state);
 		p_state->push(p_game);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.editor)) {
-		p_editor = new EditorState(p_stageContainer, p_stageNames, p_window, p_mainCamera, p_dM, p_oM, p_state, p_event);
+		p_editor = new EditorState(p_stgM, p_window, p_mainCamera, p_dM, p_oM, p_state, p_event);
 		p_state->push(p_editor);
 	}
 	if (Window::CheckButton(a_it, p_dM->Lang.settings)) {

@@ -6,7 +6,7 @@ class Stage
 public:
 	enum class EState {
 		none = -1,
-		mainMenuState,
+		mainMenuState = 0,
 		gameState,
 		editorState
 	};
@@ -21,8 +21,7 @@ private:
 protected:
 
 public:
-	std::deque<Tile> BackGroundTiles;
-	std::deque<Tile> DecorTiles;
+	std::vector<Tile> BackGroundTiles;
 
 	std::string Name;
 	Grid TileGrid;
@@ -44,6 +43,39 @@ public:
 		changeStage = false;
 		nextStageName = "";
 		currentState = Stage::EState::none;
+	}
+
+	Stage(const Stage& p1) {
+		p_objMenager = p1.p_objMenager;
+		p_dM = p1.p_dM;
+		p_renderTarget = p1.p_renderTarget;
+		Name = p1.Name;
+		changeStage = p1.changeStage;
+		currentState = p1.currentState;
+		TileGrid = p1.TileGrid;
+		BackGroundTiles = p1.BackGroundTiles;
+
+		TileGrid.SolidObjects.clear();
+		TileGrid.CollisionObjects.clear();
+		TileGrid.RenderEditorObjPtrVec.clear();
+		TileGrid.RenderObjPtrVec.clear();
+		TileGrid.StaticObjStorageVec.clear();
+		TileGrid.InteractableObjStorageVec.clear();
+		TileGrid.PlayerObjStorageVec.clear();
+		TileGrid.SpecialObjStorageVec.clear();
+
+		for (auto i : p1.TileGrid.StaticObjStorageVec) {
+			addObject(i->GetPosition(), i->ID);
+		}
+		for (auto i : p1.TileGrid.InteractableObjStorageVec) {
+			addObject(i->GetPosition(), i->ID);
+		}
+		for (auto i : p1.TileGrid.PlayerObjStorageVec) {
+			addObject(i->GetPosition(), i->ID);
+		}
+		for (auto i : p1.TileGrid.SpecialObjStorageVec) {
+			addObject(i->GetPosition(), i->ID, i->getProperties());
+		}
 	}
 
 	bool isVisible(const Sprite& a_sprite, sf::RenderTarget* a_target);

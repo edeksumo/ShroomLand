@@ -56,7 +56,10 @@ void State::DimmerRender(sf::RenderTarget* a_target)
 /****************************************************/
 void State::setStateForStages()
 {
-	for (auto it = p_stageContainer->begin(); it != p_stageContainer->end(); ++it) {
+	for (auto it = p_stgM->ActiveStageContainer.begin(); it != p_stgM->ActiveStageContainer.end(); ++it) {
+		it->second.setCurrentState(StateType);
+	}
+	for (auto it = p_stgM->StageContainer.begin(); it != p_stgM->StageContainer.end(); ++it) {
 		it->second.setCurrentState(StateType);
 	}
 }
@@ -72,15 +75,17 @@ void State::updateOpenedWindowIt()
 /****************************************************/
 void State::setActiveStage(string a_name)
 {
-	if (p_stageContainer == nullptr) {
-		return;	//future throw
-	}
-	if (p_stageContainer->find(a_name) == p_stageContainer->end()) {
+	//if (p_stgM->StageContainer == nullptr) {
+	//	return;	//future throw
+	//}
+	//p_stgM->restoreStages();
+	//setStateForStages();
+	if (p_stgM->ActiveStageContainer.find(a_name) == p_stgM->ActiveStageContainer.end()) {
 		std::cout << "There is not stage with name: " << a_name;
 		return;
 	}
-	auto stg = p_stageContainer->find(a_name);
-	std::cout << "Current stage name: " << a_name;
+	auto stg = p_stgM->ActiveStageContainer.find(a_name);
+	std::cout << "Current stage name: " << a_name << endl;
 	currentStage = &stg->second;
 }
 

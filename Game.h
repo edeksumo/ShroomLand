@@ -19,6 +19,8 @@ private:
 
 	DataMenager dataMenager;
 	ObjectMenager* objMenager;
+	StageMenager* stageMenager;
+
 	MainMenuState *MainMenu;
 	Camera* MainCamera;
 
@@ -27,8 +29,6 @@ private:
 	sf::Time previousTime;
 	sf::Time currentTime;
 
-
-	void LoadStages();
 	void Keyboard();
 	void Render();
 	void Begin();
@@ -40,8 +40,6 @@ public:
 	sf::RenderWindow* Window;
 	sf::Event Event;
 
-	std::multimap<std::string, Stage> StageContainer;			//stores all stages in the game
-	std::vector<std::string> StageNames;						//stores all stage names
 	/****************************************************/
 	//Constructors/ destructor
 	/****************************************************/
@@ -54,9 +52,9 @@ public:
 		Window = new sf::RenderWindow(sf::VideoMode(Wight, Height), Title);
 		Window->setKeyRepeatEnabled(false);
 		objMenager = new ObjectMenager(&dataMenager);
+		stageMenager = new StageMenager(&dataMenager, objMenager);
 		MainCamera = new Camera(Window, sf::Vector2f(800.f, 600.f));
-		LoadStages();
-		MainMenu = new MainMenuState(&StageContainer, &StageNames, Window, Window, MainCamera, &dataMenager, objMenager, &States, &Event);
+		MainMenu = new MainMenuState(stageMenager, Window, Window, MainCamera, &dataMenager, objMenager, &States, &Event);
 		previousTime = clock.getElapsedTime();
 
 		MainCamera->ActiveCamera();
@@ -69,6 +67,7 @@ public:
 		delete MainMenu;
 		delete objMenager;
 		delete MainCamera;
+		delete objMenager;
 	};
 };
 

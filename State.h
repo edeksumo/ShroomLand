@@ -25,8 +25,7 @@ protected:
 	ObjectMenager* p_oM;
 	sf::Event* p_event;
 	std::stack<State*>* p_state;
-	std::multimap<std::string, Stage>* p_stageContainer;
-	std::vector<std::string>* p_stageNames;
+	StageMenager* p_stgM;
 
 	std::list<Window> Windows;
 	std::list<Window>::iterator OpenedWindow;
@@ -44,8 +43,7 @@ public:
 		p_event = nullptr;
 		p_state = nullptr;
 		p_window = nullptr;
-		p_stageContainer = nullptr;
-		p_stageNames = nullptr;
+		p_stgM = nullptr;
 		p_renderWindow = nullptr;
 		stateQuit = false;
 		nbOfOpenedWindows = 0;

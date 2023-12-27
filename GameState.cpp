@@ -147,6 +147,19 @@ bool GameState::checkCollision(sf::Vector2f a_pointLeft, sf::Vector2f a_pointRig
 	return false;
 }
 
+void GameState::updateCurrentStage()
+{
+	if (currentStage->ChangeStage()) {
+		MainDimmer->setMode(Dimmer::EMode::dim);
+		if (MainDimmer->IsBlacked()) {
+			setActiveStage(currentStage->GetNextStageName());
+			MainDimmer->setMode(Dimmer::EMode::brighten);
+			setActivePlayer(nullptr);
+			PushNotification(currentStage->Name, sf::Color::White);
+		}
+	}
+}
+
 /****************************************************/
 //Protected
 /****************************************************/
@@ -244,16 +257,8 @@ void GameState::Update(sf::Vector2i* a_mousePos, sf::Vector2f* a_mousePosOnCoord
 	playerControl();
 	playerCollisionDetector();
 	createQuitDial();
+	updateCurrentStage();
 	currentStage->Update(a_mousePos);
-	if (currentStage->ChangeStage()) {
-		MainDimmer->setMode(Dimmer::EMode::dim);
-		if (MainDimmer->IsBlacked()) {
-			setActiveStage(currentStage->GetNextStageName());
-			MainDimmer->setMode(Dimmer::EMode::brighten);
-			setActivePlayer(nullptr);
-			std::cout << currentStage->ChangeStage();
-		}
-	}
 	
 	//std::cout << "== GAMESTATE == Update Func" << std::endl;
 }

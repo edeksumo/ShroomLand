@@ -72,6 +72,7 @@ public:
 		hasHitbox = p1.hasHitbox;
 		hitboxPos = p1.hitboxPos;
 		isAnimated = p1.isAnimated;
+		sprite = p1.sprite;
 		//std::cout << "sprite copy constructor " << ID << endl;
 	};
 	~Sprite() {
